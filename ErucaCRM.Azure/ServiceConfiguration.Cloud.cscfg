@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="ErucaCRM.Web.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2014-06.2.4">
+  <Role name="ErucaCRM.Web">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=erucatechwebapp;AccountKey=utIoK53qUgHa+Y6a3hbqzog4aQZVEUccEWIAAnSBeG6U7kBSjSOMivFFBiFkVOKoncBc7Moi8RTRFB+x+Nnu1w==" />
+      <Setting name="Entities" value="metadata=res://*/ErucaCRMEntities.csdl|res://*/ErucaCRMEntities.ssdl|res://*/ErucaCRMEntities.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=tcp:qpc74dmqj5.database.windows.net,1433;initial catalog=erucatechsql;persist security info=True;user id=erucatech@qpc74dmqj5;password=xiaochong.2014;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=erucatechwebapp;AccountKey=utIoK53qUgHa+Y6a3hbqzog4aQZVEUccEWIAAnSBeG6U7kBSjSOMivFFBiFkVOKoncBc7Moi8RTRFB+x+Nnu1w==" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="ErucaTech Limited" thumbprint="7C2F5AE05F642EED811D6A075A27766082AE899A" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <Role name="WorkerRoleDelayLead">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=erucatechwebapp;AccountKey=utIoK53qUgHa+Y6a3hbqzog4aQZVEUccEWIAAnSBeG6U7kBSjSOMivFFBiFkVOKoncBc7Moi8RTRFB+x+Nnu1w==" />
+      <Setting name="Entities" value="metadata=res://*/ErucaCRMEntities.csdl|res://*/ErucaCRMEntities.ssdl|res://*/ErucaCRMEntities.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=tcp:qpc74dmqj5.database.windows.net,1433;initial catalog=erucatechsql;persist security info=True;user id=erucatech@qpc74dmqj5;password=xiaochong.2014;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=erucatechwebapp;AccountKey=utIoK53qUgHa+Y6a3hbqzog4aQZVEUccEWIAAnSBeG6U7kBSjSOMivFFBiFkVOKoncBc7Moi8RTRFB+x+Nnu1w==" />
+    </ConfigurationSettings>
+  </Role>
+  <Role name="WorkerRoleRecentActivity">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=erucatechwebapp;AccountKey=utIoK53qUgHa+Y6a3hbqzog4aQZVEUccEWIAAnSBeG6U7kBSjSOMivFFBiFkVOKoncBc7Moi8RTRFB+x+Nnu1w==" />
+      <Setting name="Entities" value="metadata=res://*/ErucaCRMEntities.csdl|res://*/ErucaCRMEntities.ssdl|res://*/ErucaCRMEntities.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=tcp:qpc74dmqj5.database.windows.net,1433;initial catalog=erucatechsql;persist security info=True;user id=erucatech@qpc74dmqj5;password=xiaochong.2014;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=erucatechwebapp;AccountKey=utIoK53qUgHa+Y6a3hbqzog4aQZVEUccEWIAAnSBeG6U7kBSjSOMivFFBiFkVOKoncBc7Moi8RTRFB+x+Nnu1w==" />
+    </ConfigurationSettings>
+  </Role>
+  <Role name="WorkerRoleSendEmail">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=erucatechwebapp;AccountKey=utIoK53qUgHa+Y6a3hbqzog4aQZVEUccEWIAAnSBeG6U7kBSjSOMivFFBiFkVOKoncBc7Moi8RTRFB+x+Nnu1w==" />
+      <Setting name="Entities" value="metadata=res://*/ErucaCRMEntities.csdl|res://*/ErucaCRMEntities.ssdl|res://*/ErucaCRMEntities.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=tcp:qpc74dmqj5.database.windows.net,1433;initial catalog=erucatechsql;persist security info=True;user id=erucatech@qpc74dmqj5;password=xiaochong.2014;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=erucatechwebapp;AccountKey=utIoK53qUgHa+Y6a3hbqzog4aQZVEUccEWIAAnSBeG6U7kBSjSOMivFFBiFkVOKoncBc7Moi8RTRFB+x+Nnu1w==" />
+    </ConfigurationSettings>
+  </Role>
+  <Role name="ErucaCRM.WCFService">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=erucatechwebapp;AccountKey=utIoK53qUgHaY6a3hbqzog4aQZVEUccEWIAAnSBeG6U7kBSjSOMivFFBiFkVOKoncBc7Moi8RTRFB+x+Nnu1w==" />
+      <Setting name="Entities" value="metadata=res://*/ErucaCRMEntities.csdl|res://*/ErucaCRMEntities.ssdl|res://*/ErucaCRMEntities.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=tcp:qpc74dmqj5.database.windows.net,1433;initial catalog=erucatechsql;persist security info=True;user id=erucatech@qpc74dmqj5;password=xiaochong.2014;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

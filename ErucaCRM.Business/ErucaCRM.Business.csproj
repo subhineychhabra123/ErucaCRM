@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6C53563D-89F2-4591-9C56-758E57F2AA8A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ErucaCRM.Business</RootNamespace>
+    <AssemblyName>ErucaCRM.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Pvc.Core">
+      <HintPath>..\packages\Pvc.Core.0.0.2.0\lib\net45\Pvc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Pvc.NuGet">
+      <HintPath>..\packages\Pvc.NuGet.0.0.1.2\lib\net45\Pvc.NuGet.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=3.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\structuremap.3.0.5.130\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap.3.0.5.130\lib\net40\StructureMap.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountBusiness.cs" />
+    <Compile Include="ApplicationPageBusiness.cs" />
+    <Compile Include="AppVersionBusiness.cs" />
+    <Compile Include="AssociationApplicationPageBusiness.cs" />
+    <Compile Include="AccountCaseBusiness.cs" />
+    <Compile Include="CaseMessageBoardBusiness.cs" />
+    <Compile Include="CompanyBusiness.cs" />
+    <Compile Include="ContactBusiness.cs" />
+    <Compile Include="ContentApplicationPageBusiness.cs" />
+    <Compile Include="HomeBusiness.cs" />
+    <Compile Include="Interfaces\IAccountBusiness.cs" />
+    <Compile Include="Interfaces\IAccountCaseBusiness.cs" />
+    <Compile Include="Interfaces\IAppVersion.cs" />
+    <Compile Include="Interfaces\ICaseMessageBoardBusiness.cs" />
+    <Compile Include="Interfaces\ICompanyBusiness.cs" />
+    <Compile Include="Interfaces\IConsoleEmail.cs" />
+    <Compile Include="Interfaces\IContentApplicationPageBusiness.cs" />
+    <Compile Include="Interfaces\IApplicationPageBusiness.cs" />
+    <Compile Include="Interfaces\IHomeBusiness.cs" />
+    <Compile Include="Interfaces\IInvoiceBusiness.cs" />
+    <Compile Include="Interfaces\ILeadAuditBusiness.cs" />
+    <Compile Include="Interfaces\ILeadCommentBussiness.cs" />
+    <Compile Include="Interfaces\IPlanBusiness.cs" />
+    <Compile Include="Interfaces\IProductLeadAssociationBusiness.cs" />
+    <Compile Include="Interfaces\IRatingBusiness.cs" />
+    <Compile Include="Interfaces\IRealTimeNotificationBusiness.cs" />
+    <Compile Include="Interfaces\IReportBusiness.cs" />
+    <Compile Include="Interfaces\IStageBusiness.cs" />
+    <Compile Include="Interfaces\ITagBusiness.cs" />
+    <Compile Include="Interfaces\ITimeZoneBusiness.cs" />
+    <Compile Include="Interfaces\IUserCultureBusness.cs" />
+    <Compile Include="InvoiceBusiness.cs" />
+    <Compile Include="LeadAuditBusiness.cs" />
+    <Compile Include="LeadCommentBussiness.cs" />
+    <Compile Include="LeadNotifcationBusiness.cs" />
+    <Compile Include="PlanBusiness.cs" />
+    <Compile Include="ProductLeadAssociationBusiness.cs" />
+    <Compile Include="FileAttachmentBusiness.cs" />
+    <Compile Include="IndustryBusiness.cs" />
+    <Compile Include="Infrastructure\StructureMap.cs" />
+    <Compile Include="Infrastructure\AutoMapperBusinessProfile.cs" />
+    <Compile Include="Interfaces\IContactBusiness.cs" />
+    <Compile Include="Interfaces\IFileAttachmentBusiness.cs" />
+    <Compile Include="Interfaces\IIndustryBusiness.cs" />
+    <Compile Include="Interfaces\ILeadBusiness.cs" />
+    <Compile Include="Interfaces\ILeadSourceBusiness.cs" />
+    <Compile Include="Interfaces\ILeadStatusBusiness.cs" />
+    <Compile Include="Interfaces\IProductBusiness.cs" />
+    <Compile Include="Interfaces\IProductQuoteAssociationBusiness.cs" />
+    <Compile Include="Interfaces\IProfileBusiness.cs" />
+    <Compile Include="Interfaces\IProfilePermissionBusiness.cs" />
+    <Compile Include="Interfaces\IQuoteBusiness.cs" />
+    <Compile Include="Interfaces\IRoleBusiness.cs" />
+    <Compile Include="Interfaces\ISalesOrderBusiness.cs" />
+    <Compile Include="Interfaces\ITaskItemBusiness.cs" />
+    <Compile Include="LeadBusiness.cs" />
+    <Compile Include="LeadSourceBusiness.cs" />
+    <Compile Include="LeadStatusBusiness.cs" />
+    <Compile Include="ProductBusiness.cs" />
+    <Compile Include="ProductQuoteAssociationBusiness.cs" />
+    <Compile Include="ProfileBusiness.cs" />
+    <Compile Include="ProfilePermissionBusiness.cs" />
+    <Compile Include="QuoteBusiness.cs" />
+    <Compile Include="RatingBusiness.cs" />
+    <Compile Include="RealTimeNotificationBusiness.cs" />
+    <Compile Include="ReportBusiness.cs" />
+    <Compile Include="RoleBusiness.cs" />
+    <Compile Include="SalesOrderBusiness.cs" />
+    <Compile Include="StageBusiness.cs" />
+    <Compile Include="TagBusiness.cs" />
+    <Compile Include="TaskItemBusiness.cs" />
+    <Compile Include="TimeZoneBusiness.cs" />
+    <Compile Include="UserBusiness.cs" />
+    <Compile Include="Interfaces\IUserBusiness.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CultureInformationBusiness.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ErucaCRM.Domain\ErucaCRM.Domain.csproj">
+      <Project>{215c3458-ab79-42b6-a893-bc99efcb0c19}</Project>
+      <Name>ErucaCRM.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ErucaCRM.Repository\ErucaCRM.Repository.csproj">
+      <Project>{a5d3ce91-7121-4193-a41e-5be094c409fa}</Project>
+      <Name>ErucaCRM.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ErucaCRM.Utility\ErucaCRM.Utility.csproj">
+      <Project>{4da23c60-ebb3-48fe-8a07-3c6e787364a1}</Project>
+      <Name>ErucaCRM.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

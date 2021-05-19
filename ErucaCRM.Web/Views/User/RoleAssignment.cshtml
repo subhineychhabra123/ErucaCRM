@@ -1,0 +1,68 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model IEnumerable<ErucaCRM.Web.ViewModels.UserVM>
+
+@{
+    ViewBag.Title = "ErucaCRM | RoleAssignment";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+@section scripts {
+    <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.RoleAssignment.js")" type="text/javascript"></script>
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.RoleAssignment.pageLoad();
+}
+@section SideMenuCss
+{<style>
+        .sidemenu {   position: fixed;}        
+        .wrapper-inner { border-left: 1px solid #B6B6B6; margin-left: 230px; padding-left: 10px; overflow: hidden;}
+        #SideMenu-Configuration { display: block; }
+            /*#SideMenu-Configuration a[href*='UserList'] { background: #fff; color: #17B5F0; }*/
+    </style>
+    @*<style>
+        .sidemenutd { display: block; }
+        .inner-body .wrapper-inner { max-width: 980px; }
+        #SideMenu-Configuration { display: block; }
+    </style>*@
+}
+
+<h2>Assign Roles</h2>
+
+<div class="buttoncontainer clear-both">
+    <input type="button" class="button small purple _savePermissions" value="Save" />
+     
+</div>
+<div class="role-assignment _roleAssignment">
+    <center><span class="error"></span></center>
+    <table>
+        <tr>
+            <th>
+                 <input id="chkAllrole" type="checkbox" />
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role.RoleName)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr >
+
+                <td>
+                   <input id="chkrole" class="_chkrole" type="checkbox" />
+                    @Html.HiddenFor(modelItem => item.UserId)
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td >
+                    @(Html.DropDownListFor(modelItem => item.UserId, new SelectList(ViewBag.RolesList, "RoleId", "RoleName", item.Role.RoleId), new {@disabled="disabled" }))
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>

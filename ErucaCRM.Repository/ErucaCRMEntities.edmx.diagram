@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="94fbfd85908a4c3191ab161eecea1e02" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="ErucaCRMModel.AccountTag" Width="1.5" PointX="14.25" PointY="2.25" />
+        <EntityTypeShape EntityType="ErucaCRMModel.AccountType" Width="1.5" PointX="3.36473310336691" PointY="28.902752189386057" IsExpanded="false" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Address" Width="1.5" PointX="6.125" PointY="28.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="ErucaCRMModel.ApplicationPage" Width="1.5" PointX="6.75" PointY="29.5" />
+        <EntityTypeShape EntityType="ErucaCRMModel.AssociatedProduct" Width="1.5" PointX="2.747494246227431" PointY="1.0260249381074797" />
+        <EntityTypeShape EntityType="ErucaCRMModel.AssociationApplicationPage" Width="1.5" PointX="7.9015266596812417" PointY="31.29845246639962" />
+        <EntityTypeShape EntityType="ErucaCRMModel.CaseMessageBoard" Width="1.5" PointX="9.1045202189611825" PointY="15.566576428509586" />
+        <EntityTypeShape EntityType="ErucaCRMModel.ContactTag" Width="1.5" PointX="6.5415143103066438" PointY="0.28230339301857321" />
+        <EntityTypeShape EntityType="ErucaCRMModel.ContentApplicationPage" Width="1.5" PointX="10.077564283310233" PointY="1.2727327799763217" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Country" Width="1.5" PointX="3.2881522026323493" PointY="3.6524568813165916" />
+        <EntityTypeShape EntityType="ErucaCRMModel.CultureInformation" Width="1.5" PointX="8.352380609303891" PointY="28.773883922385931" IsExpanded="false" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Industry" Width="1.5" PointX="10.344383306030363" PointY="13.866912311812357" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Invoice" Width="1.5" PointX="3.9348134565794903" PointY="29.894476174327767" IsExpanded="false" />
+        <EntityTypeShape EntityType="ErucaCRMModel.LeadSource" Width="1.5" PointX="9.48374469833623" PointY="20.048129508294224" IsExpanded="false" />
+        <EntityTypeShape EntityType="ErucaCRMModel.LeadStatu" Width="1.5" PointX="4.4899930714117335" PointY="11.672349518012418" />
+        <EntityTypeShape EntityType="ErucaCRMModel.ModulePermission" Width="1.5" PointX="1" PointY="13.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Permission" Width="1.5" PointX="1.5399626016337251" PointY="9.5548806831030557" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Product" Width="1.5" PointX="13.25" PointY="21" />
+        <EntityTypeShape EntityType="ErucaCRMModel.ProductContactAssociation" Width="1.5" PointX="5.2573652142925962" PointY="2.6523714673949272" />
+        <EntityTypeShape EntityType="ErucaCRMModel.ProductInvoiceAssociation" Width="1.5" PointX="12.75" PointY="17.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="ErucaCRMModel.ProductLeadAssociation" Width="1.5" PointX="2.6542102520606528" PointY="4.7584572903618483" />
+        <EntityTypeShape EntityType="ErucaCRMModel.ProductQuoteAssociation" Width="1.5" PointX="6" PointY="27.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="ErucaCRMModel.ProductSalesOrderAssociation" Width="1.5" PointX="9.5394656404570988" PointY="5.3201647276618358" />
+        <EntityTypeShape EntityType="ErucaCRMModel.ProfilePermission" Width="1.5" PointX="11.368635954041331" PointY="11.050470729847659" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Quote" Width="1.5" PointX="0.43930774947596141" PointY="25.459739011460794" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Role" Width="1.5" PointX="10" PointY="30" IsExpanded="false" />
+        <EntityTypeShape EntityType="ErucaCRMModel.sysdiagram" Width="1.5" PointX="4.305852711343138" PointY="5.7716886428052971" />
+        <EntityTypeShape EntityType="ErucaCRMModel.TaskStatu" Width="1.5" PointX="11.829708728859997" PointY="12.718134275040653" />
+        <EntityTypeShape EntityType="ErucaCRMModel.TimeZone" Width="1.5" PointX="1.0715270010156217" PointY="6.7196245373783752" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Address_Country" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Invoice_Address" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Invoice_Address1" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Quote_BillingAddress" />
+        <AssociationConnector Association="ErucaCRMModel.FK_AssociationApplicationPages_ApplicationPage" />
+        <AssociationConnector Association="ErucaCRMModel.FK_AssociationApplicationPages_ApplicationPage1" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ContentApplicationPage_ApplicationPage" />
+        <AssociationConnector Association="ErucaCRMModel.FK_AssociatedProduct_Product" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProductInvoiceAssociation_AssociatedProduct" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProductQuoteAssociation_AssociatedProduct" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProductSalesOrderAssociation_AssociatedProduct" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ContentApplicationPage_CultureInformation" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProductInvoiceAssociation_Invoice" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ModulePermission_Permission" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProfilePermission_ModulePermission" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProductLeadAssociation_Product" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProductQuoteAssociation_Quote" ManuallyRouted="true" >
+          <ConnectorPoint PointX="1.07812675" PointY="33.441630859375" />
+          <ConnectorPoint PointX="1.07812675" PointY="33.504130859375" />
+          <ConnectorPoint PointX="2.0419900977291485" PointY="29.708344100421915" />
+          <ConnectorPoint PointX="2.083009902270851" PointY="29.546804156714057" />
+          <ConnectorPoint PointX="2.093755" PointY="29.50448892626147" />
+          <ConnectorPoint PointX="2.093755" PointY="27.0625" />
+          <ConnectorPoint PointX="2.2447896666666667" PointY="27.0625" />
+          <ConnectorPoint PointX="2.458333333333333" PointY="27.0625" />
+          <ConnectorPoint PointX="2.5729176666666667" PointY="27.0625" />
+          <ConnectorPoint PointX="2.7395843333333336" PointY="27.0625" />
+          <ConnectorPoint PointX="2.9322946666666665" PointY="27.0625" />
+          <ConnectorPoint PointX="3.0989613333333335" PointY="27.0625" />
+          <ConnectorPoint PointX="3.5714871144071432" PointY="27.0625" />
+          <ConnectorPoint PointX="3.73815378107381" PointY="27.0625" />
+          <ConnectorPoint PointX="5.90625" PointY="27.0625" />
+          <ConnectorPoint PointX="5.90625" PointY="28.075" />
+          <ConnectorPoint PointX="6" PointY="28.075" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="ErucaCRMModel.FileAttachment" Width="1.5" PointX="11.625" PointY="30.5" IsExpanded="false" />
+        <AssociationConnector Association="ErucaCRMModel.FK_FileAttachments_CaseMessageBoard" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Rating" Width="1.5" PointX="11.375" PointY="28.75" IsExpanded="false" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Quote_ShippingAddress" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Company" Width="1.5" PointX="5.7951790568396353" PointY="22.973758276074079" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Designation_Company" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Rating_Company" />
+        <EntityTypeShape EntityType="ErucaCRMModel.CompanyPlan" Width="1.5" PointX="7.035580753830998" PointY="18.832671427555695" IsExpanded="false" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Module" Width="1.5" PointX="8.8877972275427517" PointY="26.165510130191926" IsExpanded="false" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Plan" Width="1.5" PointX="3" PointY="16.125" />
+        <EntityTypeShape EntityType="ErucaCRMModel.PlanModule" Width="1.5" PointX="2.5519451715759676" PointY="15.26820219274061" IsExpanded="false" />
+        <AssociationConnector Association="ErucaCRMModel.FK_CompanyPlan_CompanyPlan" />
+        <AssociationConnector Association="ErucaCRMModel.FK_CompanyPlan_Plan" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ModulePermission_Module" />
+        <AssociationConnector Association="ErucaCRMModel.FK_PlanModule_Module" />
+        <AssociationConnector Association="ErucaCRMModel.FK_PlanModule_Plan" />
+        <EntityTypeShape EntityType="ErucaCRMModel.AccountContact" Width="1.5" PointX="3.1358153592496252" PointY="10.988333587994955" />
+        <EntityTypeShape EntityType="ErucaCRMModel.LeadContact" Width="1.5" PointX="15.5" PointY="20.5" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Account" Width="1.5" PointX="3.7793607859776177" PointY="27.103819695815361" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Account_AccountType" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Account_Address" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Account_Address1" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Account_Company" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Account_Industry" />
+        <AssociationConnector Association="ErucaCRMModel.FK_AccountContacts_Account" />
+        <AssociationConnector Association="ErucaCRMModel.FK_AccountTag_Account" />
+        <AssociationConnector Association="ErucaCRMModel.FK_FileAttachments_Account" />
+        <EntityTypeShape EntityType="ErucaCRMModel.LeadTag" Width="1.5" PointX="2.9272561627101417" PointY="1.1155369286963421" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Contact" Width="1.5" PointX="3.8464635088324846" PointY="3.4618310050395462" />
+        <AssociationConnector Association="ErucaCRMModel.FK_AccountContacts_Contact" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Contact_Address" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ContactTag_Contact" />
+        <AssociationConnector Association="ErucaCRMModel.FK_FileAttachments_Contact" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Invoice_Contact" />
+        <AssociationConnector Association="ErucaCRMModel.FK_LeadContact_Contact" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProductContactAssociation_Contact" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Quote_Contact" />
+        <EntityTypeShape EntityType="ErucaCRMModel.User" Width="1.5" PointX="9.5842751942501749" PointY="24.880346280001266" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Account_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_User_Adress" />
+        <AssociationConnector Association="ErucaCRMModel.FK_CaseMessageBoard_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_User_Company" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Contact_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_User_CultureInformation" />
+        <AssociationConnector Association="ErucaCRMModel.FK_FileAttachments_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Invoice_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Module_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Module_User1" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Product_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProfilePermission_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProfilePermission_User1" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Quote_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_User_Role" />
+        <AssociationConnector Association="ErucaCRMModel.FK_User_TimeZone" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Stage" Width="1.5" PointX="8.0945961885594748" PointY="11.638582100923443" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Stage_Company" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Stage_Rating" />
+        <EntityTypeShape EntityType="ErucaCRMModel.AccountCase" Width="1.5" PointX="11.62991977465801" PointY="21.108887056405138" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Profile" Width="1.5" PointX="6.9936013440571738" PointY="12.583117625016309" />
+        <EntityTypeShape EntityType="ErucaCRMModel.SalesOrder" Width="1.5" PointX="2.0043568788116595" PointY="18.300649413047662" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Tag" Width="1.5" PointX="3.4025669858802887" PointY="6.2077613948880517" />
+        <AssociationConnector Association="ErucaCRMModel.FK_AccountCase_Account" />
+        <AssociationConnector Association="ErucaCRMModel.FK_SalesOrder_Account" />
+        <AssociationConnector Association="ErucaCRMModel.FK_AccountCase_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_CaseMessageBoard_AccountCase" />
+        <AssociationConnector Association="ErucaCRMModel.FK_FileAttachments_AccountCase" />
+        <AssociationConnector Association="ErucaCRMModel.FK_AccountTag_Tag" />
+        <AssociationConnector Association="ErucaCRMModel.FK_SalesOrder_Address" />
+        <AssociationConnector Association="ErucaCRMModel.FK_SalesOrder_Address1" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Profile_Company" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Tag_Company" />
+        <AssociationConnector Association="ErucaCRMModel.FK_SalesOrder_Contact" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ContactTag_Tag" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Invoice_SalesOrder" />
+        <AssociationConnector Association="ErucaCRMModel.FK_LeadTag_Tag" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProductSalesOrderAssociation_SalesOrder" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Profile_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Profile_User1" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProfilePermission_Profile" />
+        <AssociationConnector Association="ErucaCRMModel.FK_User_Profile" />
+        <AssociationConnector Association="ErucaCRMModel.FK_SalesOrder_Quote" />
+        <AssociationConnector Association="ErucaCRMModel.FK_SalesOrder_User" />
+        <EntityTypeShape EntityType="ErucaCRMModel.Lead" Width="1.5" PointX="4.507408615437992" PointY="21.114188621339476" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Lead_Account" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Lead_Address" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Lead_Contact" />
+        <AssociationConnector Association="ErucaCRMModel.FK_FileAttachments_Lead" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Lead_Industry" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Invoice_Lead" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Lead_LeadSource" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Lead_LeadStatus" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Lead_Rating" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Lead_Stage" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Lead_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_LeadContact_Lead" />
+        <AssociationConnector Association="ErucaCRMModel.FK_LeadTag_Lead" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProductLeadAssociation_Lead" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Quote_Lead" />
+        <AssociationConnector Association="ErucaCRMModel.FK_ProductContactAssociation_Product" />
+        <EntityTypeShape EntityType="ErucaCRMModel.LeadEmailNotification" Width="1.5" PointX="9.5776680081978753" PointY="6.0298092840378219" />
+        <EntityTypeShape EntityType="ErucaCRMModel.UserSetting" Width="1.5" PointX="10.101225032518258" PointY="5.6579914864422713" />
+        <AssociationConnector Association="ErucaCRMModel.FK_UserID_UserSettings" />
+        <EntityTypeShape EntityType="ErucaCRMModel.LeadAudit" Width="1.5" PointX="11.177147799719659" PointY="12.636919757647869" />
+        <AssociationConnector Association="ErucaCRMModel.FK_LeadAudit_Lead" />
+        <AssociationConnector Association="ErucaCRMModel.FK_LeadAudit_Rating" />
+        <AssociationConnector Association="ErucaCRMModel.FK_LeadAudit_Stage" />
+        <EntityTypeShape EntityType="ErucaCRMModel.TaskItem" Width="1.5" PointX="8.4723669721150614" PointY="9.72596109366322" />
+        <AssociationConnector Association="ErucaCRMModel.FK_FileAttachments_FileAttachments" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Task_Module1" />
+        <AssociationConnector Association="ErucaCRMModel.FK_Task_User" />
+        <AssociationConnector Association="ErucaCRMModel.FK_TaskItem_TaskStatus" />
+        <EntityTypeShape EntityType="ErucaCRMModel.GlobalSetting" Width="1.5" PointX="4.3702942693467692" PointY="30.30267020980952" />
+        <EntityTypeShape EntityType="ErucaCRMModel.RealTimeNotificationConnection" Width="1.5" PointX="6.8501044525066881" PointY="6.1388627915358462" />
+        <AssociationConnector Association="ErucaCRMModel.FK_RealTimeNotificationConnection_Company" />
+        <AssociationConnector Association="ErucaCRMModel.FK_RealTimeConnection_User" />
+        <EntityTypeShape EntityType="ErucaCRMModel.LeadComment" Width="1.5" PointX="3.1852294277331" PointY="28.49443511501627" />
+        <AssociationConnector Association="ErucaCRMModel.FK_LeadComment_Lead" />
+        <AssociationConnector Association="ErucaCRMModel.FK_LeadComment_User" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

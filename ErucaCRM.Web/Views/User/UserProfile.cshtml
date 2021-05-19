@@ -1,0 +1,100 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.UserProfileVM
+@{
+    ViewBag.Title = "ErucaCRM | Profile";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.UserProfileView.js")" type="text/javascript"></script>
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.UserProfileView.pageLoad();
+
+}
+
+@if (!Model.IsCurrentUser)
+{
+    @section SideMenuCss
+{<style>
+    .wrapper-inner { border-left: 1px solid #B6B6B6; width: 88%; padding-left: 10px; overflow: hidden; }
+        /*.sidemenu {   position: fixed; min-height:600px;}*/
+        /*.wrapper-inner { border-left: 1px solid #B6B6B6; margin-left: 230px; padding-left: 10px;overflow: hidden; }*/
+        #SideMenu-Configuration { display: block; }
+        #SideMenu-Configuration a[href*='UserList'] { background: #0798BC; color: #ffffff; }
+ </style>
+        @* <style>
+            .sidemenutd { display: block; }
+            .inner-body .wrapper-inner { max-width: 980px; }
+            #SideMenu-Configuration { display: block; }
+                #SideMenu-Configuration a[href*='UserList'] { background: #fff; color: #17B5F0; }
+        </style>*@
+    }
+   <div class="gridspace">
+    <h2>@Html.CultureSpecificDisplay(model => model.PageHeaderManage)</h2>
+   </div>
+}
+else
+{
+   <div class="gridspace">
+    <h2>@Html.CultureSpecificDisplay(model => model.PageHeaderMyAccount)</h2></div>
+   
+    <div class="hidden" id="ChangePasswordSection">
+        <div class="popup" style="height: 290px;">
+            <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+            <center><h2 class="_usrHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderChangePassword)</h2></center>
+
+            <div class="floatleft " style="width: 90%">
+                <center>  <span id="spanMessage" class="error" > </span></center>
+                <div>
+                    <div class="profile">
+                        <div class="control-group">
+                            <div class="display-label">@Html.CultureSpecificDisplay(model => model.PageLabels.CurrentPassword)</div>
+                            <div class="display-field" style="width: 60%;">
+                                <input id="TextBoxCurrentPassword" class="input-text" type="password" maxlength="50" />
+                            </div>
+
+
+                        </div>
+                        <div class="control-group">
+                            <div class="display-label">@Html.CultureSpecificDisplay(model => model.PageLabels.NewPassword)</div>
+                            <div class="display-field" style="width: 60%">
+                                <input id="TextBoxNewPassword" class="input-text" type="password" minlength="6" onblur="viewModel.CheckMinLen(this);" />
+                            </div>
+
+
+                        </div>
+                        <div class="control-group">
+                            <div class="display-label">@Html.CultureSpecificDisplay(model => model.PageLabels.ConfirmPassword)</div>
+                            <div class="display-field" style="width: 60%">
+                          <input id="TextBoxConfirmPassword" type="password" class="input-text" maxlength="50" />
+                            </div>
+
+
+                        </div>
+                        <div class="control-group">
+                            <div class="display-label">&nbsp;</div>
+                            <div class="display-field" style="width: 52%">
+
+                                <input type="button" id="ButtonChangePassword" class="button small purple _change" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonChangePassword)" />
+                                <input type="button" class="button small purple _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+@Html.Partial("UserProfileDetailPartial", Model)
+
+
+
+

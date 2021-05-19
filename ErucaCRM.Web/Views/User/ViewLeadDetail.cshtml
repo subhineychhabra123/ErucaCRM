@@ -1,0 +1,475 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.LeadVM
+@{
+    ViewBag.Title = "ErucaCRM | Lead";
+  
+}
+<div id="formleadDetails" class="_leadDetails">
+
+    <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.ViewLead.js")" type="text/javascript"></script>
+
+    <script>ErucaCRM.User.ViewLead.pageLoad();</script>
+
+    <h2>@Html.CultureSpecificDisplay(model => model.PageHeaderDetail)<span class="floatright">
+    </span>
+    </h2>
+    <script type="text/javascript">
+    </script>
+    <script type="text/html" id="TemplateLeadHistory">
+        <tr data-bind="attr: { id: StageName }">
+            <td>
+                <div data-bind="text: StageName"></div>
+            </td>
+            <td class="text-align-left">
+                <div data-bind="text: Amount"></div>
+            </td>
+            <td class="text-align-left">
+                <div data-bind="text: Proability"></div>
+            </td>
+            <td class="text-align-left">
+                <div data-bind="text: ExpectedRevenue"></div>
+            </td>
+            <td class="text-align-left">
+                <div data-bind="text: ClosingDate"></div>
+            </td>
+            <td class="text-align-left">
+                <div data-bind="text: Duration"></div>
+            </td>
+            <td class="text-align-left">
+                <div data-bind="text: FromDate"></div>
+            </td>
+        </tr>
+    </script>
+
+
+    <div class="_IsLastStage IsLastStage">
+        <span class="button small" style="color: white;"><a class="_leadstatus" data-LeadStatus="@((int)ErucaCRM.Utility.Enums.LeadStatus.CloseWin)">Win</a></span>
+        <span class="button small"><a class="_leadstatus" data-LeadStatus="@((int)ErucaCRM.Utility.Enums.LeadStatus.CloseLost)">Lost</a></span>
+    </div>
+
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div>
+        @{
+            if (Model.Rating.Icons != null && Model.Rating.Icons != "")
+            {
+                var SingleRatingpath = "/Content/images/" + Model.Rating.Icons + ".png";     
+             if (Model.Stage.IsLastStage.HasValue == false || Model.Stage.IsLastStage.Value == false)
+             {
+                <div class="_SingleRating SingleRating">
+                <div class="stars _stars" data-Rating="@Model.Rating.RatingId">
+                    <img class="ratingicon" src="@SingleRatingpath"/>
+                </div>
+            </div>
+        }else{ <div class="SingleRating">
+                <div class="stars" data-Rating="@Model.Rating.RatingId">
+                    <img class="ratingicon" src="@SingleRatingpath"/>
+                </div>
+            </div>}
+            <span class="header-revenue floatright  ">Excepted Revenue:<span id="ExpectedRevenueAmount">@Model.ExpectedRevenue</span></span>
+            }
+            else
+            {
+            <span class="header-revenue floatright  ">Excepted Revenue:<span id="ExpectedRevenueAmount">@Model.ExpectedRevenue</span></span>
+            }          
+               
+            }
+        <div class="infoheader-popup">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderLeadInfo)</span>
+
+        </div>
+        <div class="_leadId">
+            @Html.HiddenFor(model => model.LeadId)
+            @Html.HiddenFor(model => model.StageId)
+             @Html.HiddenFor(model => model.FinalStageId)
+              @Html.HiddenFor(model => model.Title)
+             @Html.HiddenFor(model => model.Amount)
+        </div>
+
+        <div class="floatleft leadInfo">
+
+
+            <div class="profile">
+                <div class="control-group-popup">
+                    <div class="display-label-popup">
+                        @Html.CultureSpecificLabel(model => model.Title)
+                    </div>
+                    <div class="display-field-popup">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.Title)
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile">
+                <div class="control-group-popup">
+                    <div class="display-label-popup">
+                        @Html.CultureSpecificLabel(model => model.LeadOwnerId)
+                    </div>
+                    <div class="display-field-popup">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.User.Name)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile">
+                <div class="control-group-popup">
+                    <div class="display-label-popup">
+
+                        @Html.CultureSpecificLabel(model => model.LeadCompanyName)
+                    </div>
+                    <div class="display-field-popup">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.LeadCompanyName)
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="profile">
+                <div class="control-group-popup">
+                    <div class="display-label-popup">
+                        @Html.CultureSpecificLabel(model => model.Amount)
+                    </div>
+                    <div class="display-field-popup">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.Amount)
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="floatleft leadInfo">
+            <div class="profile">
+
+
+
+                <div class="control-group-popup">
+                    <div class="display-label-popup">
+                        @Html.CultureSpecificLabel(model => model.IndustryId)
+                    </div>
+                    <div class="display-field-popup">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.Industry.IndustryName)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group-popup">
+                    <div class="display-label-popup">
+                        @Html.CultureSpecificLabel(model => model.LeadSourceId)
+                    </div>
+                    <div class="display-field-popup">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.LeadSource.LeadSourceName)
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group-popup">
+                    <div class="display-label-popup">
+                        @Html.CultureSpecificLabel(model => model.LeadStatusId)
+                    </div>
+                    <div class="display-field-popup">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.LeadStatus.LeadStatusName)
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="side-buttons">
+            @if (Model.Stage.IsLastStage.HasValue == false || Model.Stage.IsLastStage.Value == false)
+            {
+                <a data-leadId='@ViewBag.LeadId' data-permission="@string.Concat(Constants.MODULE_LEAD, Constants.PERMISSION_EDIT)" class="button _editLead">Edit</a>
+                if (Model.Stage.IsInitialStage.HasValue == false || Model.Stage.IsInitialStage.Value == false)
+                {
+<div>  
+                  <a class="button small _OpenReatingPop" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonRating)</a><div class="_RatingPopup RatingPopup">
+                        <span class="rightarrow"></span>
+                        <a href="javascript:void(0);" class="close-Popup-RatingPop _close-Popup-RatingPop button small">Cancel</a>
+                        @foreach (var item1 in Model.RatingList)
+                        {
+                            var path = "/Content/images/" + item1.Icons + ".png";
+<div class="stars _stars" data-Rating="@item1.RatingId" data-ratingconstant="@item1.RatingConstant" data-ExpectedRevenue="@item1.ExpectedRevenuePercentage">
+                                <img  src="@path"/>
+                            </div>
+                        }
+                </div>
+                </div>
+                }
+
+                <div>
+                    <a class="button small _OpenMoveStagePop" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonMoveStage)</a>
+                    <div class="_MoveStagePopup MoveStagePopup">
+                        <span class="rightarrow"></span>
+                        Move To Stage: @Html.DropDownList("Stages", new SelectList(ViewBag.Stages, "StageId", "StageName", ViewBag.LeadStageId), new { @class = "dropdown _stagedropdown" })
+                        <div><a class="button small movebtn _movebtn floatleft">Move</a><a href="javascript:void(0);" class="close-Popup-Movestage _close-Popup-Movestage button small floatright">Cancel</a></div>
+                    </div>
+                </div>
+          
+                <a class="_adddoc button  small permissionbased" data-permission="DocumentsPermissionsCreateDocument" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonAddNewDocument)</a>
+
+                <a id="btnAddProduct" class="button small purple" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddProduct)</a>
+
+                <a id="btnAddActivity"  class="button small permissionbased" data-permission="@string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_CREATE)" href="/User/taskitem?mod=Lead&val_encrypted=@ViewBag.LeadID" class="button small purple  floatright">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddActivity)</a>
+                <a id="btnAddContact" class=" button small permissionbased"   data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_CREATE)" href="/User/AddContact?id_encrypted=@ViewBag.LeadID&mode=Lead" class="button small purple  floatright">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddContact)</a>
+            }
+        </div>
+
+        <div class="floatleft LeadHistory">
+            <div class="infoheader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderLeadHistory)</div>
+            <table class="History-table">
+                <tr>
+                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderStage)</th>
+                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderAmount)</th>
+                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderProbability)</th>
+                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderExpectedRevenue)</th>
+                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderClosingDate)</th>
+                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderStageDuration)</th>
+                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderModifiedTime)</th>
+                </tr>
+                <tbody id="LeadHistoryData" data-bind="template: { name: 'TemplateLeadHistory', foreach: LeadHistoryList }"></tbody>
+
+            </table>
+            <div id="Pager"></div>
+        </div>
+
+        <div class="control-group-popup">
+            <div class="infoheader-popup">
+                <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderDescription)</span>
+            </div>
+            <div class="floatleft">
+                <div class="profile">
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                            @Html.CultureSpecificLabel(model => model.Description)
+                        </div>
+                        <div class="display-field-popup">
+                            <div class="display-value">
+                                @Html.DisplayFor(model => model.Description)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="control-group-popup">
+            <div class="infoheader-popup">
+                <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachments)</span>
+            </div>
+            <div class="rellistbL"></div>
+
+            <div id="LeadDocs" class="_Attachments">
+                @foreach (var item in Model.FileAttachments)
+                {  
+                    <div class="attachment-thumbnail">
+                        <a class="attachment-thumbnail-preview js-real-link " title="ContentManagement.cshtml" target="_blank" href="#">
+                            @item.DocumentName.@item.DocumentPath.Split('.')[1]
+
+
+                        </a>
+                        <p class="attachment-thumbnail-details ">
+                            @item.DocumentName
+                            <span class="attachment-thumbnail-details-options">
+                                <a class="icon-sm  light attachment-thumbnail-details-options-item download" target="_blank" href="@ErucaCRM.Utility.Constants.LEAD_DOCS_PATH@item.DocumentPath" title="Download"></a>
+
+                                <span docid="@item.DocumentId" class="icon-sm  light attachment-thumbnail-details-options-item attachment-thumbnail-details-options-item-delete _deleteLeadDocs" title="Delete">X</span>
+                            </span>
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="infoheader">
+                <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderProducts)</span>
+            </div>
+            <div class="rellistbL">
+                <table id="leadProducts">
+                    <tr>
+                        <th class="w50px"></th>
+                        <th class="text-align-left">@Html.CultureSpecificDisplay(model => model.GridHeaders.ProductName)
+                        </th>
+                        <th class="text-align-left">@Html.CultureSpecificDisplay(model => model.GridHeaders.ProductCode)
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.ProductLeadAssociations)
+                    {
+                        <tr id="row_@item.ProductId">
+                            <td>
+                                <a data-productid="@item.ProductId" href="javascript:void(0)" class="addpro _removeProduct">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonRemoveProduct)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.ProductName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.ProductCode)
+                            </td>
+                        </tr>
+                    }
+                    <tbody data-bind="template: { name: 'tmplAssociatedProducts', foreach: AssociatedProductsModels }"></tbody>
+                </table>
+
+            </div>
+
+
+        </div>
+        <div class="control-group">
+            <div class="infoheader">
+                <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderContacts)</span>
+            </div>
+            <div class="rellistbL">
+                <table id="leadContacts">
+                    <tr>
+
+                        <th class="text-align-left">@Html.CultureSpecificDisplay(model => model.GridHeaders.ContactName)
+                        </th>
+                        <th class="text-align-left">@Html.CultureSpecificDisplay(model => model.GridHeaders.Email)
+                        </th>
+
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.LeadContact)
+                    {
+                        <tr id="row_@item.Contact.ContactId">
+
+                            <td>
+                                <a  class="floatleft marR25px"    href="@Url.Action("ContactView", "User", new { id_encrypted = item.ContactId })"  >@Html.DisplayFor(modelItem => item.Contact.ContactName)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Contact.EmailAddress)
+                            </td>
+                            <td>
+                                <a  class="floatleft marR25px permissionbased"   data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_EDIT)"  href="@Url.Action("EditContact", "User", new { id_encrypted = item.Contact.ContactId, leadId = @Model.LeadId })" >@Html.CultureSpecificDisplay(model => model.ButtonEdit) </a>
+                                <a data-contactId="@item.Contact.ContactId" data-leadId="@Model.LeadId"  class="_deleteContact " data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_DELETE)"  href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonDelete) </a>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+            </div>
+
+
+        </div>
+        <div class="control-group">
+            <div class="infoheader ">
+                <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderActivities)</span>
+            </div>
+            <div class="rellistbL">
+            </div>
+            <div style="clear: both; margin-bottom: 5px;"></div>
+
+            <div class="_roleselector">
+                @Html.Partial("TasksPartial", new ErucaCRM.Web.ViewModels.TaskItemVM())
+            </div>
+
+            <div class="hidden _FileUploadSection" id="FileUploadSection">
+                <div class="popup" style="overflow:hidden">
+                    <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+                    <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachFile)</h2></center>
+                    <center><span class="error"></span></center>
+                    <div class="floatleft " style="margin-left: 70px; width: 70%">
+                        <div >
+                            <div id="fileuploader">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonUpload)</div>
+                        </div>
+                        <div class="buttonbottomcontainer clear-both">
+                            <input type="button" class="button small purple _attachDoc" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAttach)" />
+                            <input type="button" class="button small purple _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="hidden _AddProductSection" id="AddProductSection">
+                <div class="popup">
+                    <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+                    <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAddProduct)</h2></center>
+
+
+                    <a id="btnAddNewProduct" class="button small purple floatright" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddProduct)</a>
+
+                    <table id="allProducts">
+                        <tr>
+                            <th class="w30px"></th>
+                            <th class="text-align-left">@Html.CultureSpecificDisplay(model => model.GridHeaders.ProductName)
+                            </th>
+                            <th class="text-align-left">@Html.CultureSpecificDisplay(model => model.GridHeaders.ProductCode)
+                            </th>
+                        </tr>
+                        @foreach (var item in Model.AllProducts)
+                        {
+                            <tr id="row_@item.ProductId">
+                                <td>
+                                    <a class="addpro _addProduct" data-productid="@item.ProductId" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAssociateProduct)</a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductCode)
+                                </td>
+                            </tr>
+                        }
+                        <tbody data-bind="template: { name: 'tmplAllProducts', foreach: AllProductsModels }"></tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="hidden _addNewProductSection" id="addNewProductSection">
+                <div class="popup">
+                    <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+                    @*  @{Html.RenderPartial("_AddProduct", new ErucaCRM.Web.ViewModels.ProductVM());}*@
+                    @{Html.RenderAction("AddProduct", "User");}
+                </div>
+
+            </div>
+
+            <script type="text/html" id="tmplAssociatedProducts">
+                <tr data-bind="attr: { id: RowId }">
+                    <td>
+                        <a data-bind="click: function () { viewLeadModel.RemoveProduct(ProductId); }" href="javascript:void(0)" class="addpro _removeProduct">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonRemoveProduct)</a>
+                    </td>
+                    <td class="text-align-left">
+                        <div data-bind="text: ProductName"></div>
+                    </td>
+                    <td class="text-align-left">
+                        <div data-bind="text: ProductCode"></div>
+                    </td>
+                </tr>
+            </script>
+            <script type="text/html" id="tmplAllProducts">
+                <tr data-bind="attr: { id: RowId }">
+                    <td>
+                        <a data-bind="click: function () { viewLeadModel.AddProduct(ProductId); }" href="javascript:void(0)" class="addpro _addProduct">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAssociateProduct)</a>
+                    </td>
+                    <td class="text-align-left">
+                        <div data-bind="text: ProductName"></div>
+                    </td>
+                    <td class="text-align-left">
+                        <div data-bind="text: ProductCode"></div>
+                    </td>
+                </tr>
+            </script>
+        </div>
+    </div>
+    <div class="_EditLead hidden" style="position: relative;">
+    </div>
+</div>
+
+

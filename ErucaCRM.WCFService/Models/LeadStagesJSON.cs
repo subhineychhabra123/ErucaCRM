@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Web;
+
+namespace ErucaCRM.WCFService.Models
+{
+    [DataContract]
+    public class LeadStagesJSON
+    {
+        [DataMember]
+        public string StageName { get; set; }
+        [DataMember]
+        public List<Lead> Leads { get; set; }
+        [DataMember]
+        public int StageId { get; set; }
+        [DataMember]
+        public int TotalRecords { get; set; }
+        public string StageOrder { get; set; }
+        [DataMember]
+        public bool IsInitialStage { get; set; }
+        [DataMember]
+        public bool IsLastStage { get; set; }
+
+
+    }
+}

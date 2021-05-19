@@ -1,0 +1,43 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+@model  ErucaCRM.Web.ViewModels.TaskItemVM
+<script type="text/html" id="tmplTaskItems">
+    <tr>
+        <td>
+            <a  data-bind="    attr: { href: DetailUrl, title: Subject }"><span data-bind="    text: Subject"></span></a>
+        </td>
+        <td>
+            <div data-bind=" text: DueDate"></div>
+        </td>
+        <td>
+            <div data-bind="text: TaskStatus"></div>
+        </td>
+        <td>
+            <div data-bind=" text: Priority"></div>
+        </td>
+        <td>         
+            <a  class="permissionbased floatleft" title="@Html.CultureSpecificDisplay(model=>model.PageButtons.EditButtonToolTip)"  data-permission="@string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_EDIT)" data-bind="attr: { href: EditUrl, TaskId: TaskId }, ifnot: IsLeadsLastStage">@Html.CultureSpecificDisplay(model => model.ButtonEdit)</a>
+            <a  class="permissionbased _deleteTask floatleft mrgndelete" data-helpkey="deletetask" data-helppos="top-right"  title="@Html.CultureSpecificDisplay(model=>model.PageButtons.DeleteButtonToolTip)"  data-permission="@string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_DELETE)" data-bind="attr: { TaskId: TaskId },ifnot: IsLeadsLastStage, click: function () { viewModel.DeleteTaskItem(this) }" >@Html.CultureSpecificDisplay(model => model.ButtonDelete)</a>
+        </td>
+    </tr>
+</script>
+<table class="tablecontainer">
+    <tr>
+        <th data-sortby="Subject"  class="_common"  data-sortdir="A" ><a class="link"> @Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderSubject)</a>
+        </th>
+        <th data-sortby="DueDate" class="_common" data-sortdir="A"><a class="link">@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderDueDate)</a>
+        </th> 
+        <th data-sortby="Status" class="_common" data-sortdir="A"><a class="link">@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderStatus)</a>
+        </th>
+        <th data-sortby="Priority"  class="_common" data-sortdir="A"><a class="link">@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderPriorityName)</a>
+        </th>
+        <th class="actionHeader"></th>
+    </tr>
+    <tbody id="TaskItemListData" data-bind="template: { name: 'tmplTaskItems', foreach: TaskItemList }" ></tbody>
+</table>
+
+<div class="_noTaskItemsFound text-align-center tabletd" id="divNoRecord">
+
+</div>
+<div class="clear pad5px"></div>
+<div class="_taskItemsPager" id="Pager"></div>

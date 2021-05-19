@@ -1,0 +1,912 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+
+@model ErucaCRM.Web.ViewModels.AccountVM
+
+@{
+    ViewBag.Title = "AccountDetail";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+<style>
+    .tablecontainer { margin: 0 0 0;}
+</style>
+@section scripts {
+    @*  <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.ViewAccount.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/ErucaCRM.Framework/ErucaCRM.Framework.DateFormat.js")" type="text/ecmascript"></script>*@
+    @Scripts.Render("~/bundles/AccountDetailScripts")
+
+}
+@section ReadyScripts
+{
+ErucaCRM.User.ViewAccount.pageLoad();
+
+}
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderDetail)</h2>
+<div class="buttoncontainer">
+    @if (Request.QueryString["returnurl"] != null)
+    {
+        @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonBack).ToString(), "Accounts", null, new { @class = "button purple small _back" })
+    }
+    else
+    {
+        @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonBack).ToString(), "Accounts", null, new { @class = "button purple small" })
+    }
+    @if (User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_ACCOUNT, ErucaCRM.Utility.Constants.PERMISSION_EDIT)))
+    {
+        @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonEdit).ToString(), "Account", new { @Id_encrypted = Model.AccountId }, new { @class = "button purple small" })
+    }
+</div>
+<div class="clear pad5px"></div>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+  
+    <div class="control-group">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAccountInfo)</span>
+        </div>
+        <div class="_accountId">
+            @Html.HiddenFor(model => model.AccountId)
+
+        </div>
+
+        <div class="floatleft  w50pc">
+            <div class="profile">
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.AccountOwner)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.AccountOwner)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.AccountName)
+                    </div>
+                    <div class="display-field floatleft">
+                        <div class="display-value ">
+                            @Html.DisplayFor(model => model.AccountName)
+                        </div>
+
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(Convert.ToString(Model.ParentAccountId)))
+                {
+                    <div class="control-group">
+                        <div class="display-label">
+                            @Html.CultureSpecificLabel(model => model.ParentAccountName)
+                        </div>
+                        <div class="display-field">
+                            <div class="display-value">
+                                @Html.DisplayFor(model => model.ParentAccountName)
+                            </div>
+
+                        </div>
+                    </div>
+                }
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.AccountLocation)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.AccountLocation)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Industry.IndustryName)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.Industry.IndustryName)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.AnnualRevenue)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.AnnualRevenue)
+                        </div>
+
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.NumberOfEmployee)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.NumberOfEmployee)
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="floatleft">
+            <div class="profile">
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.AccountType)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.AccountTypeName)
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Phone)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.Phone)
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Fax)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.Fax)
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Mobile)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.Mobile)
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.AccountWebsite)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.AccountWebsite)
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+    
+    <div class="control-group">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderTags)</span>
+        </div>
+
+
+        <div class="control-group">
+            <div class="tagmain">
+
+
+
+                @if (Model.AccountTags != null && Model.AccountTags.Count() > 0)
+                {
+                    foreach (var item in Model.AccountTags)
+                    { 
+                    <div class="tag tagwidth" tagid="@item.TagId" tagname="@item.TagModel.TagName">
+                        <div>
+                            <div class='tagname'><a href="/User/TagDetail/@item.TagId.Encrypt()"><span>@item.TagModel.TagName  </span></a></div>
+                        </div>
+                    </div>
+                       
+                 
+                    }
+                }
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="control-group">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAddressInfo)</span>
+        </div>
+    </div>
+    <div class="floatleft  w50pc">
+
+        <div class="profile">
+
+            <div class="control-group">
+
+
+
+
+                <div class="infosubheader">
+                    <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderShippingAddressInfo)</span>
+                </div>
+
+
+
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.Street, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address.Street)
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.City, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address.City)
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.State, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address.State, Model.AddressModuleName)
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.Zipcode, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address.Zipcode, Model.AddressModuleName)
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.Country.CountryName, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address.Country.CountryName, Model.AddressModuleName)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="floatleft  w50pc">
+
+        <div class="profile">
+            <div class="control-group">
+
+
+
+
+                <div class="infosubheader">
+                    <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderBillingAddressInfo)</span>
+                </div>
+
+
+
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.Street, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+
+                        @Html.DisplayFor(model => model.Address1.Street)
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.City, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address1.City)
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.State, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address1.State, Model.AddressModuleName)
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.Zipcode, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address1.Zipcode, Model.AddressModuleName)
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.Country.CountryName, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address1.Country.CountryName, Model.AddressModuleName)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderDescription)</span>
+        </div>
+        <div class="floatleft">
+            <div class="profile">
+                <div class="control-group">
+                    @*<div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Description)
+                    </div>*@
+                   @* <div class="display-field">
+                        <div class="display-value">
+                           
+                        </div>
+                    </div>*@
+                     @Html.DisplayFor(model => model.Description)
+                </div>
+            </div>
+        </div>
+
+    </div>
+                if (User.IsInRole(string.Concat(Constants.MODULE_DOCUMENT, Constants.PERMISSION_VIEWDOCUMENT)))
+                {
+    <div class="control-group">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachments)</span>
+        </div>
+        <div class="rellistbL buttoncontainer"><a class="_adddoc button  pad0px floatright permissionbased" data-permission="@string.Concat(Constants.MODULE_DOCUMENT, Constants.PERMISSION_CREATEDOCUMENT)" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonAddNewDocument)</a></div>
+
+        <table id="AccountDocs" class="tablecontainer _roleselector">          
+                <tr>
+                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.FileName)
+                    </th>
+                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.AttachedBy)
+                    </th>
+                    <th class="actionHeader"></th>
+                </tr>
+
+                @foreach (var item in Model.FileAttachments)
+                {
+                    <tr class="_dataRow">
+                        <td>
+                            @Html.HiddenFor(modelItem => item.DocumentId)
+                            <a href="@item.DocumentPath" class="_docPath" target="_blank">@Html.DisplayFor(modelItem => item.DocumentName)</a>
+                        </td>
+                        <td>
+                            <a href="/User/UserProfile/@item.User.UserId"  >@Html.DisplayFor(modelItem => item.User.Name)</a>
+                        </td>
+                        <td>
+                            @if(User.IsInRole(string.Concat(Constants.MODULE_DOCUMENT,Constants.PERMISSION_DELETEDOCUMENT)))
+                            {
+                            <a docid="@item.DocumentId" docpath="@item.DocumentPath" class="_deleteDoc" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonDelete)</a>
+                            }
+                        </td>
+                    </tr>
+                
+                }
+                <tr id="trNoAccountDocRecord" class="_NoAccountDocRecord" style="display: none">
+                    <td colspan="3"></td>
+                </tr>
+          
+             <tbody id="docAcoountList" data-bind="template: { name: 'tmpldDocAccountList', foreach: AccountDocList }">
+
+            </tbody>
+        </table>
+    </div>
+                }
+    <div class="control-group permissionbased" data-permission="@string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_VIEW)">
+        <div class="infoheader ">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderActivities)</span>
+        </div>
+        <div class="rellistbL buttoncontainer">
+
+            @*      <a id="btnAddActivity" class="button pad0px permissionbased floatright _backtohere"  data-permission="@string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_CREATE)" href="/User/taskitem?mod=Account&val_encrypted=@ViewBag.AccountId" >@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddActivity)</a>*@
+            <a id="btnAddActivity" class="button pad0px permissionbased floatright _backtohere"  data-permission="@string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_CREATE)" href="/User/taskitem?mod=Account&val_encrypted=@ViewBag.AccountId" >@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddActivity)</a>
+        </div>
+        <div style="clear: both; margin-bottom: -1px;"></div>
+
+        <div class="_roleselector">
+            @Html.Partial("TasksPartial", new ErucaCRM.Web.ViewModels.TaskItemVM())
+        </div>
+
+
+    </div>
+    <div class="control-group permissionbased" data-permission="@string.Concat(Constants.MODULE_SALESORDER, Constants.PERMISSION_VIEW)">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderSalesOrders)</span>
+        </div>
+        <div class="rellistbL permissionbased buttoncontainer" data-permission="@string.Concat(Constants.MODULE_SALESORDER, Constants.PERMISSION_CREATE)">
+            @Html.ActionLink(Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddSalesOrder).ToString(), "CreateSalesOrder/" + @Model.AccountId, "User", null, new { @class = "_addSalesOrder button small purple floatright _backtohere" })
+        </div>
+
+        <table id="AccountSaleOrders" class="tablecontainer">
+            <tr>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.Subject)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GrandTotal)
+                </th>
+                <th class="actionHeader"></th>
+            </tr>
+            <tbody>
+                @foreach (var item in Model.SalesOrders)
+                {
+                    <tr class="_dataRow">
+                        <td>
+                            @Html.HiddenFor(modelItem => item.SalesOrderId)
+
+                            <a      href="@Url.Action("ViewSalesOrderDetail", "User", new { id_encrypted = item.SalesOrderId })"  href="javascript:void(0)">@Html.DisplayFor(modelItem => item.Subject)</a>
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GrandTotal)
+                        </td>
+                        <td>
+                            <a  class="floatleft marR25px permissionbased _backtohere"   data-permission="@string.Concat(Constants.MODULE_SALESORDER, Constants.PERMISSION_EDIT)"  href="@Url.Action("EditSalesOrder", "User", new { id_encrypted = item.SalesOrderId, AccountId = @Model.AccountId })" >@Html.CultureSpecificDisplay(model => model.ButtonEdit) </a>
+                            <a salesorderid="@item.SalesOrderId"  class="_deleteSalesOrder permissionbased" data-permission="@string.Concat(Constants.MODULE_SALESORDER, Constants.PERMISSION_DELETE)"  href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonDelete) </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tr id="trNoAccountSalesOrderRecord" class="_NoAccountSalesOrderRecord" style="display: none">
+                <td colspan="3"></td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="control-group permissionbased _roleselector" data-permission="@string.Concat(Constants.MODULE_LEAD, Constants.PERMISSION_VIEW)">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAssociatedLeadInfo)</span>
+        </div>
+        <div class="rellistbL permissionbased buttoncontainer " data-permission="@String.Concat(ErucaCRM.Utility.Constants.MODULE_LEAD, ErucaCRM
+        .Utility.Constants.PERMISSION_CREATE)">
+            <a class="button small purple floatright _addLead" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddAssociatedLead).ToString()</a>
+        </div>
+
+        <table id="AssociateAccountLeads" class="tablecontainer">
+            <tr>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderLeadName)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderLeadOwner)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderLeadCreatedOn)
+                </th>
+                <th></th>
+
+            </tr>
+            <tbody>
+                @foreach (var item in Model.Leads)
+                {
+                    <tr class="_dataRow">
+                        <td>
+                            @Html.HiddenFor(modelItem => item.LeadId)
+
+                            <a   href='@Url.Action("Leads", "User")#@item.LeadId'>@Html.DisplayFor(modelItem => item.Title)</a>
+
+                        </td>
+                        <td>
+                            <a     href="@Url.Action("UserProfile", "User", new { id_encrypted = item.User.UserId })"  >@Html.DisplayFor(modelItem => item.User.Name)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LeadCreatedTime)
+                        </td>
+                        <td>
+                            @*                              <a  class="floatleft marR25px permissionbased"   data-permission="@string.Concat(Constants.MODULE_LEAD, Constants.PERMISSION_EDIT)"  href="@Url.Action("EditLead", "User", new { id_encrypted = item.LeadId })" >@Html.CultureSpecificDisplay(model => model.ButtonEdit) </a>*@
+                            <a data-leadId="@item.LeadId" data-stageId="@item.StageId"   class="_deleteLead permissionbased" data-permission="@string.Concat(Constants.MODULE_LEAD, Constants.PERMISSION_DELETE)"  href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonDelete) </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tbody data-bind="template: { name: 'tmplLeadAccount', foreach: AccountLeadList }"></tbody>
+            <tr id="trNoAssociateAccountLeadRecord" class="_NoAssociateAccountLeadRecord" style="display: none">
+                <td colspan="3"></td>
+            </tr>
+
+        </table>
+    </div>
+  
+    <div class="control-group permissionbased _roleselector" data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_VIEW)">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageHeaderAddContact)</span>
+        </div>
+        <div class="rellistbL buttoncontainer">
+            <a class="button floatright" data-bind="click: AddContact">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddContact)</a>
+        </div>
+
+        <table id="AccountContacts" class="tablecontainer">
+            <tr>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.Contact)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.PhoneNo)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.Email)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.ContactCompany)
+                </th>
+                <th class="actionHeader"></th>
+            </tr>
+            <tbody>
+                @foreach (var item in Model.AccountContact)
+                {
+                    <tr class="_dataRow">
+                        <td>
+                            @Html.HiddenFor(modelItem => item.Contact.ContactId)
+
+                            <a    href="@Url.Action("ContactView", "User", new { id_encrypted = item.Contact.ContactId })"  >@Html.DisplayFor(modelItem => item.Contact.ContactName)</a>
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contact.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contact.EmailAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contact.ContactCompanyName)
+                        </td>
+                        <td>
+                            <a  class="floatleft marR25px permissionbased"   data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_EDIT)"  href="@Url.Action("EditContact", "User", new { id_encrypted = item.Contact.ContactId, AccountId = @Model.AccountId })" >@Html.CultureSpecificDisplay(model => model.ButtonEdit) </a>
+                            <a contactId="@item.Contact.ContactId" accountId="@Model.AccountId"  class="_deleteContact permissionbased" data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_DELETE)"  href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonDelete) </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tbody data-bind="template: { name: 'tmplAccountContact', foreach: AccountContactList }"></tbody>
+            <tr id="trNoAccountContactsRecord" class="_NoAccountContactsRecord" style="display: none">
+                <td colspan="5"></td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="control-group permissionbased"  data-permission="@string.Concat(Constants.MODULE_CASE, Constants.PERMISSION_VIEW)">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderCases)</span>
+        </div>
+        <div class="rellistbL  permissionbased buttoncontainer" data-permission="@string.Concat(Constants.MODULE_CASE, Constants.PERMISSION_CREATE)">
+
+            @Html.ActionLink(Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddCase).ToString(), "AccountCase", "User", new { accountId_encrypted = Model.AccountId, redirectedTo = ErucaCRM.Utility.Constants.MODULE_ACCOUNT }, new { @class = "_backtohere _addSalesOrder button floatright" })
+        </div>
+
+
+        <table id="AccountCases" class="tablecontainer">
+            <tr>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.CaseNumber)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.Subject)
+
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.CaseOrigin)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.PriorityName)
+                </th>
+                <th class="actionHeader"></th>
+            </tr>
+            <tbody>
+                @foreach (var item in Model.AccountCases)
+                {
+                    <tr class="_dataRow">
+                        <td>
+                            @Html.HiddenFor(modelItem => item.AccountCaseId)
+
+                            <a   href="@Url.Action("AccountCaseDetail", "User", new { Id_encrypted = item.AccountCaseId })"  >@Html.DisplayFor(modelItem => item.CaseNumber)</a>
+
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.Subject)
+
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.CaseOrigin)
+
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.PriorityName)
+
+                        </td>
+                        <td>
+
+                            <a  class="floatleft marR25px permissionbased _backtohere"   data-permission="@string.Concat(Constants.MODULE_CASE, Constants.PERMISSION_EDIT)"  href="@Url.Action("AccountCase", "User", new { accountId_encrypted = @Model.AccountId, caseId_encrypted = item.AccountCaseId })" >@Html.CultureSpecificDisplay(model => model.ButtonEdit) </a>
+                            <a caseId="@item.AccountCaseId" accountId="@Model.AccountId"  class="_deleteCase permissionbased" data-permission="@string.Concat(Constants.MODULE_CASE, Constants.PERMISSION_DELETE)"  href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonDelete) </a>
+
+                        </td>
+                    </tr>
+                }
+
+                <tr id="trNoAccountCaseRecord" class="_NoAccountCaseRecord" style="display: none">
+                    <td colspan="5"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+            
+    <div class="hidden" id="FileUploadSection">
+        <div class="popup overflowhidden">
+            <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+            <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachFile)</h2></center>
+            <center><span class="error"></span></center>
+            <div class="floatleft " style="margin-left: 70px; width: 70%">
+                <div>
+                    <div id="fileuploader">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonUpload)</div>
+                </div>
+                <div class="buttonbottomcontainer clear-both buttoncontainer">
+                    <input type="button" class="button small purple _attachDoc" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAttach)" />
+                    <input type="button" class="button small purple _close marnone" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+}
+
+
+<div class="hidden _AddContactSection " id="AddContactSection">
+    <div class="popup large">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAddContact)</h2></center>
+
+        <div class="rellistbL  permissionbased buttoncontainer marpx" data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_CREATE)">
+            <a id="btnAddNewProduct" class="button small purple _commonButton floatright " href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddContact)</a>
+
+        </div>
+
+        <table id="allContact " class="tablecontainer">
+            <tr>
+                <th class="w20px"></th>
+                <th class="w30pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.ContactName)
+                </th>
+                <th class="w30pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.PhoneNo)
+                </th>
+                <th class="w30pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.ContactEmail)
+                </th>
+            </tr>
+            <tbody data-bind="template: { name: 'tmplAllContact', foreach: ContactList }"></tbody>
+        </table>
+        <div id="AllContactPager" class="footermar"></div>
+        <div class="control-group">
+            <div class="display-field">
+            </div>
+            <div class="display-field floatright buttoncontainer marpx">
+                <a id="btnSaveNewContact" class="button small purple floatleft marB5px " data-bind="click: function () { $data.AssociateContact() }" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonSave)</a>
+                </div>
+            <div class="display-field floatright buttoncontainer marpx">
+                <a id="btnCancel" class="button small purple floatleft _close marB5px " href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonCancel)</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="hidden _addNewContactSection" id="addNewContactSection">
+    <div class="popup">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAddNewContact)</h2></center>
+
+        <div class="profile">
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificDisplay(model => model.PageLabels.ContactName)
+                </div>
+                <div class="display-field">
+                    <div>
+                        @Html.TextBox("ContactName", "", new { maxlength = 50 })
+                    </div>
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificDisplay(model => model.PageLabels.ContactEmail)
+                </div>
+                <div class="display-field">
+
+                    @Html.TextBox("ContactEmail", "", new { maxlength = 100 })
+
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-field">
+                </div>
+                <div class="display-field">
+                    <a id="btnSaveNewContact" class="button small purple floatleft " data-bind="click: function () { $data.SaveNewContact() }" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonSave)</a>
+                    &nbsp; <a id="btnCancel" class="button small purple floatleft _close " href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonCancel)</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="hidden _addNewLeadPopup" id="addNewLeadPopup">
+    <div class="popup">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAddNewLead)</h2></center>
+
+        <div class="profile">
+            <div class="control-group">
+                <div class="display-label">
+                    &nbsp
+                </div>
+                <div class="display-field" style="text-align: left">
+                    <div>
+                        <span class="error-role _error"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificDisplay(model => model.PageLabels.Title)
+                </div>
+                <div class="display-field">
+                    <div>
+                        @Html.TextBox("LeadTitle", "", new { maxlength = 50 })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                </div>
+                <div class="display-field">
+
+                    <a class="button small purple floatleft  _saveLead" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonSave).ToString()  </a>
+
+                    <a class="button small purple floatleft _close marL5px" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonCancel).ToString()  </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+<script type="text/html" id="tmplAllContact">
+    <tr data-bind="attr: { id: RowId }">
+        <td>
+            @*  <a data-bind="click:function () { viewModel.AssociateProduct()}"} class="_addContact">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAssociateProduct)</a> *@
+            <input type="checkbox" class="_contact" data-bind="attr: { ContactId: ContactId }" />
+        </td>
+        <td class="w30pc">
+            <div class="wrapword" data-bind="text: ContactName"></div>
+        </td>
+        <td class="w30pc">
+            <div class="wrapword" data-bind="text: PhoneNo"></div>
+        </td>
+        <td class="w30pc">
+            <div class="wrapword" data-bind="text: ContactEmail"></div>
+        </td>
+    </tr>
+</script>
+
+
+
+<script type="text/html" id="tmplAccountContact">
+    <tr data-bind="attr: { id: RowId }">
+
+        <td>
+            <div data-bind="text: ContactName"></div>
+        </td>
+        <td>
+            <div data-bind="text: PhoneNo"></div>
+        </td>
+        <td>
+            <div data-bind="text: ContactEmail"></div>
+        </td>
+        <td></td>
+        <td>
+            <a class="floatleft marR25px permissionbased" data-bind="attr: { href: EditContact }" data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_EDIT)">@Html.CultureSpecificDisplay(model => model.ButtonEdit) </a>
+            <a data-bind="click: function () { viewModel.DeleteContact(ContactId, AccountId, $data) }, attr: { ContactId: ContactId, AccountId: AccountId }" class="_deleteContact permissionbased " data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_DELETE)" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonDelete) </a>
+        </td>
+
+    </tr>
+</script>
+
+<script type="text/html" id="tmplLeadAccount">
+    <tr data-bind="attr: { id: RowId }">
+
+        <td>
+            <div data-bind="text: Title"></div>
+        </td>
+        <td>
+            <div data-bind="text: LeadOwnerName"></div>
+        </td>
+        <td>
+            <div data-bind="text: CreatedOn"></div>
+        </td>
+
+        <td>
+            @*          <a  class="floatleft marR25px" data-bind="attr: {href:EditLead}"   data-permission="@string.Concat(Constants.MODULE_LEAD, Constants.PERMISSION_EDIT)">@Html.CultureSpecificDisplay(model => model.ButtonEdit) </a>*@
+            <a data-bind="click: function () { viewModel.DeleteLead(this) }" class="_deleteLead permissionbased" data-permission="@string.Concat(Constants.MODULE_LEAD, Constants.PERMISSION_DELETE)"  href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonDelete) </a>
+        </td>
+
+    </tr>
+</script>
+
+
+<script id="tmpldDocAccountList" type="text/html">
+    <tr>
+        <td>
+            <input type="hidden" id="DocumentId" data-bind="Value: DocId" />
+             <a data-bind="attr: { href: FilePath }" target="_blank">
+                 <span data-bind="text: FileName"></span>
+             </a>
+        </td>
+        <td>
+            <a data-bind="attr: { href: UserProfileLink }">
+                 <span data-bind="text: AttachedBy"></span>
+            </a>
+         
+         </td>
+        <td>
+            <a  data-bind="click: function () { viewModel.RemoveDoc(this) }" class="permissionbased" data-permission="@string.Concat(Constants.MODULE_DOCUMENT,Constants.PERMISSION_DELETEDOCUMENT)" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonDelete)</a>
+        </td>
+    </tr>
+</script>

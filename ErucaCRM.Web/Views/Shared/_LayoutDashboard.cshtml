@@ -1,0 +1,217 @@
+@using ErucaCRM.Utility;
+@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Web.ViewModels;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @*  <meta charset="utf-8" />*@
+    <title>@ViewBag.Title</title>
+    <link rel="icon" href="@Url.Content("~/content/images/favicon.ico")"/>
+    @*      <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/main.css")" />*@
+    <link href="@Url.Content("~/Content/css/jquery-ui.css")" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    @Scripts.Render("~/bundles/BootstrapScripts")
+    @Styles.Render("~/Content/BootstrapCss")
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Scripts/ErucaCRM.Messages/@CommonFunctions.GetCurrentCulturScript()?t=@DateTime.Today.Ticks"></script>
+    <script type="text/javascript" src="~/Scripts/ErucaCRM.Helps/@CommonFunctions.GetCurrentCulturScript()?t=@DateTime.Today.Ticks"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            $("#popupboxes").click(function () {
+                $(this).hide();
+            })
+            ErucaCRM.Framework.Core.Config.CultureSpecificDateFormat = "@HtmlHelpers.jQueryDatePickerFormat()";
+        })
+
+    </script>
+
+
+</head>
+
+<body>
+    @RenderSection("SideMenuCss", false)
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ErucaCRM.User.InnerLayout.pageLoad();
+
+            @RenderSection("ReadyScripts", false)
+
+        });
+
+    </script>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top headerbg navbartop" role="navigation" style="margin-bottom: 0">
+            <div class="pull-left">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="Dashboardmenuimg" href="/User/Home">
+                        <img  class="img-responsive" src="~/Content/images/@CommonFunctions.GetCurrentCulturMenuLogo()" alt="" title=""></a>
+                    <a class="Dashboardmenuimglogo" href="/User/Home">
+                        <img class="img-responsive" src="/Content/images/logo-1.png" alt="" title=""></a>
+                </div>
+            </div>
+            <!-- /.navbar-header -->
+            <div class="pull-right navbarmenu">
+                <ul class="nav navbar-top-links navbar-right Dashboardheader">
+                    <li>
+                        <a href="javascript:void(0)" class="sign helpimg _helpclick">
+                            <img class="img-responsive" src="~/Content/images/help.png" class="profilehelpimg" title="Help" /></a>
+                        <!-- /.dropdown-messages -->
+                    </li>
+                    <!-- /.dropdown -->
+                    <li>
+                        <div>
+                            <a href="@(User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_USER, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) ? "/user/UserList/" : User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_ROLE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) ? "/user/Roles/" : User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_PROFILE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) ? "/user/ProfileType/" : User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_STAGE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) ? "/user/Stages/" : "#")" class="settingicon logoup" title="@LayoutInner.SettingToolTip" style="@(User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_USER, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) || User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_ROLE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) || User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_PROFILE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) || User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_STAGE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) ? "display:block" : "display:none")" ></a>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="javascript:void(0)" class="sign usrpic _usrpic">
+                            <img src="@ErucaCRM.Utility.SessionManagement.LoggedInUser.ProfileImageUrl?t=@DateTime.Now.Ticks" class="profileimg _profileimg" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'" title="@ErucaCRM.Utility.SessionManagement.LoggedInUser.FullName"/></a>
+                    </li>
+                    <li>
+                        <div class="btn-group _btn-group">
+                            <div>
+                                <a class="msg-container clearfix">
+                                    <span class="notification-thumb">
+                                        <img src="~/Content/images/Bell.png" alt="" title="@LayoutInnerMenus.BellTitle"></span>
+                                </a>
+                            </div>
+                            <a style="display: inline;">
+                                <i class="icon-globe _icon-globe" style="display: none"><span class="notify-tip _notify-tip"></span></i>
+                            </a>
+
+
+                        </div>
+                        <div id="NotificationList">
+                            <div id="NoNotification">
+                            </div>
+                        </div>
+                    </li>
+                    <!-- /.dropdown -->
+                </ul>
+            </div>
+            <!-- /.navbar-top-links -->
+        </nav>
+        <div class="navbar-default sidebar headerbg headermenu" role="navigation">
+            <div class="sidebar-nav navbar-collapse collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="permissionbased" data-permission="@string.Concat(Constants.MODULE_REPORTSANDDASHBOARDS, Constants.PERMISSION_VIEW)">
+                        <a class="active permissionbased dashanchor" href="@Url.Action("Dashboard", "User")">
+                            <img src="@Url.Content("~/Content/images/dashboardclock-logo.png")" alt="" title="">
+                            @LayoutInnerMenus.Dashboard</a>
+                    </li>
+                    <li class="permissionbased" data-permission="@string.Concat(Constants.MODULE_LEAD, Constants.PERMISSION_VIEW)">
+                        <a href="@Url.Action("Leads", "User")">
+                            <img src="@Url.Content("~/Content/images/leads-menu.png")" class="img-small-20" alt="" title="" >
+                            @LayoutInnerMenus.Leads</a>
+                    </li>
+                    @if (User.IsInRole(string.Concat(Constants.MODULE_ACCOUNT, Constants.PERMISSION_VIEW)) || User.IsInRole(string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_VIEW)))
+                    {  
+                        <li>
+                            <a href="@Url.Action("Accounts", "User")">
+                                <img src="@Url.Content("~/Content/images/account.png")" alt="" title="">
+                                @LayoutInnerMenus.Accounts </a>
+                        </li>
+                    }
+                    <li class="permissionbased" data-permission="@string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_VIEW)">
+                        <a href="@Url.Action("Tasks", "User")">
+                            <img src="@Url.Content("~/Content/images/activities.png")" alt="" title=""  >
+                            @LayoutInnerMenus.Activities</a>
+                    </li>
+                    <li class="permissionbased" data-permission="@string.Concat(Constants.MODULE_TAG, Constants.PERMISSION_VIEW)">
+                        <a href="@Url.Action("Tags", "User")">
+                            <img src="@Url.Content("~/Content/images/Tags.png")" class="img-small-20" alt="" title="" >@LayoutInnerMenus.Tags </a>
+                    </li>
+                    <li class="permissionbased" data-permission="@string.Concat(Constants.MODULE_SALESORDER, Constants.PERMISSION_VIEW)">
+                        <a href="@Url.Action("SaleOrders", "User")">
+                            <img src="@Url.Content("~/Content/images/sale.png")" alt="" title="">
+                            @LayoutInnerMenus.SaleOrders</a>
+                    </li>
+                    <li  class="permissionbased" data-permission="@string.Concat(Constants.MODULE_CASE, Constants.PERMISSION_VIEW)">
+                        <a href="@Url.Action("AccountCases", "User")">
+                            <img src="@Url.Content("~/Content/images/cases.png")" alt="" title="">@LayoutInnerMenus.Cases</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+        <div class="right-section">
+            <div id="divaccount" class="divaccount _popup _divaccount">
+                <span class="userarrow"></span>
+                <div class="userimage pull-left">
+                    <img src="@ErucaCRM.Utility.SessionManagement.LoggedInUser.ProfileImageUrl?t=@DateTime.Now.Ticks"  class="profileimg" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'" />
+                </div>
+                <div class="userprofiledetail">
+
+                    <div class="userprofilename">@ErucaCRM.Utility.SessionManagement.LoggedInUser.FullName</div>
+                    <div class="userprofileemail">@ErucaCRM.Utility.SessionManagement.LoggedInUser.EmailId</div>
+                    <div class="userprofilemyaccount">
+                        @Html.ActionLink(LayoutInner.MyAccount, "MyProfile", new { @id_encrypted = @ErucaCRM.Utility.SessionManagement.LoggedInUser.UserId.Encrypt() })
+                    </div>
+                    <div class="userprofilelogout">
+                        @using (Html.BeginForm("LogOut", "User", FormMethod.Post, new { id = "logoutForm", @class = "floatright" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <a href="javascript:document.getElementById('logoutForm').submit()" class="button purple small">@LayoutInner.SignOut</a>
+                              
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="page-wrapper">
+            <div class="InnerContentContainer">
+                @RenderBody()
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+    </div>
+
+    <div id="viewAllInnerRecentActivites">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close _close _resetUrl" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="_roleHeader modal-title" style="text-transform: none">Recent Activities</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="_viewallRecent">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default _loadmoreinner pull-left" data-target="#myModal">Load More..</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+    </div>
+
+</body>
+</html>

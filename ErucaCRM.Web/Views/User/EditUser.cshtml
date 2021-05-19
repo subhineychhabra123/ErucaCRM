@@ -1,0 +1,176 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.UserVM
+
+@{
+    ViewBag.Title = "ErucaCRM | EditUser";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+<script src="~/Scripts/file-upload/jquery.fileupload.js"></script>
+<script src="~/Scripts/file-upload/jquery.fileupload-ui.js"></script>
+<script src="~/Scripts/file-upload/jquery.iframe-transport.js"></script>
+<script src="~/Scripts/UploadImage.js"></script>
+
+@section SideMenuCss
+{<style>
+        .sidemenu {   position: fixed;}        
+        .wrapper-inner { border-left: 1px solid #B6B6B6; margin-left: 230px; padding-left: 10px; overflow: hidden;}
+        #SideMenu-Configuration { display: block; }
+            #SideMenu-Configuration a[href*='UserList'] { background: #fff; color: #17B5F0; }
+    </style>
+    @*<style>
+        .sidemenutd { display:block}
+        .inner-body .wrapper-inner { max-width:980px}
+        #SideMenu-Configuration { display:block }
+        #SideMenu-Configuration a[href*='UserList'] { background: #fff; color: #800080; }
+    </style>*@
+}
+
+@using (Html.BeginForm("EditUser", "User", FormMethod.Post, new { @id = "userID" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+         
+    <div class="floatleft">
+        <div class="profile">
+            @Html.HiddenFor(model => model.UserId)
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.FirstName)
+                </div>
+                <div class="display-field">
+                    @Html.TextBoxFor(model => model.FirstName, new { @class = "input-text", maxlength = 50})
+                    @Html.ValidationMessageFor(model => model.FirstName)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.LastName)
+                </div>
+                <div class="display-field">
+                    @Html.TextBoxFor(model => model.LastName, new {maxlength = 100, @class = "input-text" })
+                    @Html.ValidationMessageFor(model => model.LastName)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.EmailId)
+                </div>
+                <div class="display-field">
+                    @Html.TextBoxFor(model => model.EmailId, new {  maxlength = 50,@class = "input-text" })
+                    @Html.ValidationMessageFor(model => model.EmailId)
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.Street)
+                </div>
+                <div class="display-field">
+                    @Html.TextAreaFor(model => model.Address.Street, new {maxlength = 250, @class = "input-text" })
+                    @Html.ValidationMessageFor(model => model.Address.Street)
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.City)
+                </div>
+                <div class="display-field">
+                    @Html.TextBoxFor(model => model.Address.City, new { @class = "input-text",maxlength = 50 })
+                    @Html.ValidationMessageFor(model => model.Address.City)
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.Zipcode)
+                </div>
+                <div class="display-field">
+                    @Html.TextBoxFor(model => model.Address.Zipcode, new { @class = "input-text",maxlength = 20  })
+                    @Html.ValidationMessageFor(model => model.Address.Zipcode)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.Country.CountryName)
+                </div>
+                <div class="display-field">
+                    @(Html.DropDownListFor(model => model.Address.Country.CountryId, new SelectList(ViewBag.CountryList, "CountryId", "CountryName"), new { @class = "CssCountryCode phoneCode dropdown" }))
+                    @Html.ValidationMessageFor(model => model.Address.Country.CountryName)
+                </div>
+            </div>
+
+                   <div class="control-group">
+
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.CultureInformationId)
+                </div>
+                <span class="requiredfield"></span>
+                <div class="display-field">
+                    @(Html.DropDownListFor(model => model.CultureInformationId, new SelectList(ViewBag.CultureInformationList, "CultureInformationId", "CultureName","1"), new { @class = "CssCountryCode phoneCode dropdown" }))
+
+                </div>
+            </div>
+                <div class="control-group">
+
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.TimeZoneId)
+                </div>
+                <span class="requiredfield"></span>
+                <div class="display-field">
+                    @(Html.DropDownListFor(model => model.TimeZoneId, new SelectList(ViewBag.TimeZoneList, "TimeZoneId", "TimeZoneDescription"), new { @class = "CssCountryCode phoneCode dropdown" }))
+
+                </div>
+            </div>
+
+              <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Role.RoleName)
+                </div>
+                <div class="display-field">
+                    @(Html.DropDownListFor(model => model.Role.RoleId, new SelectList(ViewBag.DesignationList, "RoleId", "RoleName"), new { @class = "CssCountryCode phoneCode dropdown" }))
+                    @Html.ValidationMessageFor(model =>model.Role.RoleName)
+                </div>
+            </div>
+              <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Profile.ProfileName)
+                </div>
+                <div class="display-field">
+                    @(Html.DropDownListFor(model => model.Profile.ProfileId, new SelectList(ViewBag.ProfileList, "ProfileId", "ProfileName"), new { @class = "CssCountryCode phoneCode dropdown" }))
+                    @Html.ValidationMessageFor(model =>model.Profile.ProfileName)
+                </div>
+            </div>
+
+
+        @*    <div class="editor-label">
+                @Html.CultureSpecificLabel(model => model.ImageURL)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.ImageURL)
+                @Html.ValidationMessageFor(model => model.ImageURL)
+            </div>*@
+
+
+            <div class="control-group">
+                <div class="display-label">
+                </div>
+                <div class="display-field">
+                    <input type="submit" class="button purple medium" value="Save" />
+                    @Html.ActionLink("Back to Users", "UserList", new { /* id=Model.PrimaryKey */ }, new { @class = "link-purple" })
+                </div>
+
+            </div>
+        </div>
+    </div>
+       <div class="floatleft profile-image">
+         <img id="ProfileImage"  src="~/Uploads/users/@Model.ImageURL"  /> 
+    <input type="file" name="fileupload" id="fileupload" />
+   
+</div> 
+}
+
+

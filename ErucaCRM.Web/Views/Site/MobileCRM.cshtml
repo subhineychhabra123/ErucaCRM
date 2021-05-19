@@ -1,0 +1,15 @@
+﻿@model ErucaCRM.Web.ViewModels.PublicMobileCRMPageVM 
+@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+
+@{  
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ErucaCRM Mobile Apps for Managers and Sales team";
+}
+<div class="cultureContentblock">
+    <div class="cultureContent">
+
+        @Html.Raw(string.IsNullOrWhiteSpace(Model.CultureSpecificPageContent) ? "" : Model.CultureSpecificPageContent.Replace("&nbsp;", " "))
+    </div>
+</div>
+

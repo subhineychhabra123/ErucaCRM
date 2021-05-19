@@ -1,0 +1,454 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using Recaptcha.Web.Mvc;
+@using ErucaCRM.Utility;
+
+
+@model ErucaCRM.Web.ViewModels.RegistrationVM
+
+
+@*<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />*@
+@*    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/main.css")" />*@
+
+
+
+
+
+
+@using (Html.BeginForm("Register", "Site"))
+{
+    @Html.AntiForgeryToken()
+ 
+    <div class="back-bg-register">
+        <div class="main-div">
+            <div class="left-Register">
+                <a href="@Url.Content("/Home")">
+                    <img src="/content/images/@CommonFunctions.GetCurrentCulturLoginLogo()" alt="" title="logo"></a>
+            </div>
+            <div class="LogIn1">
+                <p>@Html.CultureSpecificDisplay(model => model.PageHeaderCreate, "Registration")</p>
+                @if (ViewBag.success == false)
+                {
+                    <div class="registration-error">
+                        @Html.ValidationSummary(true)
+                        @Html.Raw(ViewBag.StatusMessage)
+                    </div>
+                    <br />
+                }
+                @Html.ValidationMessageFor(m => m.FirstName)
+                <div class="input-box1">
+                    <img src="/content/images/frist-name.png" class="background-img">
+                    <form>
+                        @Html.TextBoxFor(m => m.FirstName, new {autofocus="", maxlength = 50, @class = "input-text-Registration registerTxtbox", @placeholder = "First Name" })
+
+                    </form>
+                    <div class="clear"></div>
+                </div>
+                @Html.ValidationMessageFor(m => m.LastName)
+                <div class="input-box1">
+                    <img src="/content/images/frist-name.png" class="background-img">
+                    <form>
+
+                        @Html.TextBoxFor(m => m.LastName, new { maxlength = 50, @class = "input-text-Registration registerTxtbox", @placeholder = "Last Name" })
+
+                    </form>
+                    <div class="clear"></div>
+                </div>
+                @Html.ValidationMessageFor(m => m.Company.CompanyName)
+                <div class="input-box1">
+                    <img src="/content/images/company-name.png" class="background-img">
+                    <form>
+
+                        @Html.TextBoxFor(m => m.Company.CompanyName, new { maxlength = 50, @class = "input-text-Registration registerTxtbox", @placeholder = "Company Name" })
+
+                    </form>
+                    <div class="clear"></div>
+                </div>
+                @Html.ValidationMessageFor(m => m.EmailId)
+                <div class="input-box1">
+                    <img src="/content/images/email-id.png" class="background-img">
+                    <form>
+
+                        @Html.TextBoxFor(m => m.EmailId, new { maxlength = 50, @class = "input-text-Registration registerTxtbox", @autocomplete = "off", @placeholder = "Email Id" })
+
+                    </form>
+                    <div class="clear"></div>
+                </div>
+                @Html.ValidationMessageFor(m => m.Password)
+                <div class="input-box1">
+                    <img src="/content/images/password.png" class="background-img">
+                    <form>
+
+                        @Html.PasswordFor(m => m.Password, new { maxlength = 50, @class = "input-text-Registration registerTxtbox", @placeholder = "Password" })
+
+                    </form>
+                    <div class="clear"></div>
+                </div>
+                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                <div class="input-box1">
+                    <img src="/content/images/password.png" class="background-img">
+                    <form>
+
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { maxlength = 50, @class = "input-text-Registration registerTxtbox", @placeholder = "Confirm Password" })
+                    </form>
+                    <div class="clear"></div>
+                </div>
+                <form>
+                    <div class=" registration-error"></div>
+                    @(Html.DropDownListFor(model => model.CultureInformationId, new SelectList(ViewBag.CultureList, "CultureInformationId", "CultureDescription", 0), new { @class = "dropdown" }))
+                </form>
+                <form>
+                    @(Html.DropDownListFor(model => model.TimeZoneId, new SelectList(ViewBag.TimeZoneList, "TimeZoneId", "TimeZoneDescription", 0), new { @class = "dropdown" }))
+                </form>
+                <div class="display-field-registration registration-captcha">@Html.Recaptcha(theme: Recaptcha.Web.RecaptchaTheme.Red)</div>
+                <div class="display-label-registration">&nbsp;</div>
+                <div class="display-field-registration">
+                    <input type="submit" value=" @Html.CultureSpecificDisplay(model => model.PageButtons.ButtonRegister, "Registration")" class="register-left-registration-button" />
+
+                    @Html.ActionLink(@Html.CultureSpecificDisplay(model => model.PageButtons.LinkButtonAlreadyHaveAnAccount, "Registration"), "Login", "Site", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "account" })
+                </div>
+            </div>
+
+            <div class="forword">
+                <span class="account"><a href="@Url.Content("/Register")" class="_register hyperlink register">@Html.CultureSpecificDisplay(model => model.PageButtons.LinkButtonSignUpNow)&nbsp;|</a></span>
+                <span class="password account1">@Html.ActionLink(@Html.CultureSpecificDisplay(model => model.PageButtons.LinkButtonForgotPassword), "ForgotPassword", "Site", null, new { @class = "hyperlink" })</span>
+            </div>
+
+            <div class="clear"></div>
+
+        </div>
+    </div>
+}
+
+
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/OuterLayoutCss.css")" />
+
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+<link href="@Url.Content("~/Content/css/font-awesome/css/font-awesome.css")" rel="stylesheet" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/knockout-3.0.0.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/ErucaCRM.Framework/ErucaCRM.Framework.Core.js")"></script>
+<script type="text/javascript" src="~/Scripts/ErucaCRM.Messages/@CommonFunctions.GetCurrentCulturScript()?t=@DateTime.Today.Ticks"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+@section scripts {
+  @*  <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.AddUser.js")" type="text/javascript"></script>*@
+    
+}
+@section ReadyScripts
+{
+ErucaCRM.User.AddUser.pageLoad()
+   
+   
+
+}
+
+@*@using ErucaCRM.Web.Infrastructure;
+@using Recaptcha.Web.Mvc;
+@model ErucaCRM.Web.ViewModels.RegistrationVM
+@section scripts {
+    <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.AddUser.js")" type="text/javascript"></script>
+}
+@section ReadyScripts
+{
+ErucaCRM.User.AddUser.pageLoad()
+
+}
+
+
+@using (Html.BeginForm("Register", "Site"))
+{
+    @Html.AntiForgeryToken()
+ 
+   
+    <div class="register">
+        <div class="register-left">
+            <h1>@Html.CultureSpecificDisplay(model => model.PageHeaderCreate, "Registration")</h1>
+
+            @if (ViewBag.success == false)
+            {
+                <div class="registration-error">
+                    @Html.ValidationSummary(true)
+                    @Html.Raw(ViewBag.StatusMessage)
+                </div>
+                <br />
+            }
+            <div class="registration-error">@Html.ValidationMessageFor(m => m.FirstName)</div>
+            <div class="display-label-registration">@Html.CultureSpecificDisplay(model => model.PageLabels.FirstName, "Registration")</div>
+
+            <div class="display-field-registration">
+                <div>
+                    @Html.TextBoxFor(m => m.FirstName, new { maxlength = 50, @class = "input-text-Registration" })
+                </div>
+            </div>
+
+            <div class=" registration-error clear">@Html.ValidationMessageFor(m => m.LastName)</div>
+            <div class="display-label-registration">@Html.CultureSpecificDisplay(model => model.PageLabels.LastName, "Registration")</div>
+
+            <div class="display-field-registration">
+                <div>
+@Html.ValidationMessageFor(m => m.LastName)
+                    @Html.TextBoxFor(m => m.LastName, new { maxlength = 50, @class = "input-text-Registration" })
+                </div>
+            </div>
+
+            <div class=" registration-error">@Html.ValidationMessageFor(m => m.Company.CompanyName)</div>
+            <div class="display-label-registration ">
+                @Html.CultureSpecificDisplay(model => model.PageLabels.CompanyName, "Registration")
+            </div>
+            <div class="display-field-registration ">
+
+                <div>
+@Html.ValidationMessageFor(m => m.Company.CompanyName)
+                    @Html.TextBoxFor(m => m.Company.CompanyName, new { maxlength = 50, @class = "input-text-Registration" })
+
+                </div>
+
+            </div>
+
+            <div class=" registration-error">
+                @Html.ValidationMessageFor(m => m.EmailId)
+            </div>
+            <div class="display-label-registration ">
+                @Html.CultureSpecificDisplay(model => model.PageLabels.EmailId, "Registration")
+            </div>
+            <div class="display-field-registration ">
+
+                <div>
+  @Html.ValidationMessageFor(m => m.EmailId)
+                    @Html.TextBoxFor(m => m.EmailId, new { maxlength = 50, @class = "input-text-Registration", @autocomplete = "off" })
+                </div>
+
+
+            </div>
+
+            <div class=" registration-error">@Html.ValidationMessageFor(m => m.Password)</div>
+            <div class="display-label-registration ">
+                @Html.CultureSpecificDisplay(model => model.PageLabels.Password, "Registration")
+            </div>
+            <div class="display-field-registration ">
+
+                <div>
+@Html.ValidationMessageFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password, new { maxlength = 50, @class = "input-text-Registration" })
+
+                </div>
+
+            </div>
+
+            <div class=" registration-error">@Html.ValidationMessageFor(m => m.ConfirmPassword)</div>
+            <div class="display-label-registration floatleft">
+                @Html.CultureSpecificDisplay(model => model.PageLabels.ConfirmPassword, "Registration")
+            </div>
+            <div class="display-field-registration floatleft">
+
+                <div>
+@Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { maxlength = 50, @class = "input-text-Registration" })
+
+                </div>
+
+            </div>
+
+            <div class=" registration-error"></div>
+            <div class="display-label-registration">
+                @Html.CultureSpecificDisplay(model => model.PageLabels.Culture, "Registration")
+            </div>
+            <div class="display-field-registration">
+
+                <div>
+ <div class=" registration-error"></div>
+                    @(Html.DropDownListFor(model => model.CultureInformationId, new SelectList(ViewBag.CultureList, "CultureInformationId", "CultureDescription", 0), new { @class = "dropdown" }))
+                </div>
+
+            </div>
+
+            <div class="clear"></div>
+            <div class="display-label-registration">
+                @Html.CultureSpecificDisplay(model => model.PageLabels.TimeZone, "Registration")
+            </div>
+            <div class="display-field-registration">
+
+                <div>
+                    @(Html.DropDownListFor(model => model.TimeZoneId, new SelectList(ViewBag.TimeZoneList, "TimeZoneId", "TimeZoneDescription", 0), new { @class = "dropdown" }))
+                </div>
+
+            </div>
+
+            <div class="display-field-registration registration-captcha">@Html.Recaptcha(theme: Recaptcha.Web.RecaptchaTheme.Red)</div>
+            <div class="display-label-registration">&nbsp;</div>
+            <div class="display-field-registration">
+                <input type="submit" value=" @Html.CultureSpecificDisplay(model => model.PageButtons.ButtonRegister, "Registration")" class="register-left-registration-button" />
+
+                @Html.ActionLink(@Html.CultureSpecificDisplay(model => model.PageButtons.LinkButtonAlreadyHaveAnAccount, "Registration"), "Login", "Site", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "account" })
+            </div>*@
+
+@*     <label>Last Name</label><input type="text" placeholder="Enter your Last Name" /><br />
+                <label>Company Name</label><input type="text" placeholder="Enter your Company Name" /><br />
+                <label>Email Id</label><input type="text" placeholder="Enter your Email Id" /><br />
+                <label>Password</label><input type="password" placeholder="Enter you Password" /><br />
+                <label>Confirm Password</label><input type="password" placeholder="Enter you Confirm Password" />*@
+@*   <div class="clear"></div>
+        </div>
+        <div class="register-right">
+            <img src="content/images/login-img.png" alt="" title="">
+        </div>
+        <div class="clear"></div>*@
+
+
+@*        <ul class="align-left">
+            <li>
+
+                <div class="control-group-registration">
+                    <div class=" error">@Html.ValidationMessageFor(m => m.FirstName)</div>
+                    <div class="display-label-registration floatleft ">
+                        @Html.CultureSpecificDisplay(model => model.PageLabels.FirstName, "Registration")
+                    </div>
+                    <div class="display-field-registration  floatleft">
+
+                        <div>
+                            @Html.TextBoxFor(m => m.FirstName, new { maxlength = 50, @class = "input-text" })
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </li>
+            <li>
+                <div class="control-group-registration">
+                    <div class=" error">@Html.ValidationMessageFor(m => m.LastName)</div>
+                    <div class="display-label-registration floatleft">
+                        @Html.CultureSpecificDisplay(model => model.PageLabels.LastName, "Registration")
+                    </div>
+                    <div class="display-field-registration floatleft">
+
+                        <div>
+                            @Html.TextBoxFor(m => m.LastName, new { maxlength = 50, @class = "input-text" })
+
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="control-group-registration">
+                    <div class=" error">@Html.ValidationMessageFor(m => m.Company.CompanyName)</div>
+                    <div class="display-label-registration floatleft">
+                        @Html.CultureSpecificDisplay(model => model.PageLabels.CompanyName, "Registration")
+                    </div>
+                    <div class="display-field-registration floatleft">
+
+                        <div>
+
+                            @Html.TextBoxFor(m => m.Company.CompanyName, new { maxlength = 50, @class = "input-text" })
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </li>
+            <li>
+
+                <div class="control-group-registration">
+                    <div class=" error">
+                        @Html.ValidationMessageFor(m => m.EmailId)
+                    </div>
+                    <div class="display-label-registration floatleft">
+                        @Html.CultureSpecificDisplay(model => model.PageLabels.EmailId, "Registration")
+                    </div>
+                    <div class="display-field-registration floatleft">
+
+                        <div>
+                            @Html.TextBoxFor(m => m.EmailId, new { maxlength = 50, @class = "input-text", @autocomplete = "off" })
+                        </div>
+
+
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="control-group-registration">
+                    <div class=" error">@Html.ValidationMessageFor(m => m.Password)</div>
+                    <div class="display-label-registration floatleft">
+                        @Html.CultureSpecificDisplay(model => model.PageLabels.Password, "Registration")
+                    </div>
+                    <div class="display-field-registration floatleft">
+
+                        <div>
+                            @Html.PasswordFor(m => m.Password, new { maxlength = 50, @class = "input-text" })
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </li>
+            <li>
+                <div class="control-group-registration">
+                    <div class=" error">@Html.ValidationMessageFor(m => m.ConfirmPassword)</div>
+                    <div class="display-label-registration floatleft">
+                        @Html.CultureSpecificDisplay(model => model.PageLabels.ConfirmPassword, "Registration")
+                    </div>
+                    <div class="display-field-registration floatleft">
+
+                        <div>
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { maxlength = 50, @class = "input-text" })
+                        </div>
+
+                    </div>
+
+                </div>
+            </li>
+            <li>
+                <div class="control-group-registration">
+                    <div class=" error"></div>
+                    <div class="display-label-registration floatleft">
+                        @Html.CultureSpecificDisplay(model => model.PageLabels.Culture, "Registration")
+                    </div>
+                    <div class="display-field-registration floatleft">
+
+                        <div>
+                            @(Html.DropDownListFor(model => model.CultureInformationId, new SelectList(ViewBag.CultureList, "CultureInformationId", "CultureDescription", 0), new { @class = "dropdown" }))
+                        </div>
+
+                    </div>
+
+                </div>
+            </li>
+            <li>
+                <div class="control-group-registration">
+                    <div class=" error"></div>
+                    <div class="display-label-registration floatleft">
+                        @Html.CultureSpecificDisplay(model => model.PageLabels.TimeZone, "Registration")
+                    </div>
+                    <div class="display-field-registration floatleft">
+
+                        <div>
+                            @(Html.DropDownListFor(model => model.TimeZoneId, new SelectList(ViewBag.TimeZoneList, "TimeZoneId", "TimeZoneDescription", 0), new { @class = "dropdown" }))
+                        </div>
+
+                    </div>
+
+                </div>
+            </li>
+
+            <li>
+                <div class="display-field-registration clear">@Html.Recaptcha(theme: Recaptcha.Web.RecaptchaTheme.Red)</div>
+            </li>
+            <li>
+                <div class="control-group-registration">
+                    <div class="display-label-registration submit ">
+                        <input type="submit" value=" @Html.CultureSpecificDisplay(model => model.PageButtons.ButtonRegister, "Registration")" class="button" />
+                        @Html.ActionLink(@Html.CultureSpecificDisplay(model => model.PageButtons.LinkButtonAlreadyHaveAnAccount, "Registration"), "Login", "Site", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                    </div>
+                </div>
+            </li>
+
+        </ul>*@
+
+@* </div>
+}*@

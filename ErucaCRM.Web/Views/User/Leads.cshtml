@@ -1,0 +1,894 @@
+﻿@model ErucaCRM.Web.ViewModels.LeadVM
+
+@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+
+@{  
+    ViewBag.Title = "ErucaCRM | Leads";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+@section scripts {
+
+    @Scripts.Render("~/bundles/LeadScripts")
+    <script src="~/Scripts/ErucaCRM.Framework/ErucaCRM.Framework.DateFormat.js"></script>
+
+}
+@section ReadyScripts
+{
+ErucaCRM.User.Leads.pageLoad();
+  ErucaCRM.Framework.Common.ApplyHelp("Lead");
+}
+@section SideMenuCss
+{
+    <style>
+        /*.wrapper-inner { margin-left: 2px; margin-right: 0; }*/
+        .wrapper { padding-bottom: 0px; }
+        .wrapper-inner { margin-bottom: 0px; }
+        .leadslayout { margin-top: 0px; }
+        a.disabled { opacity: 0.5; pointer-events: none; cursor: default; }
+        .loadmorecontainer { bottom: 0; float: left; margin-left: 50px; overflow: hidden; padding: 10px; }
+        .tab ul li { background: none; border-radius: 5px 5px 0 0; float: left; margin: 0 6px 0 0; padding: 10px 20px; }
+        #LeadDetail .ui-widget-content { background: url("/Content/images/ui-bg_flat_75_ffffff_40x100.png") repeat-x scroll 50% 50% #ffffff; border: 0 solid #aaaaaa; color: #222222; min-height: 155px!important; }
+    </style>
+
+}
+<script type="text/html" id="StageListTemplate">
+    <div class="stage _droppable _stage " data-bind="attr: { id: StageId, IsLastStage: IsLastStage }">
+        <div class="title floatleft marB5px marT5px" data-bind="text: StageName">
+        </div>
+        <div class="stage-loader _stageloader floatright" data-bind="attr: { loader_id: loaderId }">
+            <img style="width: 25px;" src="/Content/images/loading.gif" />
+        </div>
+        <div class="_roleselector">
+            <div class="addnew permissionbased" data-permission="@string.Concat(Constants.MODULE_LEAD, Constants.PERMISSION_CREATE)" data-bind="if: IsInitialStage">
+                <div class="_addNewLeadSection">
+                    <input class="txt _addnewlead _help" type="text" data-helpkey="addlead" data-helppos="top-left" />
+                    <div class="_addLeadButtons">
+                        <a href="javascript:void(0);" class=" _help _btnAddLead btnAddLead">@Html.CultureSpecificDisplay(model => model.ButtonSave)
+                        </a>
+                        <a href="javascript:void(0);" class="close-Popup _close-Popup btnAddLead">@Html.CultureSpecificDisplay(model => model.ButtonCancel)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="leadlst _leadsContainer" data-bind="attr: { StageId: StageId, id: LeadContainerId }">
+
+            <div data-bind="if: !IsLastStage">
+                <div class="_LeadList LeadsList" data-bind="template: { name: 'LeadListTemplate', foreach: Leads, if: !IsInitialStage }"></div>
+                <div class="_bottomMost clear"></div>
+            </div>
+            <div data-bind="if: IsInitialStage">
+                <div class="_LeadList LeadsList" data-bind="template: { name: 'LeadListinitialstageTemplate', foreach: Leads }, css: { _InitialLeads: IsInitialStage }"></div>
+                <div class="_bottomMost clear"></div>
+            </div>
+            <div data-bind="if: IsLastStage">
+                <div class="_LeadList LeadsList " data-bind="template: { name: 'LeadListTemplateLastStage', foreach: Leads }"></div>
+                <div class="_bottomMost clear"></div>
+            </div>
+            <div data-bind="attr: { StageId: StageId }" class="_loadmorecontainer loadmorecontainer displaynone">
+                <button type="button" class="normal button clear _loadmore loadmore">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonLoadMore)</button>
+            </div>
+        </div>
+
+    </div>
+
+
+</script>
+<script type="text/html" id="LeadListTemplate">
+    <div class="lead word-wrap _draggable" data-bind="attr: { LeadId: LeadId }">
+
+        <div class="leadiconcontainer _leadiconcontainer">
+            <img class=" ratingicon _ratingicon" data-bind="attr: { src: Icons, ratingImageLeadId: LeadId }">
+            @if (User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_LEAD, ErucaCRM.Utility.Constants.PERMISSION_DELETE)))
+            {
+                <a class="deletelead small _deletelead " data-helpkey="deletelead" data-helppos="top-left" data-bind="attr: { LeadId: LeadId, StageId: StageId }" title="Delete Lead"></a>
+            }
+
+        </div>
+        <div class="clear-both"></div>
+        <div class="lead-stage-leaddetailcontainer " data-bind="click: $data.ViewLeadDetail_Click">
+            @*<img class="lead-Owner-Image" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'" data-bind="    attr: { src: LeadOwnerImage, title: LeadOwnerName }" />*@
+
+            <a href="javascript:void(0)" class="_lead lead-Padding" data-bind="    attr: { title: Title, LeadId: LeadId, StageId: StageId }, text: Title"></a>
+            <div data-bind="text: LeadOwnerName" class="owner _owner"></div>
+        </div>
+
+    </div>
+</script>
+<script type="text/html" id="LeadListinitialstageTemplate">
+    <div class="lead word-wrap _draggable" data-bind="attr: { LeadId: LeadId }">
+        <div class="leadiconcontainer _leadiconcontainer">
+            @if (User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_LEAD, ErucaCRM.Utility.Constants.PERMISSION_DELETE)))
+            {
+                <a class="deletelead small _deletelead " data-bind="attr: { LeadId: LeadId, StageId: StageId }" title="Delete Lead"></a>
+            }
+        </div>
+        <div class="clear-both"></div>
+        <div class="lead-stage-leaddetailcontainer" data-bind="click: $data.ViewLeadDetail_Click">
+            <div class="lead-Owner">
+                <a href="javascript:void(0)" class="_lead lead-Padding" data-bind="    attr: { title: Title, LeadId: LeadId, StageId: StageId }, text: Title"></a>
+                <div data-bind="text: LeadOwnerName" class="owner _owner"></div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="LeadListTemplateLastStage">
+    <div class="lead word-wrap" data-bind="attr: { LeadId: LeadId }">
+        <div class="leadiconcontainer">
+            <img class=" ratingicon _ratingicon" data-bind="attr: { src: Icons, ratingImageLeadId: LeadId }">
+        </div>
+        <div class="clear-both"></div>
+        <div class="lead-stage-leaddetailcontainer" data-bind="click: $data.ViewLeadDetail_Click">
+
+            <a href="javascript:void(0)" class="_lead lead-Padding" data-bind="    attr: { title: Title, LeadId: LeadId, StageId: StageId }, text: Title"></a>
+            <div data-bind="text: LeadOwnerName" class="owner _owner"></div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="TagListTemplate">
+    <div style="margin-top: 8px;">
+        <div style="float: left; padding: 5px; margin-top: 5px;">
+            <a class="contacttagname" data-bind="attr: { TagId: TagId, TagName: TagName }, event: { click: function () { viewModel.GetTaggedLeads(this) } }"><span data-bind="    text: TagName"></span></a>
+        </div>
+    </div>
+</script>
+
+<div class="_IsLeadLastStage hidden IsLeadLastStage">
+
+    <div class="popup small">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+
+        <center><h2><span class="_finalstageheader"</h2></center>
+        <span class="_leadFromStageMove fontsize14px _winlossheader marL30pc"></span>
+        <div style="margin-left: 29%; margin-top: 0%">
+            <a class="_leadstagestatus leadstagestatus button small floatleft" data-LeadStatus="@(Convert.ToBoolean(ErucaCRM.Utility.Enums.LeadStatus.CloseWin))">@Html.CultureSpecificDisplay(model => model.ButtonWin, Model.LeadModuleName)</a>
+            <a class="_leadstagestatus leadstagestatus button small floatleft" data-LeadStatus="@(Convert.ToBoolean(ErucaCRM.Utility.Enums.LeadStatus.CloseLost))">@Html.CultureSpecificDisplay(model => model.ButtonLost, Model.LeadModuleName)</a>
+        </div>
+    </div>
+</div>
+
+<div class="hidden _leadAdditionalInformation" id="leadAdditionalInformation">
+    <div class="popup">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        <center><h2 class="_roleHeader _headerAddditionalInfo"></h2></center>
+
+        <div class="profile">
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Company)
+                </div>
+                <div class="display-field">
+                    <div>
+                        <input type="text" data-bind="value: LeadCompanyName" maxlength="70" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Amount)
+                </div>
+                <div class="display-field">
+
+                    <input type="text" data-bind="value: LeadAmount" maxlength="17" />
+
+
+                </div>
+            </div>
+            <div class="control-group" data-bind="visible: HasContact">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.ContactName)
+                </div>
+                <div class="display-field">
+                    <input type="text" data-bind="value: ContactName" maxlength="100" />
+                    <a href="#" class="_ExistingContacts button small marL5px">@Html.CultureSpecificDisplay(model => model.ExistingContact)</a>
+                </div>
+            </div>
+            <div class="control-group" data-bind="visible: HasContact">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.ContactEmail)
+                </div>
+                <div class="display-field">
+                    <input type="text" data-bind="value: ContactEmail" maxlength="120" />
+                </div>
+            </div>
+            <div class="control-group" data-bind="visible: ShowContactsDropDown">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.ContactName)
+                </div>
+                <div class="display-field">
+                    <select id="drpContactList">
+                    </select>
+                    <a href="#" class="_btnAddContacts button small">@Html.CultureSpecificDisplay(model => model.ButtonNewContact, Model.LeadModuleName) </a>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-field">
+                </div>
+                <div class="display-field buttoncontainer">
+
+                    <div class="buttoncontainer-popup ">
+                        <a id="btnsavecontact" class="button small purple floatleft" data-bind="click: function () { $data.SaveAdditionalInformation() }" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonSave, Model.LeadModuleName)</a>
+                        &nbsp; <a id="btnCancel" class="button small purple _close " href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonCancel, Model.LeadModuleName)</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+<a id="Searchtagbutton">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonTagSearchName)</a>
+<div class="clear"></div>
+@* <div id="divTagSearch" class="divTagSearch _popup leadtagpop">
+                    <div class="floatright">
+                        <a onclick="return viewModel.HideTagFilterMenu();"><span class="tagcross">
+                            <img src="~/Content/images/cross.png" /></span></a>
+                    </div>
+                    <div>
+                        <br />
+                        <input id="TextBoxSearchbyLeadName" data-bind="value: FilterLeadTitle" class="input-textsearch" placeholder="@Html.CultureSpecificDisplay(model => model.PageLabels.SearchByLeadTitlePlaceHolder)" maxlength="100" />
+                        <br>
+                        &nbsp;
+                          <input id="TextBoxSearchbyTag" data-bind="value: FilterLeadTag" class="input-textsearch floatleft width170" placeholder="@Html.CultureSpecificDisplay(model => model.PageLabels.SearchByTagPlaceHolder)" maxlength="100" />
+                        <button id="ShowLeadTags" type="button" data-bind="attr: { title: TitleSearchTag }" class="small button">--</button>
+                        <br />
+                        <button id="ButtonTagSearchName" type="button" class="button purple buttonTagSearch" data-bind="click: function () { viewModel.GetSearchLeads() }">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonSearch)</button>
+                        <br />
+                    </div>
+                </div>*@
+
+<div id="tagsearch" style="display: none">
+    <div id="Filterpopup1">
+
+        <div id="TagArrow" class="arrow" data-bind="click: function () { viewModel.hideMenu() }">
+            <a href="javascript:void(0)">
+                <img src="/Content/images/arrow.png" alt="" title=""></a>
+        </div>
+
+        <div class="board-widgets">
+            <a href="javascript:void(0)" data-helpscope="tagsearch" class="_helpclick floatright padR10px">
+                <img src="~/Content/images/help.png" class="smalhelp" title="Help" /></a>
+            <h3>@Html.CultureSpecificDisplay(model => model.PageLabels.FilterMenuHeader)</h3>
+           
+            <div class="input-box">
+                <button type="button" data-bind="click: function () { viewModel.showFilterLeadsmenu() }">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonFilterLeads)</button>
+
+                @* <button type="button" >@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonFilterStages)</button>
+             
+            <button type="button">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonArchivedLeads)</button>*@
+
+            </div>
+            <button type="button" data-helpkey="filtercloselead"  data-helppos="top-left"  class="button" data-bind="click: function () { viewModel.hideMenu() }">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonClose)</button>
+            @* <input type="button" value="Close" class="close"/>*@
+        </div>
+    </div>
+
+    <div id="Filterpopup2" style="display: none">
+        @*<div id="TagArrow1" ><a href="javascript:void(0)"><img src="/Content/images/arrow.png" alt="" title=""  data-bind="click: function () { viewModel.hideMenu() }"></a></div>*@
+        <div class="board-widgets">
+            <div class="head">
+                <div class="main_div_pop2">
+                    <div class="back-front"></div>
+                    <div class="back" data-bind="click: function () { viewModel.hideFilterMenu() }">@Html.CultureSpecificDisplay(model => model.ButtonBack)</div>
+
+                </div>
+                @* <button type="button"  data-bind="click: function () { viewModel.hideFilterMenu() }">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonBack)</button>*@
+                @* <input type="button" value="Back"  data-bind="click: function () { viewModel.hideFilterMenu() }" />*@
+
+                @*<p>Filter Leads</p>*@
+                <p>@Html.CultureSpecificDisplay(model => model.PageLabels.FilterLeads)</p>
+                <div class="clear"></div>
+            </div>
+            <input id="TextBoxSearchbyLeadName" data-bind="value: FilterLeadTitle" class="input-textsearch" placeholder="@Html.CultureSpecificDisplay(model => model.PageLabels.SearchByLeadTitlePlaceHolder)" maxlength="100" />
+
+            @* <p class="lead-name">Type to filter by lead names</p>*@
+            <p class="lead-name">@Html.CultureSpecificDisplay(model => model.PageLabels.FilterLeadByName)</p>
+            <div class="All_tag">
+                <p>@Html.CultureSpecificDisplay(model => model.PageLabels.FilterTag)</p>
+                <input id="TextBoxSearchbyTag" class="input-textsearch floatleft width170" maxlength="100" placeholder="@Html.CultureSpecificDisplay(model => model.PageLabels.SearchByTagPlaceHolder)" data-bind="value: FilterLeadTag"><br />
+                <br />
+                <div class="clear"></div>
+
+                <div id="TagListData" style="overflow: auto; height: 200px; width: 300px;" data-bind="template: { name: 'TagListTemplate', foreach: TagList }">
+                    <p>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderSearchTagOption)</p>
+                </div>
+
+            </div>
+            <div class="clear"></div>
+            <div class="button1">
+                <button class="button purple buttonTagSearch" data-bind="click: function () { viewModel.ClearFields() }" type="button">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonClearFilter)</button>
+                <button id="ButtonTagSearchName" class="button purple buttonTagSearch" data-bind="click: function () { viewModel.GetSearchLeads() }" type="button">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonApplyFilter)</button>
+                <div class="clear"></div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div id="divFilterInfo" data-bind="visible: ShowLeadFilterInfo" class="leadtagfilterinfo" style="display: none">
+    <img class="leadtagfiltericon " src="~/Content/images/leadfilter-icon.png" />
+    <span>@Html.CultureSpecificDisplay(model => model.PageLabels.FilterByLabel)</span>
+    <span data-bind="visible: FilterByLeadTitle">@Html.CultureSpecificDisplay(model => model.PageLabels.Title):
+                <span id="spanLeadTitleName" class="tagfilterspan" data-bind="text: FilterLeadTitle"></span>
+    </span>
+    <span data-bind="visible: FilterByLeadTag">
+        <span data-bind="if: FilterByTitleAndTag">,</span>
+        @Html.CultureSpecificDisplay(model => model.PageLabels.Tag):
+                <span id="spanCurrentTagName" class="tagfilterspan" data-bind="text: FilterLeadTag"></span>
+    </span>
+    <a id="ClearTagFilter">
+        <img class="tagfiltercross" src="~/Content/images/leadgreencross-icon.png" /></a>
+</div>
+<div id="leadslayout" class="leadslayout leadslayouts">
+
+    <div class="leadsouter leadsout">
+
+        <div id="MainStageDiv" class="list-area-wrapper" style="width:@( ViewBag.totalwidth)px;">
+            <div class="TagSearch">
+                @* <div id="LeadTags" class="displaynone _popup ">
+                    <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderSearchTagOption)</span>
+                    <br />
+                    <img class="img" title="" alt="" src="/Content/images/arrow-left.png">
+                    <div id="TagListData" data-bind="template: { name: 'TagListTemplate', foreach: TagList }">
+                    </div>
+                </div>*@
+                @*   <div id="divTagSearch" class="divTagSearch _popup leadtagpop">
+                    <div class="floatright">
+                        <a onclick="return viewModel.HideTagFilterMenu();"><span class="tagcross">
+                            <img src="~/Content/images/cross.png" /></span></a>
+                    </div>
+                    <div>
+                        <br />
+                        <input id="TextBoxSearchbyLeadName" data-bind="value: FilterLeadTitle" class="input-textsearch" placeholder="@Html.CultureSpecificDisplay(model => model.PageLabels.SearchByLeadTitlePlaceHolder)" maxlength="100" />
+                        <br>
+                        &nbsp;
+                          <input id="TextBoxSearchbyTag" data-bind="value: FilterLeadTag" class="input-textsearch floatleft width170" placeholder="@Html.CultureSpecificDisplay(model => model.PageLabels.SearchByTagPlaceHolder)" maxlength="100" />
+                        <button id="ShowLeadTags" type="button" data-bind="attr: { title: TitleSearchTag }" class="small button">--</button>
+                        <br />
+                        <button id="ButtonTagSearchName" type="button" class="button purple buttonTagSearch" data-bind="click: function () { viewModel.GetSearchLeads() }">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonSearch)</button>
+                        <br />
+                    </div>
+                </div>*@
+                @*  <button type="button" class="button normal" id="Searchtagbutton">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonTagSearchName)</button>*@
+            </div>
+            <div id="LeadListData" data-bind="template: { name: 'StageListTemplate', foreach: LeadList }"></div>
+        </div>
+
+    </div>
+</div>
+<div id="LeadDetailForHelp" class="leadDetail _leadDetail">
+    <div class="lead-pop-up popup leaddetail-popupheight">
+        <h2 class="lead ">@Html.CultureSpecificDisplay(model => model.PageHeaderDetail)
+            <a href="javascript:void(0)" data-helpscope="LeadDetailForHelp" class="_helpclick floatright padR10px">
+                <img src="~/Content/images/help.png" class="smalhelp" title="Help" /></a>
+
+        </h2>
+            
+        <a class="close close-btn _resetUrl" href="javascript:void(0)">
+            <img src="/Content/images/cross-arrow.png"></a>
+
+
+        <div class="tabs">
+            <div id="leadDetailTabs" class="tab prodtab ">
+                <ul class="tabstrip _tabstrip">
+                    <li class="active"><a href="#LeadGeneralTab">@Html.CultureSpecificDisplay(model => model.PageSubTabs.PageSubtabGeneral)</a></li>
+                    <li><a data-helpkey="leadhistory"  data-helppos="top-left" href="#LeadHistoryTab">@Html.CultureSpecificDisplay(model => model.PageSubTabs.PageSubtabHistory)</a></li>
+                    @if (User.IsInRole(string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_VIEW)))
+                    {
+                        <li><a href="#LeadActivitiesTab">@Html.CultureSpecificDisplay(model => model.PageSubTabs.PageSubtabActivity)</a></li>
+                    }
+                    @if (User.IsInRole(string.Concat(Constants.MODULE_DOCUMENT, Constants.PERMISSION_VIEWDOCUMENT)))
+                    {
+                        <li><a href="#LeadDocumentsTab">@Html.CultureSpecificDisplay(model => model.PageSubTabs.PageSubtabDocument)</a></li>
+                    }
+
+                    <li><a href="#LeadProductsTab">@Html.CultureSpecificDisplay(model => model.PageSubTabs.PageSubtabProducts)</a></li>
+                    @if (User.IsInRole(string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_VIEW)))
+                    {
+                        <li><a href="#LeadContactsTab">@Html.CultureSpecificDisplay(model => model.PageSubTabs.PageSubtabContact)</a></li>
+                    }
+
+                    <li><a href="#LeadCommentsTab">@Html.CultureSpecificDisplay(model => model.PageSubTabs.PageSubtabComments)</a></li>
+                </ul>
+                <div id="LeadGeneralTab">
+                    <div id="LeadDetail" class="forms" style="display: block">
+                        @if (User.IsInRole(string.Concat(Constants.MODULE_LEAD, Constants.PERMISSION_EDIT)))
+                        { Html.RenderAction("EditLeadDetail", "User"); }
+                        else
+                        { Html.RenderAction("_ViewLeadDetail", "User"); }
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div id="LeadHistoryTab">
+                    <div class=" ">
+                        <div class="infoheader clear">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderLeadHistory)</div>
+                        <table class="tablecontainer">
+                            <tr>
+                                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderStage)</th>
+                                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderAmount)</th>
+                                @*<th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderProbability)</th>
+                                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderExpectedRevenue)</th>*@
+                                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderClosingDate)</th>
+                                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderStageDuration)</th>
+                                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderModifiedTime)</th>
+                                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.ActivityType)</th>
+                            </tr>
+                            <tbody id="LeadHistoryData" data-bind="template: { name: 'TemplateLeadHistory', foreach: LeadHistoryList }"></tbody>
+                            <tr data-bind="style: { visibility: ShowNoLeadHistoryFoundMsg }">
+                                <td colspan="7"><span><b data-bind="text: NoLeadHistoryFoundMsg"></b></span></td>
+                            </tr>
+                        </table>
+                        <div id="LeadHistoryPager" class="pad2px"></div>
+                        <div id="divLeadHistoryChart">
+                            <div id="containerLeadHistoryChart">
+                            </div>
+                            <span id="spanDeletedStageInfo">@Html.CultureSpecificDisplay(model => model.GridHeaders.DeletedStageInfo)</span>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="LeadActivitiesTab" class="_roleselector">
+                    @if (User.IsInRole(string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_VIEW)))
+                    {
+                        <div>
+                            <div class="rellistbL  clear-both buttoncontainer paddingnone floatnone ">
+                                @if (User.IsInRole(string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_CREATE)))
+                                {
+                                    <a id="btnAddLeadActivity" class="mar6px button small purple pad0px floatright buttonmargin _commonButton _backtohere" data-bind="attr: { href: AddLeadActivityUrl } ">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddActivity)</a>
+                                }
+                            </div>
+                            @Html.Partial("TasksPartial", new ErucaCRM.Web.ViewModels.TaskItemVM())
+
+                        </div>
+                    }
+
+
+                </div>
+                <div id="LeadDocumentsTab" class="_roleselector">
+                    @if (User.IsInRole(string.Concat(Constants.MODULE_DOCUMENT, Constants.PERMISSION_VIEWDOCUMENT)))
+                    {
+                        <div class="rellistbL buttoncontainer paddingnone floatnone ">
+                            @if (User.IsInRole(string.Concat(Constants.MODULE_DOCUMENT, Constants.PERMISSION_CREATEDOCUMENT)))
+                            {
+                                <a class="mar6px button buttonmargin pad0px floatright  _commonButton" data-bind="click: AddNewLeadDocument" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonAddNewDocument)</a>
+                            }
+                        </div>
+                        <table id="AccountDocs" class="tablecontainer">
+                            <tr>
+                                <th class="w150px"></th>
+                                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.FileName)
+                                </th>
+                                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.AttachedBy)
+                                </th>
+
+                            </tr>
+                            <tbody id="AccountCaseAttachments" data-bind="template: { name: 'tmplLeadDocuments', foreach: LeadDocumentsList }"></tbody>
+                            <tr data-bind="style: { visibility: ShowNoLeadDocFoundMsg }">
+                                <td colspan="3"><span><b data-bind="text: NoLeadDocFoundMsg"></b></span></td>
+                            </tr>
+
+                        </table>
+                        <div id="LeadDocumentsPager"></div>
+                    }
+                </div>
+                <div id="LeadProductsTab" class="_roleselector">
+                    <div class="LeadProducts ">
+                        <div class="rellistbL buttoncontainer paddingnone floatnone ">
+
+                            <input id="ButtonAddProduct" type="button" data-bind="click: AllProductListPopup" class="mar6px button buttonmargin purple small marT2px floatright _commonButton fontnone" value="@Html.CultureSpecificDisplay(model => model.ButtonCreate)"  />
+
+                        </div>
+                        <div class="clear-both">
+                            <table id="leadProducts" class="tablecontainer">
+                                <tr>
+                                    <th class="w50px"></th>
+                                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.ProductName)
+                                    </th>
+                                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.ProductCode)
+                                    </th>
+                                </tr>
+                                <tbody id="leadProduct" data-bind="template: { name: 'tmplLeadProducts', foreach: LeadProductsList }"></tbody>
+                                <tr data-bind="style: { visibility: ShowNoLeadProductFoundMsg }">
+                                    <td colspan="3"><span><b data-bind="text: NoLeadProductFoundMsg"></b></span></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="LeadProductsPager"></div>
+                    </div>
+
+                </div>
+                <div id="LeadContactsTab">
+                    @if (User.IsInRole(string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_VIEW)))
+                    {
+                        <div class="LeadContacts">
+                            <div class="rellistbL  clear-both _roleselector buttoncontainer paddingnone floatnone ">
+
+                                <a class="mar6px buttonmargin button floatright _commonButton" data-bind="click: AddContact">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddContact)</a>
+
+
+                            </div>
+                            <table class="tablecontainer _roleselector">
+                                <tr>
+
+                                    <th class="w20pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.ContactName)
+                                    </th>
+                                    <th class="w20pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.Detail)
+                                    </th>
+
+                                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.JobPosition)
+                                    </th>
+                                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.Company)
+                                    </th>
+                                    <th class="actionHeader"></th>
+                                </tr>
+                                <tbody id="ContactListData" data-bind="template: { name: 'templLeadContacts', foreach: LeadContactsList }"></tbody>
+                                <tr data-bind="style: { visibility: ShowNoLeadContactFoundMsg }">
+                                    <td colspan="5"><span><b data-bind="text: NoLeadContactFoundMsg" class="_NoContactFound"></b></span></td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                        <div id="LeadContactsPager1" class="footermar"></div>
+                    }
+
+                </div>
+
+                <div id="LeadCommentsTab" class="Comment-section">
+
+                    <div class="left-col">
+                        <h3>Comments:</h3>
+                        <div class="comment-img-container">
+                            <img src="@ErucaCRM.Utility.SessionManagement.LoggedInUser.ProfileImageUrl?t=@DateTime.Now.Ticks"  class="profileimg" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'" />
+                        </div>
+                        <div class="text">
+                            <textarea id="Commenttxt" placeholder="@Html.CultureSpecificDisplay(model => model.PageButtons.AddCommentPlaceholder)"></textarea><br>
+
+                            <a href="javascript:void(0);" class="button small margincomment buttoncontainer floatnone" onclick="viewModel.AddCommentInLead();">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddComment)</a>
+
+
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div id="CommentsListData" data-bind="template: { name: 'templLeadComments', foreach: LeadCommentsList }"></div>
+                    <div id="LeadCommentsPager"></div>
+
+                </div>
+
+
+
+
+            </div>
+
+            <div class="clear"></div>
+        </div>
+
+    </div>
+</div>
+
+<div class="hidden _AddProductSection" id="AddProductSection">
+
+    <div class="popup">
+
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+         <a href="javascript:void(0)" data-helpscope="AddProductSection" class="_helpclick floatright padR10px">
+                <img src="~/Content/images/help.png" class="smalhelp" title="Help" /></a>
+        <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAddProduct)</h2></center>
+       
+
+        <a id="btnAddNewProduct" data-helpkey="addproduct" data-helppos="top-right" data-bind="click: AddNewProductPopup" class="marginTLR buttoncontainer button small purple _commonButton floatright" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddProduct)</a>
+
+        <table id="allProducts" class="tablecontainer">
+            <tr>
+                <th class="w30px"></th>
+                <th class="w45pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.ProductName)
+                </th>
+                <th class="w45pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.ProductCode)
+                </th>
+            </tr>
+
+            <tbody id="allProduct" data-bind="template: { name: 'tmplAllProducts', foreach: AllProductsList }"></tbody>
+        </table>
+
+        <div id="AllProductsPager" class="footermar"></div>
+    </div>
+
+</div>
+<div class="hidden _addNewProductSection" id="addNewProductSection">
+    <div class="popup width545px">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        @*  @{Html.RenderPartial("_AddProduct", new ErucaCRM.Web.ViewModels.ProductVM());}*@
+        @{Html.RenderAction("AddProduct", "User");}
+    </div>
+
+</div>
+<div class="hidden _LeadFileUploadSection" id="LeadFileUploadSection">
+    <div class="popup " style="overflow: hidden">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachFile)</h2></center>
+        <center><span class="error"></span></center>
+        <div class="divdocupload floatleft ">
+            <div>
+                <div id="fileuploader">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonUpload)</div>
+            </div>
+            <div class="buttonbottomcontainer clear-both">
+                <input type="button" data-bind="click: AttachLeadDocument" class="docupload button small purple _attachDoc" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAttach)" />
+                <input type="button" class="docupload button small purple _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/html" id="TemplateLeadHistory">
+    <tr data-bind="attr: { id: StageName }">
+        <td>
+            <div data-bind="text: StageName"></div>
+        </td>
+        <td>
+            <div data-bind="text: Amount"></div>
+        </td>
+        @* <td>
+            <div data-bind="text: Proability"></div>
+        </td>
+        <td>
+            <div data-bind="text: ExpectedRevenue"></div>
+        </td>*@
+        <td>
+            <div data-bind="text: ClosingDate"></div>
+        </td>
+        <td>
+            <div data-bind="text: Duration"></div>
+        </td>
+        <td>
+            <div data-bind="text: FromDate"></div>
+        </td>
+        <td>
+            <div data-bind="text: ActivityType"></div>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="tmplAllProducts">
+    <tr data-bind="event: { mouseover: $parent.AllProductsMouserEnterHandler, mouseout: $parent.AllProductsMouserOutHandler }, attr: { id: RowId }">
+        <td>
+            <a data-bind="style: { display: ShowLink }, click: $parent.AddProduct" href="javascript:void(0)" class="addpro _addProduct">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAssociateProduct)</a>
+        </td>
+        <td>
+            <div class="wrapword" data-bind="text: ProductName"></div>
+        </td>
+        <td>
+            <div class="wrapword" data-bind="text: ProductCode"></div>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="tmplLeadProducts">
+    <tr data-bind="attr: { id: RowId }">
+        <td>
+            <a data-bind="click: $parent.RemoveProduct" href="javascript:void(0)" class="addpro _removeProduct">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonRemoveProduct)</a>
+        </td>
+        <td>
+            <div data-bind="text: ProductName"></div>
+        </td>
+        <td>
+            <div data-bind="text: ProductCode"></div>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="tmplLeadDocuments">
+    <tr data-bind="event: { mouseover: $parent.LeadDocumentMouserEnterHandler, mouseout: $parent.LeadDocumentMouserOutHandler }">
+        <td>
+            <a data-bind=" style: { display: ShowDocRemoveLink }, click: $parent.RemoveDocument" data-permission="@string.Concat(Constants.MODULE_DOCUMENT, Constants.PERMISSION_DELETEDOCUMENT)"  href="javascript:void(0)" class="addpro permissionbased">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonRemoveDocument)</a>
+        </td>
+        <td>
+            <a data-bind="attr: { href: DocumentPath }" class="_docPath" target="_blank">
+                <span data-bind="text: DocumentName"></span></a>
+        </td>
+        Save
+        <td>
+            <div data-bind="text: AttachedBy"></div>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="templLeadContacts">
+    <tr>
+
+        <td>
+            <a data-bind="attr: { href: UrlViewContact, title: ContactName }"><span data-bind="    text: ContactName"></span></a>
+        </td>
+        <td>
+            <div class="text-align-left">
+                <span><b>@Html.CultureSpecificDisplay(model => model.GridHeaders.Email):</b><span data-bind="text: ContactEmail"></span></span><br />
+                <span><b>@Html.CultureSpecificDisplay(model => model.GridHeaders.Phone):</b><span data-bind="text: ContactPhone"></span></span><br />
+                <span><b>@Html.CultureSpecificDisplay(model => model.GridHeaders.Mobile):</b><span data-bind="text: Mobile"></span></span>
+            </div>
+        </td>
+        <td>
+            <div data-bind="text: JobPosition"></div>
+        </td>
+        <td>
+            <div data-bind="text: Company"></div>
+        </td>
+        <td>
+            <a class="permissionbased floatleft marginleft40px" data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_EDIT)" data-bind="attr: { href: UrlEdit }, ifnot: IsLeadsLastStage">@Html.CultureSpecificDisplay(model => model.ButtonEdit)</a>
+            <a class="permissionbased" href="javascript:void(0)"  data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_DELETE)" data-bind="attr: { id: ContactId }, ifnot: IsLeadsLastStage, click: function () { viewModel.DeleteContact(this) }">@Html.CultureSpecificDisplay(model => model.ButtonDelete)</a>
+        </td>
+    </tr>
+</script>
+
+<script type="text/html" id="templLeadComments">
+
+    <div class="left-col1">
+        <div class="comment-img-container">
+            <a data-bind="attr: { href: UserDetail }">
+                <img data-bind="    attr: { src: UserImg }" alt="" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'"></a>
+        </div>
+        <div class="text1">
+            @* <span class="name" data-bind="  ">*@
+            <a class="name" data-bind="attr: { href: UserDetail }, text: UserName"></a>
+            @*  </span>*@
+            <!-- ko if:fileExists==true -->
+            <div class="_audiocmt">
+                <audio id="res_audio" controls>
+                    <source data-bind="attr: { src: filePath }" type="audio/wav">
+                    Your browser does not support the audio element.
+                </audio>
+                <div id="_audiohref" class="downloadcmtaudio _downloadaudio">
+                    <a data-bind="attr: { href: filePath }" target="_blank">
+                        <img src="../Content/images/Download.png" title="Download audio" /></a>
+                </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if:fileExists==false -->
+            <p class="_cmntxt" data-bind="html: Comment"></p>
+            <!-- /ko -->
+            <span class="comment-date" data-bind="text: CreatedDate"></span>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    @*  <div class="clear"></div>
+    <div class="left-section _left-section">
+        <div class="left-img">
+            <img data-bind="attr: { src: UserImg }" alt="" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'">
+        </div>
+        <span data-bind="text:UserName"></span>
+        <div class="right-img _right-img" data-bind="attr: { 'data-LeadCommentId': LeadCommentId }">
+            <p class="activity-text" data-bind="html: Comment"></p>
+        </div>
+        <div class="floatright"><p data-bind="text: CreatedDate"></p></div>
+    </div>
+    <div class="clear"></div>
+    <hr />*@
+</script>
+
+<script type="text/html" id="templLeadRating">
+    <div class="ratings_stars" data-bind="attr: { 'data-ratingId': RatingId, 'data-ratingconstant': RatingConstant, class: RatingClass }"></div>
+</script>
+<script type="text/html" id="tempLeadSubmitButton">
+    <!-- ko if: Hidden()==false -->
+    <input type="submit" class="button purple small" onclick="viewModel.SaveTagToLead();" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" />
+    <input type="button" onclick="viewModel.CancelLeadDetailPopUp()" class="button purple small" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+    <!-- /ko -->
+</script>
+<div class="_IsLeadLastRating hidden IsLeadLastRating">
+    <div class="popup small">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        <center><h2 class="_roleHeader _leadWonHeading" style="color:#FDC221;"></h2></center>
+
+        <div style="padding-left: 10px; padding-right: 10px">
+            <span class=" _leadWinFromRating _optionYesNoHeading fontsize14px marL10pc"></span>
+        </div>
+
+        <div style="padding: 20px; margin-left: 28%">
+            <a class="_leadratingstatus button small" data-LeadStatus="@(Convert.ToBoolean(ErucaCRM.Utility.Enums.LeadStatus.CloseWin))">@Html.CultureSpecificDisplay(model => model.ButtonYes, Model.LeadModuleName)</a>
+            <a class="_undoChangeRating  button small  _close">@Html.CultureSpecificDisplay(model => model.ButtonNo, Model.LeadModuleName)</a>
+        </div>
+    </div>
+</div>
+
+<div class="hidden _AddContactSection  " id="AddContactSection">
+    <div class="popup large">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAddContact)</h2></center>
+
+        @if (User.IsInRole(string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_CREATE)))
+        {
+                                 
+            <a id="btnAddNewContact" class="mar6px button buttonmargin small purple _commonButton  floatright" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddContact)</a>
+        }
+
+        <table id="allContact " class="tablecontainer">
+            <tr>
+                <th class="w30px"></th>
+                <th class="text-align-center w30pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.ContactName)
+                </th>
+                <th class="text-align-center w30pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.Phone)
+                </th>
+                <th class="text-align-center w30pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.Email)
+                </th>
+            </tr>
+            <tbody id="allContacts" data-bind="template: { name: 'tmplAllContact', foreach: ContactList }"></tbody>
+        </table>
+        <div id="AllContactPager" class="footermar"></div>
+        <div class="control-group ">
+            <div class="display-field">
+            </div>
+            <div class="display-field floatright buttoncontainer buttonmargin">
+                <input type="button" id="btnAssociateNewContact" class="button small purple" data-bind="click: function () { $data.AssociateContact() }"  value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" />
+                <input type="button" id="btnCancel"  class="button small purple _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" >
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="hidden _addNewContactSection" id="addNewContactSection">
+    <div class="popup">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAddContact, Model.LeadModuleName)</h2></center>
+
+        <div class="profile">
+            <div class="control-group">
+                <div class="lineheightprod display-label">
+                    @Html.CultureSpecificLabel(model => model.PageLabels.ContactName, new { @class = "divlabel" })
+                    @*Contact Name*@
+                </div>
+                <div class="display-field">
+                    <div>
+                        @Html.TextBox("ContactName", "", new { maxlength = 35 })
+                    </div>
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="lineheightprod display-label">
+                    @Html.CultureSpecificLabel(model => model.PageLabels.ContactEmail, new { @class = "divlabel" })
+                    @*     Contact Email*@
+                </div>
+                <div class="display-field">
+
+                    @Html.TextBox("ContactEmail", "", new { maxlength = 35 })
+
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-field">
+                </div>
+                <div class="display-field alignleft buttoncontainer">
+
+
+                    <input type="button" id="btnSaveNewContact"  class="button small purple" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" data-bind="click: function () { $data.SaveNewContact() }" />
+                    <input type="button"  id="btnCancel"  class="button small purple _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/html" id="tmplAllContact">
+    <tr data-bind="attr: { id: RowId }">
+        <td>
+            @*  <a data-bind="click:function () { viewModel.AssociateProduct()}"} class="_addContact">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAssociateProduct)</a> *@
+            <input type="checkbox" class="_contact" data-bind="attr: { ContactId: ContactId }" />
+        </td>
+        <td class="text-align-center w30pc">
+            <div class="wrapword" data-bind="text: ContactName"></div>
+        </td>
+        <td class="text-align-center w30pc">
+            <div class="wrapword" data-bind="text: PhoneNo"></div>
+        </td>
+        <td class="text-align-center w30pc">
+            <div class="wrapword" data-bind="text: ContactEmail"></div>
+        </td>
+    </tr>
+</script>

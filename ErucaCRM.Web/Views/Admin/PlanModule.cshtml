@@ -1,0 +1,94 @@
+﻿@model ErucaCRM.Web.ViewModels.PlanModuleVM
+
+@{
+    ViewBag.Title = "PlanModule";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>PlanModule</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+
+    <div class="buttoncontainer">
+        @Html.ActionLink("Back", "Plans", null, new { @class = "button _back" })
+    </div>
+
+
+    <div class="clear pad5px"></div>
+    
+    <div class="profile">
+        @Html.HiddenFor(model => model.PlanId)
+        @Html.HiddenFor(model => model.PlanModuleId)
+
+
+
+
+    <div class="clear pad5px"></div>
+         <div class="control-group">
+             @if (ViewBag.ErrorMessage != null)
+             { 
+             <span class="error"> @ViewBag.ErrorMessage </span>
+             }
+             </div>
+
+        <div class="control-group">
+
+            <div class="display-label">
+                <span class="requiredfield"></span>
+                @Html.LabelFor(model => model.ModuleId)
+            </div>
+            <div class="display-field" style="text-align:left; padding:8px;">
+
+                @(Html.DropDownListFor(model => model.ModuleId, new SelectList(Model.ModuleList, "ModuleId", "ModuleName", 0), new { @class = "dropdown" }))
+
+            </div>
+        </div>
+
+
+        <div class="control-group">
+
+            <div class="display-label">
+               Permission
+            </div>
+            <div class="display-field" style="text-align:left; padding:8px;">
+
+                @Html.CheckBoxFor(model => model.HasPermission,new { })
+                
+
+            </div>
+        </div>
+        <div class="control-group">
+
+            <div class="display-label">
+                   Permission After Trial
+            </div>
+            <div class="display-field" style="text-align:left; padding:8px;">
+
+                @Html.CheckBoxFor(model => model.HasPermissionAfterTrail)
+
+            </div>
+        </div>
+
+
+
+        <div class="control-group">
+            <div class="display-label">
+                &nbsp;
+            </div>
+            <div class="display-field" style="text-align:left; padding:8px;">
+                <input type="submit" class="button purple medium" value="Save" />
+                <input type="submit" class="button" value="Cancel" />
+            </div>
+
+        </div>
+
+
+    </div>
+
+}
+

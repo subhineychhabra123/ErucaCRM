@@ -1,0 +1,155 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.LeadVM
+@{
+    ViewBag.Title = "ErucaCRM | Leads";
+
+}
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/ErucaCRM.Framework/ErucaCRM.Framework.Core.js")"></script>
+
+@*@if (Model.LeadId == null)
+{
+    <h2>@Html.CultureSpecificDisplay(model => model.PageHeaderCreate)</h2>
+}
+else
+{
+    <h2>@Html.CultureSpecificDisplay(model => model.PageHeaderEdit)</h2>
+}*@
+<script type="text/html" id="TagsListTemplate">
+    <div class="tag tagwidth" data-bind="attr: { TagId: TagId, TagName: TagName }">
+        <div>
+            <div class='tagname'><a target="_blank" class="floatleft"   data-bind="attr: { href: TagLink }"><span data-bind="    text: TagName"></span></a><a data-permission="@String.Concat(ErucaCRM.Utility.Constants.MODULE_LEAD, ErucaCRM.Utility.Constants.PERMISSION_EDIT)" class="_commonButton floatleft permissionbased"  onclick="viewModel.RemoveTag(this);" data-bind="    if: IsEditable" >&nbsp;&nbsp;X</a></div>
+        </div>
+    </div>
+</script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+   @Html.HiddenFor(m => m.AccountId)
+    @Html.HiddenFor(m => m.LeadId)
+    @Html.HiddenFor(model => model.RatingId)
+    @Html.Hidden("LeadRatingConstant")
+    @Html.Hidden("hdnIsClosedWin")
+    @Html.Hidden("hdnIsLastStage")
+    @Html.Hidden("hdnIsInitialStage")
+    @Html.HiddenFor(model => model.FinalStageId)
+    @Html.HiddenFor(model => model.StageId)
+    <div class="leadpopup">
+        <div class="control-groContup">
+            <div class="infoheader">
+                <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderLeadInfo)</span>
+            </div>
+            <div class="floatleft  " style="width: 60%;">
+                <div class="profile">
+                    <div class="control-group">
+                        <div class="display-label">
+                            <span class="requiredfield floatright">*</span>
+                            @Html.CultureSpecificLabel(model => model.Title)
+                        </div>
+                        <div class="display-field">
+                            <div class="clear valerr">
+                                @Html.ValidationMessageFor(model => model.Title)
+                            </div>
+                            @Html.TextBoxFor(model => model.Title, new { @class = "text-box", @disabled = "disabled", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="display-label">
+                            @Html.CultureSpecificLabel(model => model.LeadCompanyName)
+                        </div>
+                        <div class="display-field">
+                            @Html.TextBoxFor(model => model.LeadCompanyName, new { @class = "text-box", @disabled = "disabled", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="display-label">
+                            @Html.CultureSpecificLabel(model => model.IndustryId)
+                        </div>
+                        <div class="display-field">
+                            <div class="clear valerr">@Html.ValidationMessageFor(model => model.IndustryId)</div>
+                            @(Html.CultureSpecificDropDownList(model => model.IndustryId, new SelectList(ViewBag.Industries, "IndustryId", "IndustryName", Model.IndustryId), new { @class = "dropdown", @disabled = true }))
+                            <div style="display: inline; margin-left: 5px;">@Html.ValidationMessageFor(model => model.LeadSourceId)
+                                @Html.CultureSpecificLabel(model => model.LeadSourceId)
+                                @(Html.CultureSpecificDropDownList(model => model.LeadSourceId, new SelectList(ViewBag.LeadSources, "LeadSourceId", "LeadSourceName", Model.LeadSourceId), new { @class = "dropdown", @disabled = true }))
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="display-label">
+                            @Html.CultureSpecificLabel(model => model.LeadOwnerId)
+                        </div>
+                        <div class="display-field">
+                            <div class="clear valerr">@Html.ValidationMessageFor(model => model.LeadOwnerId)</div>
+                            @(Html.DropDownListFor(model => model.LeadOwnerId, new SelectList(ViewBag.Owners, "LeadOwnerId", "Name", Model.LeadOwnerId), new { @class = "dropdown", @disabled = true }))
+                            <div style="display: inline; margin-left: 5px;">@Html.ValidationMessageFor(model => model.LeadStatusId)
+                                @Html.CultureSpecificLabel(model => model.LeadStatusId)
+                                @(Html.CultureSpecificDropDownList(model => model.LeadStatusId, new SelectList(ViewBag.LeadStatus, "LeadStatusId", "LeadStatusName", Model.LeadStatusId), new { @class = "dropdown", @disabled = true }))
+                            </div>
+                        </div>
+                    </div>
+                     <div class="clear"></div>
+                        <div class="control-group">
+                            <div class="marL100px">
+                         <div class="tagmain" data-bind="template: { name: 'TagsListTemplate', foreach: OnTagList }">
+                                
+                                </div>
+                                </div>
+                        </div>
+                    <div class="control-group">
+                        <div class="display-label">
+                            @Html.CultureSpecificLabel(model => model.Description)
+                        </div>
+                        <div class="display-field">
+                            @Html.TextAreaFor(model => model.Description, new { @class = "descriptionfield", @disabled = true })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="floatleft">
+                <div class="profile">
+                    <div class="clear"></div>
+                        <div class="control-group" id="ExpectedRevenueContainer">
+                            <div class="display-label">
+                                @Html.CultureSpecificLabel(model => model.ExpectedRevenue, new { @class = "padtp0px" })
+                            </div>
+                            <div class="display-field text-align-left">
+                                <span id="ExpectedRevenue">@*@Html.DisplayFor(model => model.ExpectedRevenue)*@</span>
+                            </div>
+                        </div>
+                    <div class="Rating" id="sectionRating">
+                            <div class="control-group" id="RatingContainer">
+                                <div class="display-field">
+                                    <label id="LabelRating">@Html.CultureSpecificDisplay(model => model.PageLabels.Rating)</label>
+                                    <div id="r1" class="rate_widget" data-bind="template: { name: 'templLeadRating', foreach: LeadRatingList }">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        <div class="clear"></div>
+                        <div class="amount">
+
+                            <div class="control-group">
+                                <div class="display-field">
+                                    @Html.CultureSpecificLabel(model => model.Amount)
+                                    @Html.ValidationMessageFor(model => model.Amount)
+                                    @Html.TextBoxFor(model => model.Amount, new { @class = "text-box", @disabled = "disabled", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+}
+
+

@@ -1,0 +1,53 @@
+﻿@model ErucaCRM.Web.ViewModels.AccountSettingVM
+@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+
+@{
+    ViewBag.Title = "ErucaCRM | AccountSettings";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+@section SideMenuCss
+{<style>
+     /*.sidemenu {   position: fixed;}*/
+     .wrapper-inner { border-left: 1px solid #B6B6B6; width: 91%; padding-left: 10px; overflow: hidden; }
+     #SideMenu-Configuration { display: block; }
+         #SideMenu-Configuration a[href*='AccountSettings'] { background: #0798BC; color: #ffffff; }
+     #lblRecent { padding-top: 23px; }
+     input[type='submit'] { margin-top: 10px; }
+ </style>
+
+}
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderManage)</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="profile">
+        <div class="control-group">
+
+
+            @Html.HiddenFor(model => model.UserSettingId)
+            <div class="display-field" id="AccountNotofication">
+                @Html.CheckBoxFor(model => model.IsSendNotificationsRecentActivities)
+
+            </div>
+            <div class="display-label" id="lblRecent">
+                @Html.CultureSpecificLabel(model => model.PageLabels.RecentActivitiesNotifications)
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="display-field">
+            </div>
+
+            <div class="display-field buttoncontainer">
+                <input type="submit" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" class="button small purple floatleft">
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+}

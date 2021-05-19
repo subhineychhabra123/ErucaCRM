@@ -1,0 +1,202 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+@model ErucaCRM.Web.ViewModels.ContactVM
+
+@{
+    ViewBag.Title = "ErucaCRM | Contacts";
+}
+@section scripts {
+
+    @Scripts.Render("~/bundles/ContactListScripts")
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.AccountAndContact.pageLoad();
+ErucaCRM.Framework.Common.ApplyHelp("Account");
+}
+
+<h2>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageHeaderContactManager)</h2>
+
+
+<script type="text/html" id="ContactListTemplate">
+
+    <div class="Account-section">
+        <ul>
+            <li>
+                <div class="top-section" style="height: 15px">
+                    <div class="truncatedText  float-left">
+                        <a data-bind="attr: { href: UrlViewContact, title: ContactName }" class="back-bg">
+                            <img src="/Content/images/building.png"><span data-bind="text: ContactName"></span></a>
+                    </div>
+                    <div class=" EDbutton buttoncontainer permissionbased paddingnone" data-helpkey="deletecontact" data-helppos="top-left" data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_DELETE)">
+                        <a class="floatright permissiongranted"  data-bind="click: function () { viewModel.DeleteContact(this) }" title="Delete" data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_DELETE)">
+                            <img src="/Content/images/cross-gray.png"></a>
+                    </div>
+                    <div class="EDbutton buttoncontainer permissionbased paddingnone" data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_EDIT)">
+                        <a class="floatright permissiongranted marR10px " data-bind="attr: { href: UrlEdit }" title="EditButtonToolTip" data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_EDIT)">
+                            <img src="/Content/images/Edit.jpg"></a>
+                    </div>
+                </div>
+                <div class="box">
+                    <p class="call">
+                        <label>@Html.CultureSpecificDisplay(model => model.PageLabels.OwnerName)</label>: <span data-bind="text: OwnerName"></span></p>
+
+                    <p class="call">
+                        <label>@Html.CultureSpecificDisplay(model => model.PageLabels.Phone)</label>: <span data-bind="text: ContactPhone"></span></p>
+
+                    <p class="call">
+                        <label>@Html.CultureSpecificDisplay(model => model.PageLabels.Email)</label>: <span data-bind="text: ContactEmail"></span></p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</script>
+
+
+
+
+<script type="text/html" id="ContactListToValidateTemplate">
+    <tr>
+        <td>
+            <span data-bind="  text: FirstName"></span>
+        </td>
+
+        <td>
+            <div class="wrapwordsmall" data-bind="text: ContactPhone"></div>
+        </td>
+        <td>
+            <div class="wrapwordsmall" data-bind="text: ContactEmail"></div>
+        </td>
+        <td>
+            <div class="wrapwordsmall" data-bind="text: Company"></div>
+        </td>
+        <td>
+            <div class="wrapwordsmall contacterror" data-bind="text: ErrorDescription"></div>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="ContactTagListTemplate">
+
+    <div>
+        <a class="contacttagname" data-bind="event: { click: function () { viewModel.GetTaggedContacts(this) } }"><span data-bind="    text: TagName"></span></a>
+    </div>
+
+</script>
+
+<div class="clear pad5px"></div>
+
+
+<div class="control-group" style="display: none;">
+    <div class="display-field">
+        <input id="ContactTextBoxTagSearch" class="input-textsearch" placeholder="Search by tag" />
+
+        <input id="ButtonTagSerach" class="button   buttonSearch" value="@Html.CultureSpecificDisplay(model => model.ButtonSearch)"  />
+    </div>
+</div>
+
+
+<div class="control-group">
+
+    <div>
+        <button id="ContactButtonSearchByTag" class=" button buttonSearch">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonContactTagSearchName)</button>
+
+        <div class="buttoncontainer permissionbased marpx" data-helpkey="addcontact" data-helppos="top-right" data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_CREATE)">
+            @Html.ActionLink(Convert.ToString(Html.CultureSpecificDisplay(model => model.ButtonCreate)), "AddContact", null, new { @class = "button purple small _backtohere floatright" })
+        </div>
+        <div class="buttoncontainer permissionbased" data-permission="@string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_CREATE)">
+            <a id="btnBulkUpload" data-bind="click: function () { viewModel.OpenBulkFileUploader() }" class="button floatright">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonBulkUpload)</a>
+        </div>
+
+        <div id="ContactdivFilterInfo" class="contacttagfilterinfo displaynone" style="display: inline-block">
+            <img class="tagfiltericon" src="~/Content/images/filter-icon.png" /><span class="tagfilterspan">@Html.CultureSpecificDisplay(model => model.PageLabels.TagFilteredByText)  : </span><span id="ContactspanCurrentTagName" class="tagfilterspan"></span>
+            <a onclick="viewModel.ClearTagFilter();">
+                <img class="tagfiltercross" src="/Content/images/greencross-icon.png" /></a>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div id="ContactdivTagSearch" class="divTagSearch _popup">
+    <div class="floatright">
+        <a onclick="return viewModel.ContactHideTagFilterMenu();"><span class="tagcross">
+            <img src="~/Content/images/cross.png" /></span></a>
+    </div>
+    <div id="TagListDataContact" data-bind="template: { name: 'ContactTagListTemplate', foreach: TagListContact }">
+    </div>
+    <div>
+        <br />
+        <input id="TextBoxContactTagSearchName" class="input-textsearch" placeholder="@Html.CultureSpecificDisplay(model => model.PageLabels.SearchByTagPlaceHolder)" />
+        &nbsp;
+        <input id="ButtonContactTagSearchName" type="button" class="button buttonTagSearch" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonContactTagSearchName)"  />
+    </div>
+</div>
+<div class="filter">
+    <select id="DropDownListContactFilter">
+        <option value="Allcontacts" selected="selected">@Html.CultureSpecificDisplay(model => model.DropDownItems.AllContacts, Constants.CULTURE_SPECIFIC_SHEET_DROPDOWNS)</option>
+        <option value="Mycontacts">@Html.CultureSpecificDisplay(model => model.DropDownItems.MyContacts, Constants.CULTURE_SPECIFIC_SHEET_DROPDOWNS)</option>
+        <option value="ThisWeekContacts">@Html.CultureSpecificDisplay(model => model.DropDownItems.ThisWeekContacts, Constants.CULTURE_SPECIFIC_SHEET_DROPDOWNS)</option>
+        <option value="LastWeekContacts">@Html.CultureSpecificDisplay(model => model.DropDownItems.LastWeekContacts, Constants.CULTURE_SPECIFIC_SHEET_DROPDOWNS)</option>
+    </select>
+</div>
+<div class="clear-both _roleselector">
+    <table>
+
+        <tbody id="ContactListData" data-bind="template: { name: 'ContactListTemplate', foreach: ContactList }"></tbody>
+
+    </table>
+    <div id="ContactdivNoRecord" class="feat_prod_box box_center" style="display: none">
+    </div>
+</div>
+
+<div id="Pager" class="AccountPager"></div>
+
+
+<div class="hidden" id="BulkFileUploadSection">
+    <div class="popup overflowhidden ">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachFile)
+             </h2>
+             <p>  <a href="@Url.Content(ErucaCRM.Utility.Constants.CONTACT_SAMPLE_FILE_PATH)" class="button floatright mar5px">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonDownloadSampleFile)</a>
+                   </p>
+        </center>
+        <center><span class="error"></span></center>
+        <div class="bulkuploadcontact floatleft ">
+            <div>
+                <div id="fileuploader">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonUpload)</div>
+            </div>
+            <div class="buttonbottomcontainer clear-both">
+                <input type="button" class="button small purple _attachDoc" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAttach)" />
+                <input type="button" class="button small purple _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+            </div>
+        </div>
+        <div class="tablecontainer _contactlistwitherror clear-both hidden  positionrelative">
+            <div class="_recordInserted successblock"></div>
+            <div class="_validationMessageSection errorblock ">
+            </div>
+
+            <table>
+                <tr>
+                    <th class="w20pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.FirstName)
+
+                    <th class="w20pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.Phone)
+                    </th>
+                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.Email)
+                    </th>
+                    <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.Company)
+                    </th>
+                    <th class="w30pc">@Html.CultureSpecificDisplay(model => model.GridHeaders.ErrorDescription)
+                    </th>
+
+                    <th class="actionHeader"></th>
+                </tr>
+                <tbody id="ContactListDataError" data-bind="template: { name: 'ContactListToValidateTemplate', foreach: ContactListNotValidated }"></tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A5D3CE91-7121-4193-A41E-5BE094C409FA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ErucaCRM.Repository</RootNamespace>
+    <AssemblyName>ErucaCRM.Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.1.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.1.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.0.2\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.0.2\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.0.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Pvc.Core">
+      <HintPath>..\packages\Pvc.Core.0.0.2.0\lib\net45\Pvc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Pvc.NuGet">
+      <HintPath>..\packages\Pvc.NuGet.0.0.1.2\lib\net45\Pvc.NuGet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountCase.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountCaseRepository.cs" />
+    <Compile Include="AccountContact.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountContactRepository.cs" />
+    <Compile Include="AccountRespository.cs" />
+    <Compile Include="AccountSettingRepository.cs" />
+    <Compile Include="AccountTag.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountTagRepository.cs" />
+    <Compile Include="AccountType.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountTypeRespository.cs" />
+    <Compile Include="Address.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AddressRepository.cs" />
+    <Compile Include="ApplicationPage.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationPageRepository.cs" />
+    <Compile Include="AppVersionRepository.cs" />
+    <Compile Include="AssociatedProduct.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AssociationApplicationPage.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AssociationApplicationPageRepository.cs" />
+    <Compile Include="CaseMessageBoard.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CaseMessageBoardRepository.cs" />
+    <Compile Include="Company.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CompanyPlan.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CompanyRepository.cs" />
+    <Compile Include="Contact.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContactRepository.cs" />
+    <Compile Include="ContactTag.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContactTagRepository.cs" />
+    <Compile Include="ContentApplicationPage.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContentApplicationPageRepository.cs" />
+    <Compile Include="Country.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CultureInformation.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FileAttachment.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Fun_GetContactsByUserId_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetLeadAnalyticData_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalSetting.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Industry.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Invoice.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceRepository.cs" />
+    <Compile Include="Lead.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LeadAudit.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LeadAuditRepository.cs" />
+    <Compile Include="LeadComment.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LeadCommentRepository.cs" />
+    <Compile Include="LeadContact.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LeadContactRepository.cs" />
+    <Compile Include="LeadEmailNotification.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LeadEmailNotificationRepository.cs" />
+    <Compile Include="LeadSource.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LeadStatu.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LeadStatus.cs" />
+    <Compile Include="LeadTag.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LeadTagRepository.cs" />
+    <Compile Include="Module.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModulePermission.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Permission.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Plan.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PlanModule.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PlanModuleRepository.cs" />
+    <Compile Include="PlanRepository.cs" />
+    <Compile Include="Product.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductContactAssociation.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductInvoiceAssociation.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductInvoiceAssociationRepository.cs" />
+    <Compile Include="ProductLeadAssociation.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductLeadAssociationRepository.cs" />
+    <Compile Include="CountryRepository.cs" />
+    <Compile Include="ErucaCRMEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErucaCRMEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ErucaCRMEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ErucaCRMEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErucaCRMEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="FileAttachmentRepository.cs" />
+    <Compile Include="IndustryRepository.cs" />
+    <Compile Include="LeadRepository.cs" />
+    <Compile Include="LeadSourceRepository.cs" />
+    <Compile Include="LeadStatusRepository.cs" />
+    <Compile Include="ModulePermissionRepository.cs" />
+    <Compile Include="ModuleRepository.cs" />
+    <Compile Include="PermissionRepository.cs" />
+    <Compile Include="ProductQuoteAssociation.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductQuoteAssociationRepository.cs" />
+    <Compile Include="ProductRepository.cs" />
+    <Compile Include="ProductSalesOrderAssociation.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Profile.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProfilePermission.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProfilePermissionRepository.cs" />
+    <Compile Include="ProfileRepository.cs" />
+    <Compile Include="Quote.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuoteRepository.cs" />
+    <Compile Include="Rating.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RatingRepository.cs" />
+    <Compile Include="RealTimeNotificationConnection.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RealTimeNotificationRepository.cs" />
+    <Compile Include="Role.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RoleRepository.cs" />
+    <Compile Include="SalesOrder.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesOrderRepository.cs" />
+    <Compile Include="SSP_DasboardAnalyticData_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ssp_GetAccountByTopHighestSaleRevenue_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetAccountCasesByUserId_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetAccountsListbyUserId_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetActivitiesByUserId_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetActivities_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetAllVisibleCulture_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetCompanyUsersInfoWithLeads_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetContactForLeadAccountContacts_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetContactsByAccountId_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetContactsByLeadId_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetContactsByUserId_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetContactsList_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetLeadAnalyticData2_Result.cs" />
+    <Compile Include="SSP_GetLeadAnalyticData_Result.cs" />
+    <Compile Include="SSP_GetLeadAuditsForHomeRecentActivites_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetLeadAudits_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ssp_GetLeadExpectedRevenue_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ssp_GetLeadHistory1_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ssp_GetLeadHistoryChartDetails_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ssp_GetLeadHistory_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetLeadsByUserIdWeb_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ssp_GetLeadsInPipeLine_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ssp_GetMonthWiseAccountSaleRevenue_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ssp_GetMonthWiseLeadCount_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetRecentActivitesForEmailNotification_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ssp_GetWeekWiseLeadCount_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_GetYearWiseLeadCount_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_LeadsByRatingAndStages_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_LeadsListbyUserId_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_NonAssociatedContactList_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SSP_Notifications_Result.cs" />
+    <Compile Include="SSP_SalesOrderListbyUserId_Result.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Stage.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StageRepository.cs" />
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tag.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TagRepository.cs" />
+    <Compile Include="TaskItem.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskItemRepository.cs" />
+    <Compile Include="TaskStatu.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskStatusRepository.cs" />
+    <Compile Include="TimeZone.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TimeZoneRepository.cs" />
+    <Compile Include="CultureInformationRepository.cs" />
+    <Compile Include="User.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRepository.cs" />
+    <Compile Include="Infrastructure\BaseRepository.cs" />
+    <Compile Include="Infrastructure\Contract\IBaseRepository.cs" />
+    <Compile Include="Infrastructure\Contract\IDbRepository.cs" />
+    <Compile Include="Infrastructure\Contract\IUnitOfWork.cs" />
+    <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserSetting.cs">
+      <DependentUpon>ErucaCRMEntities.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="ErucaCRMEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ErucaCRMEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ErucaCRMEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ErucaCRMEntities.edmx</DependentUpon>
+      <LastGenOutput>ErucaCRMEntities.Context.cs</LastGenOutput>
+    </None>
+    <None Include="ErucaCRMEntities.edmx.diagram">
+      <DependentUpon>ErucaCRMEntities.edmx</DependentUpon>
+    </None>
+    <None Include="ErucaCRMEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ErucaCRMEntities.edmx</DependentUpon>
+      <LastGenOutput>ErucaCRMEntities.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

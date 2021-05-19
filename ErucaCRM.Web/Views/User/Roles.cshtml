@@ -1,0 +1,158 @@
+﻿
+@model ErucaCRM.Web.ViewModels.RoleVM
+@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+@{
+    ViewBag.Title = "ErucaCRM | Roles";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+@section scripts {
+  @*  <script type="text/javascript" src="@Url.Content("~/Scripts/knockout.mapping.js")"></script>
+    <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.Roles.js")" type="text/javascript"></script>*@
+
+        @Scripts.Render("~/bundles/RoleScripts")
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.Roles.pageLoad();
+      ErucaCRM.Framework.Common.ApplyHelp("Role");
+}
+
+@section SideMenuCss
+{<style>
+        /*.sidemenu {   position: fixed;}*/        
+        .wrapper-inner { /*border-left: 1px solid #B6B6B6;*/ width:91%; padding-left: 10px;overflow: hidden; }        
+        #SideMenu-Configuration { display: block; }
+            #SideMenu-Configuration a[href*='Roles'] { background: #0798BC; color: #ffffff; }
+    </style>
+   @* <style>
+        .sidemenutd { display: block; }
+        .inner-body .wrapper-inner { max-width: 980px; }
+        #SideMenu-Configuration { display: block; }
+            #SideMenu-Configuration a[href*='Roles'] { background: #fff; color: #17B5F0; }
+    </style>*@
+}
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderManage)</h2>
+<div class="buttoncontainer clear-both permissionbased" data-helpkey="addrole" data-helppos="top-right" data-permission="@string.Concat(Constants.MODULE_ROLE, Constants.PERMISSION_CREATE)">
+    <a href="#" class="_newRole button small purple">@Html.CultureSpecificDisplay(model => model.ButtonCreate)</a>
+</div>
+<div class="clear pad5px"></div>
+<div class="rolelistcontainer ulboader _roleselector">
+    <ul class="_parent" id="parent" data-bind="template: { name: 'itemTmpl', foreach: $data.items }"></ul>
+</div>
+
+<script id="itemTmpl" type="text/html">
+    <li class="child editSelectedRole"  style="position:relative"  >
+        <div class="colpsrole _openclose"></div>
+        <span onmouseover="showActionField(this);" data-bind="text: RoleName, clickBubble: false"></span>
+        <span id="roleActions" class="_actions roleactions hidden " style="position:absolute " >
+         <span  style="display:inline-block;width:200px;"> 
+              <a  id="roleEdit"  data-bind="event:{click: function () { viewModel.RolePopup(this) }}" class="permissionbased floatleft" data-permission="@string.Concat(Constants.MODULE_ROLE, Constants.PERMISSION_EDIT)"><img class="pad2px" title="Edit Role" src="/Content/images/Edit.jpg" height="15"  width="14"/></a>
+            <a id="roleDelete" data-helpkey="deleterole" data-helppos="top-left" onmouseout='javascript:hideActionField()'  data-bind="click:function () {viewModel.RolePopUpActionDelete(this)}" class="_roleDelete permissionbased floatleft" data-permission="@string.Concat(Constants.MODULE_ROLE, Constants.PERMISSION_DELETE)"><img class="pad2px"  title="Delete Role" src="/Content/images/delete.png" height="14" width="14"/></a>
+          </span>
+        </span>
+        <ul class="_parent" data-bind="template: { name: 'itemTmpl', foreach: $data.items }"></ul>
+    </li>
+</script>
+
+<script id="childRole" type="text/html">
+    <li>
+        <div></div>
+        <span class="_roleActions" data-bind="text:RoleName"></span>
+    </li>
+</script>
+<div class="hidden" id="rolepop">
+    <div class="popup">
+        <span class="close-btn"><a class="_close" href="#">X</a></span>
+        <center><h2 class="_roleHeader"></h2></center>
+     
+        <div class="floatleft ">
+            <div class="profile">
+                <input type="hidden" id="hdnRoleId" value="0" />
+               <div class="control-group">
+                    <div class="display-label">
+                        
+                    </div>
+                    <div class="display-field">
+                     <div class="error-role _error"></div>
+                      </div>
+                    </div>
+                
+                  <div class="control-group">
+                    <div class="display-label">
+                       
+                      <label>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.RoleName)</label>
+                    </div>
+                    <div class="display-field">
+                        <input type="text" class="input-text _roleName" maxlength="500" />
+
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        <label>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.ReplyTo)</label>
+                    </div>
+                    <div class="display-field">
+                        <select id="roleListdropdown" class="_roleListdropdown">
+                        </select>
+
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <div class="display-field text-align-left buttoncontainer">
+                        <input type="submit" class="button   _submitbtn" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" />
+                        <input type="button" class="button   _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="assignRole">
+    <div class="popup">
+        <span class="close-btn"><a class="_close" href="#">X</a></span>
+        <center><h2>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.ReAssignRole)</h2></center>
+      
+        <div class="floatleft" >
+            <div class="profile">
+                <div class="control-group">
+                    <div class="display-label">
+                        
+                    </div>
+                    <div class="display-field">
+                     <div class="error-role _error"></div>
+                      </div>
+                    </div>
+                 <div class="control-group">
+                    <div class="display-label">
+                        <label>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.ReplyTo)</label>
+                    </div>
+                    <div class="display-field">
+                        <select id="rolelstdropdown" class="_rolelstdropdown">
+                        </select>
+
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <div class="display-field">
+                        <input type="submit" class="button   _reassignrolebtn" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonReAssign)" />
+                        <input type="button" class="button   _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div id="roleActions">
+
+    <a id="roleEdit" roleid="" parentroleid="" data-bind="click:function () {viewModel.RolePopUpActionDelete()}" class="_roleDelete">Delete</a>
+    <a id="roleDelete" roleid="" parentroleid="" class="">Edit</a>
+</div>*@

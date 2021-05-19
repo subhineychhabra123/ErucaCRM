@@ -1,0 +1,189 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.AccountCaseVM
+
+@{
+    ViewBag.Title = "AccountCase";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+@section scripts {
+  
+     @Scripts.Render("~/bundles/ValidateScripts")   
+    
+}
+@section ReadyScripts   
+{
+       
+      ErucaCRM.Framework.Common.ApplyHelp("AccountCase");
+
+}
+<div class="gridspace">
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderCreate)</h2>
+<div class="buttoncontainer">
+    @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonBack), "AccountDetail", null, new { @class = "button purple small _back" })
+</div>
+
+
+<div class="clear pad5px"></div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.AccountCaseId)
+    @Html.HiddenFor(model => model.CaseNumber)
+    @Html.Hidden("RedirectTo", (string)ViewBag.RedirectTo);
+    <div class="control-group">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderCaseInfo)</span>
+        </div>
+        <div class="floatleft ">
+            <div class="profile">
+
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg">@Html.ValidationMessageFor(model => model.AccountId)</div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        <span class="requiredfield">*</span> @Html.CultureSpecificLabel(model => model.PageLabels.AccountName)
+                    </div>
+                   
+                    <div class="display-field">
+                        @(Html.DropDownListFor(model => model.AccountId, new SelectList(ViewBag.AccountList, "AccountId", "AccountName", 0), new { @class = "dropdown" }))
+
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="display-label">
+                       <span class="requiredfield">*</span>  @Html.CultureSpecificLabel(model => model.PageLabels.CaseOwnerName)
+                    </div>
+                   
+                    <div class="display-field">
+                        @(Html.DropDownListFor(model => model.CaseOwnerId, new SelectList(ViewBag.CaseOwners, "OwnerId", "OwnerName", 0), new { @class = "dropdown" }))
+
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.Subject)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                      <span class="requiredfield">*</span>  @Html.CultureSpecificLabel(model => model.Subject)
+                    </div>
+                    
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Subject, new { @class = "input-text", maxlength = 50 })
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.PriorityName)
+                    </div>
+                    <div class="display-field">
+                        @Html.CultureSpecificDropDownList(model => model.PriorityId, new SelectList(ViewBag.Priorities, "PriorityId", "PriorityName"),new { @class = "txtBig" })
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg"></div>
+                    </div>
+                </div>
+
+
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.CaseStatus)
+                        @Html.HiddenFor(model => model.CaseNumber)
+                    </div>
+                    <div class="display-field">
+                        @Html.CultureSpecificDropDownList(model => model.StatusId, new SelectList(ViewBag.statuses, "StatusId", "StatusName"), new { @class = "txtBig" })
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.CaseOrigin)
+                    </div>
+                    <div class="display-field">
+                        @Html.CultureSpecificDropDownList(model => model.CaseOriginId, new SelectList(ViewBag.origins, "OriginId", "OriginName"), new { @class = "txtBig" })
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.PageLabels.CaseType)
+                    </div>
+                    @*  <span class="requiredfield"></span>*@
+                    <div class="display-field">
+                        @Html.CultureSpecificDropDownList(model => model.CaseTypeId, new SelectList(ViewBag.casetypes, "CaseTypeId", "CaseTypeName"), new { @class = "txtBig" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  
+    <div class="control-group clear">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderDescription)</span>
+        </div>
+        <div class="floatleft">
+            <div class="profile">
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Description)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextAreaFor(model => model.Description, new { @class = "input-text"})
+						@Html.ValidationMessageFor(model => model.Description)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <div class="display-field buttoncontainer">
+                        <input type="submit"  data-helpkey="save" data-helppos="top-left" class="button purple small floatleft _one-click-submit-button" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" />
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>  
+}
+   </div>

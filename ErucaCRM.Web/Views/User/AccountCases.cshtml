@@ -1,0 +1,80 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+
+@model ErucaCRM.Web.ViewModels.AccountCaseVM
+@{
+    ViewBag.Title = "AccountCases";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+@section scripts {
+    <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.AccountCases.js")" type="text/javascript"></script>
+}
+
+@section ReadyScripts   
+{
+       ErucaCRM.User.AccountCases.pageLoad();
+      ErucaCRM.Framework.Common.ApplyHelp("AccountCase");
+
+}
+<div class="gridspace">
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderManage)</h2>
+<div class="control-group">
+
+    <div class="rellistbL  permissionbased buttoncontainer"  data-helpkey="addaccountcase" data-helppos="top-right" data-permission="@string.Concat(Constants.MODULE_CASE, Constants.PERMISSION_CREATE)">
+        @Html.ActionLink(Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddCase).ToString(), "AccountCase", "User", new { accountId_encrypted = Model.AccountIdEncrypted }, new { @class = "_addSalesOrder button small purple floatright _backtohere" })
+    </div>
+    <div style="clear: both; margin-bottom: 5px;" class="_roleselector">
+        <table id="AccountCases" class="tablecontainer">
+            <tr>
+                <th data-sortby="CaseNumber"  class="_common"  data-sortdir="A" ><a class="link">@Html.CultureSpecificDisplay(model => model.GridHeaders.CaseNumber)</a>
+                </th>
+                <th data-sortby="Subject"  class="_common"  data-sortdir="A" ><a class="link">@Html.CultureSpecificDisplay(model => model.GridHeaders.Subject)</a>
+                </th>
+                <th data-sortby="CaseOrigin"  class="_common"  data-sortdir="A" ><a class="link">@Html.CultureSpecificDisplay(model => model.GridHeaders.CaseOrigin)</a></th>
+                <th data-sortby="Priority"  class="_common"  data-sortdir="A" ><a
+                     class="link">@Html.CultureSpecificDisplay(model => model.GridHeaders.Priority)</a>
+                </th>
+                <th data-sortby="CaseOwnerName"  class="_common"  data-sortdir="A" ><a class="link">@Html.CultureSpecificDisplay(model => model.GridHeaders.CaseOwnerName)</a>
+                </th>
+                <th data-sortby="AccountName"  class="_common"  data-sortdir="A" ><a class="link">@Html.CultureSpecificDisplay(model => model.GridHeaders.AccountName)</a>
+                </th>
+                <th class="actionHeader"></th>
+            </tr>
+            <tbody id="AccountCasesList" data-bind="template: { name: 'tmplAccountCases', foreach: AccountCasesList }"></tbody>
+            <tr id="trNoAccountCaseRecord" data-bind="style: { visibility: ShowNoAccountCaseFoundMsg }">
+                <td colspan="7"><span><b data-bind="text: NoAccountCasesFoundMsg"></b></span></td>
+            </tr>
+           
+        </table>
+    </div>
+</div>
+<div id="AccountCasesPager"></div>
+<script type="text/html" id="tmplAccountCases">
+    <tr>
+        <td>
+            <a data-bind="attr: { href: DetailUrl, title: Subject }"><span data-bind="    text: CaseNumber"></span></a>
+        </td>
+        <td>
+            <span data-bind=" text: Subject"></span>
+        </td>
+        <td>
+            <span data-bind=" text: CaseOrigin"></span>
+        </td>
+        <td>
+            <span data-bind=" text: PriorityName"></span>
+        </td>
+        <td>
+            <span data-bind=" text: CaseOwnerName"></span>
+        </td>
+        <td>
+            <span data-bind=" text: AccountName"></span>
+        </td>
+        <td>
+            <a class="floatleft permissionbased" title="@Html.CultureSpecificDisplay(model => model.PageButtons.EditButtonToolTip)"  data-permission="@string.Concat(ErucaCRM.Utility.Constants.MODULE_CASE,ErucaCRM.Utility.Constants.PERMISSION_EDIT)" data-bind="attr: { href: EditUrl }">@Html.CultureSpecificDisplay(model => model.ButtonEdit)</a>
+
+            <a class="permissionbased floatleft mrgndelete " data-helpkey="deleteaccountcase" data-helppos="top-right" title="@Html.CultureSpecificDisplay(model => model.PageButtons.DeleteButtonToolTip)" data-permission="@string.Concat(ErucaCRM.Utility.Constants.MODULE_CASE,ErucaCRM.Utility.Constants.PERMISSION_DELETE)" data-bind="click: $parent.DeleteCase">@Html.CultureSpecificDisplay(model => model.ButtonDelete)</a>
+        </td>
+    </tr>
+</script>
+
+    </div>

@@ -1,0 +1,109 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+@model ErucaCRM.Web.ViewModels.UserProfileVM
+
+<div class="gridspace" >
+<div class="buttoncontainer">
+    <div class="floatleft ">
+        @if (Request.QueryString["returnurl"] != null)
+        {
+            @Html.ActionLink(Convert.ToString(Html.CultureSpecificDisplay(model => model.ButtonBack)), "UserList", null, new { @class = "button purple small _back" })
+        }
+        else
+        {
+            if (ViewContext.RouteData.Values["action"].ToString() != "MyProfile")
+            {
+            @Html.ActionLink(Convert.ToString(Html.CultureSpecificDisplay(model => model.ButtonBack)), "UserList", null, new { @class = "button purple small" })
+            }
+        }
+    </div>
+    @if (!Model.IsCurrentUser)
+    {
+        <div class="floatleft marL5px permissionbased" data-permission="@string.Concat(Constants.MODULE_USER, Constants.PERMISSION_EDIT)">@Html.ActionLink(Convert.ToString(Html.CultureSpecificDisplay(model => model.ButtonEdit)), "EditUserProfile", new { @id_encrypted = Model.UserId }, new { @class = "button purple small" })</div>
+    }
+    else
+    { <div class="floatleft marL5px">@Html.ActionLink(Convert.ToString(Html.CultureSpecificDisplay(model => model.ButtonEdit)), "EditUserSelfProfile", new { @id_encrypted = Model.UserId }, new { @class = "button purple small" })</div>}
+    @if (Model.IsCurrentUser)
+    {
+        <a href="#" id="ChangePassword" class="button purple small  marL5px">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonChangePassword)</a>
+    }
+</div>
+<div class="tablecontainer clear">
+    <div class="profileview text-align-left">
+        <div class="userprofile_detail_box">
+            @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName) - <span class="profileNameview">@Html.DisplayFor(model => model.Role.RoleName)  ( @Html.DisplayFor(model => model.Profile.ProfileName) )</span>
+
+        </div>
+
+    </div>
+
+    <div class="usrinfo">
+        <h3 class="usrstrip">
+            @Html.DisplayFor(model => model.Role.RoleName)
+
+        </h3>
+
+        <div class="floatleft profile-image">
+
+            <img class="ProfileImage" src="@Model.ImageURL?t=@DateTime.Now.Ticks" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'">
+        </div>
+        <div class="floatleft">
+            <div class="profile">
+
+                <div class="userprofile_detail_box">
+                    <h3 class="usrstrip">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderContactInfo)</h3>
+                </div>
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.EmailId)
+                    </div>
+                    <div class="display-value adressvalue">
+                        <label>@Html.DisplayFor(model => model.EmailId) </label>
+
+                    </div>
+                    <div class="userprofile_detail_box"></div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.PageLabels.Address)
+                    </div>
+                    <div class="display-value adressvalue">
+                        @Html.DisplayFor(model => model.AddressDetails)
+
+                    </div>
+                    <div class="userprofile_detail_box"></div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.PageLabels.TimeZone)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            <label>@Html.DisplayFor(model => model.TimeZoneVM.TimeZoneDescription)</label>
+                        </div>
+
+                    </div>
+
+                    <div class="userprofile_detail_box"></div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.PageLabels.Culture)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            <label>@Html.DisplayFor(model => model.CultureInformationVM.CultureDescription)</label>
+                        </div>
+
+                    </div>
+                    <div class="userprofile_detail_box"></div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+    </div>

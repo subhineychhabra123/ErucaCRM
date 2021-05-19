@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "ErucaCRM | UserList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section scripts {
+    <script src="@Url.Content("~/Scripts/ErucaCRM.Admin/ErucaCRM.Admin.Users.js")" type="text/javascript"></script>
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.List.pageLoad();
+    }
+<h2>Manage User</h2>
+
+
+<div class="buttoncontainer" >
+     <a id="ActiveInActive" class="button purple small"></a>
+    @Html.ActionLink("Create User", "AddUser", null, new { @class = "button purple small" })
+   
+</div> 
+<div class="clear pad5px"></div>
+<script type="text/html" id="UserList-template">
+    <div class="feat_prod_box">
+
+        <div data-bind="if: !IsCurrentUser">
+            <input type="checkbox" class="userstatus" data-bind=" attr: { id: UserId }, clickBubble: false" onclick="viewModel.ActivateDeactivate(this)">
+        </div>
+        <div data-bind="if: IsCurrentUser">
+            <input type="checkbox" class="userstatus" disabled="disabled">
+        </div>
+
+
+        <div class="prod_img">
+
+            <img data-bind="        attr: { src: Url, onerror: UrlError }" width="60" height="60">
+        </div>
+        <div class="prod_det_box">
+            <div class="box_center">
+                <div class="prod_title" data-bind="text: Name"></div>
+                <div data-bind="text: Designation"></div>
+                @*    <span data-bind="text: Name"></span>*@
+                <div>
+                    <a data-bind="attr: { href: UserDetail }" class="more detail"></a>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</script>
+
+
+<div class="filter">
+    <select id="DropDownListUserStatus">
+        <option value="Active" selected="selected"></option>
+        <option value="Inactive"></option>
+    </select>
+</div>
+<div id="UserListData" data-bind="template: { name: 'UserList-template', foreach: UserList }"></div>
+<div id="divNoRecord" class="feat_prod_box box_center" style="display: none">
+</div>
+
+<div id="Pager"></div>
+
+

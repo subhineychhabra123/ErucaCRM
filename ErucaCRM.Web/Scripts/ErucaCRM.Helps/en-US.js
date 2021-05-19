@@ -1,0 +1,27 @@
+jQuery.namespace('ErucaCRM.Helps');
+ErucaCRM.Helps = {
+Login:{"Tips":[{}]},
+Registration:{"Tips":[{}]},
+Role:{"Tips":[{"AddRole":{"Title":"How to Create Role.","Description":"Click this button to Create a new Role.","Links":"links","TipType":"window"},"DeleteRole":{"Title":"How To Delete Role.","Description":"Click this X button to delete Role.","TipType":"tooltip","":""}}]},
+Lead:{"Tips":[{"AddLead":{"Title":"How to add lead.","Description":"Click this button to add a new lead.","Links":"name1,http://localhost:43387/User/Leads | Name2,http://localhost:43387/User/Le|Name3,http://localhost:43387/User/Lea|","TipType":"window"},"DeleteLead":{"Title":"How To Delete Lead.","Description":"Click this X button to delete lead.","Links":"name4,http://localhost:43387/User/Leads | Name5,http://localhost:43387/User/Le|Name6,http://localhost:43387/User/Lea|","TipType":"tooltip"}}]},
+Profile:{"Tips":[{"AddProfile":{"Title":"How to Create Profile.","Description":"Click this button to Create a new Profile.","Links":"links","TipType":"window"},"DeleteProfile":{"Title":"How To Delete Profile.","Description":"Click this X button to delete Profile.","TipType":"tooltip"}}]},
+User:{"Tips":[{"AddUser":{"Title":"How to Create User.","Description":"Click this button to Create a new User.","Links":"links","TipType":"window"},"De-ActivateUser":{"Title":"How To De-Activate.","Description":"Click this box  to De-Activate User.","TipType":"tooltip"}}]},
+Contact:{"Tips":[{"AddContact":{"Title":"How to Create Contact.","Description":"Click this button to Create a new Contact.","Links":"links","TipType":"window"},"DeleteContact":{"Title":"How To Delete Contact.","Description":"Click this X button to delete Contact.","TipType":"tooltip"}}]},
+Account:{"Tips":[{"AddAccout":{"Title":"How to Create Account.","Description":"Click this button to Create a new account.","Links":"links","TipType":"window"},"DeleteAccount":{"Title":"How To Delete Account.","Description":"Click this X button to delete Account..","TipType":"tooltip"},"AddContact":{"Title":"How to open Contact Tab.","Description":"Click here for open  Contact Tab.","Links":"links","TipType":"window"}}]},
+Tag:{"Tips":[{"AddTag":{"Title":"How to Create Tag.","Description":"Click this button to Create a new Tag.","Links":"links","TipType":"window"},"DeleteTag":{"Title":"How To Delete Tag.","Description":"Click this X button to delete Tag.","TipType":"tooltip","":""}}]},
+TaskItem:{"Tips":[{"AddTask":{"Title":"How to add Task.","Description":"Click this button to add a new Task.","Links":"links","TipType":"window"},"DeleteTask":{"Title":"How To Delete Task.","Description":"Click this X button to delete Task.","TipType":"tooltip"}}]},
+Quote:{"Tips":[{}]},
+Product:{"Tips":[{}]},
+Invoice:{"Tips":[{}]},
+SalesOrder:{"Tips":[{"AddSaleOrder":{"Title":"How to Create Sales Order.","Description":"Click this button to Create a new Sales Order.","Links":"name1,http://localhost:43387/User/Leads | Name2,http://localhost:43387/User/Le|Name3,http://localhost:43387/User/Lea|","TipType":"window"},"DeleteSaleOrder":{"Title":"How To Delete Sales Order.","Description":"Click this X button to delete Sales Order.","TipType":"tooltip","":""}}]},
+Document:{"Tips":[{}]},
+Address:{"Tips":[{}]},
+Layout:{"Tips":[{}]},
+LayoutInner:{"Tips":[{}]},
+DashBoard:{"Tips":[{"ShowAll":{"Title":"How to See all over all Sales Worth.","Description":"Click this button to see Total Sales Worth.","Links":"links","TipType":"window"},"PrintChart":{"Title":"How To Download image Print chart.","Description":"Click this  button to Download image Print chart.","TipType":"tooltip"}}]},
+DropDowns:{"Tips":[{}]},
+AccountCase:{"Tips":[{"AddAccountCase":{"Title":"How to Create Account Case.","Description":"Click this button to Create a new  Account Case.","Links":"links","TipType":"window"},"DeleteAccountCase":{"Title":"How To Delete  Account Case.","Description":"Click this X button to delete  Account Case.","TipType":"tooltip"},"Save":{"Title":"How to Save Account Case.","Description":"Click here for Save Account Case.","Links":"links","TipType":"window"}}]},
+Stage:{"Tips":[{"AddStage":{"Title":"How to Create Stage.","Description":"Click this button to Create a new Stage.","Links":"links","TipType":"window"},"DeleteStage":{"Title":"How To Delete  Stage.","Description":"Click this X button to delete  Stage.","TipType":"tooltip"}}]},
+EmailTemplates:{"Tips":[{}]},
+AccountSetting:{"Tips":[{}]}
+}

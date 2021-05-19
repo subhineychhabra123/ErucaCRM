@@ -1,0 +1,62 @@
+﻿@*@model ErucaCRM.Web.ViewModels.ContactVM*@
+
+@{
+    //ViewBag.Title = "ErucaCRM | ContactList";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+@section scripts {
+    @*<script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.Contacts.js")" type="text/javascript"></script>*@
+}
+
+@section ReadyScripts
+{
+@*ErucaCRM.User.List.pageLoad();*@
+}
+@*<script type="text/html" id="ContactListTemplate">*@
+   @* <tr>*@
+        @*<td>
+           <div data-bind="text: ProfileId"></div>
+        </td>*@
+     @*   <td class="text-align-left">
+            <a data-bind="    attr: { href: ContactViewUrl, title: ContactName }"><span data-bind="    text: ContactName"></span></a>
+        </td>
+        <td class="text-align-left">
+            <div data-bind="text: ContactPhone"></div>
+        </td>
+        <td class="text-align-left">
+            <div data-bind="text: ContactEmail"></div>
+        </td>
+
+        <td class="text-align-left">
+            <a data-bind="attr: { href: UrlEdit, title: ContactName }">Edit</a>
+        </td>
+    </tr>
+</script>
+<h2>ContactList</h2>*@
+
+@*<div class="tablecontainer clear-both">
+    <table>
+        <tr>
+
+            <th class="text-align-left">Contact Name
+            </th>
+            <th class="text-align-left">Phone
+            </th>
+
+            <th class="text-align-left">Email
+            </th>
+        </tr>
+        <tbody data-bind="template: { name: 'ContactListTemplate', foreach: ContactList }" ></tbody>
+
+    </table>
+</div>*@
+
+@*<div class="filter">
+    <select id="DropDownListContactFilter">
+        <option value="Allcontacts" selected="selected">All Contacts</option>
+        <option value="Mycontacts" selected="selected">My Contacts</option>
+        <option value="ThisWeekContacts" selected="selected">This Week Contacts</option>
+        <option value="LastWeekContacts" selected="selected">Last Week Contacts</option>
+    </select>
+</div>*@
+

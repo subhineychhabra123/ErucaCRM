@@ -1,0 +1,142 @@
+﻿@model ErucaCRM.Web.ViewModels.CompanyVM
+@{
+    ViewBag.Title = "OrganisationDetail";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section scripts {
+    <script src="@Url.Content("~/Scripts/ErucaCRM.Admin/ErucaCRM.Admin.OrganisationDetail.js")" type="text/javascript"></script>
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.List.pageLoad()
+    }
+<style>
+    .filter select { padding: 0px !important; width: auto !important; }
+</style>
+<h2>Organization Detail</h2>
+@Html.HiddenFor(r => r.CompanyId)
+<div class="control-group">
+    <div class="infoheader">
+        <span>Organization Information</span>
+    </div>
+    <div class="_accountId">
+        @Html.HiddenFor(model => model.CompanyId)
+
+    </div>
+
+
+    <div class="floatleft">
+        <div class="profile">
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.LabelFor(r => r.CompanyName)
+                </div>
+
+
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(r => r.CompanyName)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.LabelFor(r => r.CreatedBy)
+                    </div>
+
+
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(r => r.CreatedBy)
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.LabelFor(r => r.CreatedOn)
+                    </div>
+
+
+                    <div class="display-field">
+
+                        <div class="display-value">
+                            @Html.DisplayFor(r => r.CreatedOn)
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.LabelFor(r => r.IsActive)
+                    </div>
+
+
+                    <div class="display-field">
+                        <div class="display-value">
+                            @if (Model.IsActive == true)
+                            {
+                                @Html.Label("Active","Active")
+                            }
+                            else
+                            {
+                                @Html.Label("In-Active","In-Active")
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="control-group">
+    <div class="infoheader">
+        <span>User Information</span>
+    </div>
+    <div class="buttoncontainer">
+        <a id="ActiveInActive" class="button purple small"></a>
+    </div>
+    <script type="text/html" id="UserList-template">
+        <tr>
+
+
+            <td>
+                <div class="name" data-bind="text: Name"></div>
+            </td>
+            <td>
+                <div class="prod_title" data-bind="text: EmailId"></div>
+            </td>
+            <td>
+                <input type="checkbox" class="userstatus" data-bind=" attr: { id: UserId }, clickBubble: false" onclick="viewModel.ActivateDeactivate(this)">
+            </td>
+
+        </tr>
+    </script>
+
+    <div class="tablecontainer  clear _roleselector">
+        <table>
+            <tr>
+                <th class="text-align-left">User Name
+                </th>
+                <th class="text-align-left">Email
+                </th>
+                <th class="text-align-left">Action
+                <span class="floatright gridDropdown">
+                    <select id="DropDownListUserStatus">
+                        <option value="Active" selected="selected"></option>
+                        <option value="Inactive"></option>
+                    </select>
+                </span>
+                </th>
+            </tr>
+            <tbody id="UserListData" data-bind="template: { name: 'UserList-template', foreach: UserList }">
+            </tbody>
+        </table>
+        <div id="divNoRecord" class="feat_prod_box box_center" style="display: none">
+        </div>
+    </div>
+
+
+
+</div>

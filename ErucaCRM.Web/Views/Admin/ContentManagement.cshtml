@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "ContentManagement";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section scripts {
+    <script src="@Url.Content("~/Scripts/ErucaCRM.Admin/ErucaCRM.Admin.ContentManagement.js")" type="text/javascript"></script>
+}
+
+@section ReadyScripts
+{
+ErucaCRM.Admin.ContentManagement.pageLoad();
+
+}
+<style>
+
+    .inactive
+    {
+    background-color:#EAEAE9;
+    color:red;
+        
+    }
+    .default { background-color:lightyellow }
+    .clickable {cursor:pointer; }
+</style>
+<h2>Content Management</h2>
+
+<script type="text/html" id="tmplCulture">
+    <tr data-bind=" css: { inactive: IsActive ==false ? true:false ,default:IsDefault==true }">
+       
+        <td data-bind="click: function(){ viewModel.Navigate(CultureInformationId)}" class="text-align-left clickable">
+            <div data-bind="text:Language"></div>
+        </td>
+        <td data-bind="click: function(){ viewModel.Navigate(CultureInformationId)}" class="text-align-left clickable">
+      <div data-bind="text: Status"></div>
+
+        <td class="text-align-left">
+       <input type="radio" name="default"   data-bind="value:Language,checked:DefaultLanguage ,click: function () { viewModel.setDefaultLanguage(CultureInformationId,IsActive) } " />   
+        </td>
+    </tr>
+</script>
+
+<div class="clear pad5px"></div>
+<div class="tablecontainer  clear _roleselector">
+    <table>
+          <tr>  <th class="text-align-left">Language
+            </th>
+            <th class="text-align-left">Status
+            </th>
+               
+            <th class="actionHeader">Is Default</th>
+        </tr>
+        <tbody data-bind="template: { name: 'tmplCulture', foreach: CultureList }"></tbody>
+    </table>
+</div>
+<div id="Pager"></div>

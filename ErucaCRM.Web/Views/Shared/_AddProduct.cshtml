@@ -1,0 +1,54 @@
+﻿@model ErucaCRM.Web.ViewModels.ProductVM
+@using ErucaCRM.Web.Infrastructure;
+
+@{
+    ViewBag.Title = "_AddProduct";
+}
+
+<center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageHeaderCreate)</h2></center>
+
+
+<div class="profile">
+    <div class="control-group">
+        <div class="lineheightprod display-label">
+            @Html.CultureSpecificLabel(model => model.ProductName, new { @class="divlabel"})
+        </div>
+        <div class="display-field">
+            <div>
+                @Html.TextBox("ProductName", "", new { @maxlength = 50 })
+            </div>
+
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="lineheightprod display-label" >
+            @Html.CultureSpecificLabel(model => model.ProductCode, new { @class="divlabel"})
+        </div>
+        <div class="display-field">
+
+            @Html.TextBox("ProductCode", "", new { @maxlength = 50 })
+
+
+        </div>
+    </div>
+    <div class="control-group">
+        <div class=" lineheightprod display-label"> 
+            @Html.CultureSpecificLabel(model => model.UnitPrice, new { @class="divlabel"})
+        </div>
+        <div class="display-field">
+            @Html.TextBox("UnitPrice", "", new { @maxlength = 15 })
+
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="display-field">
+        </div>
+        <div class="display-field alignleft">      
+            <input type="button" id="btnSaveNewProduct" class="button small purple"  data-bind="click: function () { $data.SaveNewProduct() }" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)"/>       
+             @*   <a  class="addprodmargin  floatleft marginleft3px"  href="javascript:void(0)"</a>*@
+             <input type="button" class="button small purple _close"  value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+              @*  &nbsp; <a id="btnCancel" class="addprodmargin button small purple floatright _close" href="javascript:void(0)"></a>*@
+            
+        </div>
+    </div>
+</div>

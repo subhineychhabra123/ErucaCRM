@@ -1,0 +1,183 @@
+@using ErucaCRM.Web.ViewModels;
+@using ErucaCRM.Utility;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link rel="icon" href="@Url.Content("~/content/images/favicon.ico")"/>
+    @*    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/main.css")" />*@
+
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/OuterLayoutCss.css")" />
+
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout-3.0.0.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/ErucaCRM.Framework/ErucaCRM.Framework.Core.js")"></script>
+    <script type="text/javascript" src="~/Scripts/ErucaCRM.Messages/@CommonFunctions.GetCurrentCulturScript()?t=@DateTime.Today.Ticks"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    <meta title="@ViewBag.Title" />
+    <meta  name="description" content="@ViewBag.MetaTag" />
+</head>
+<body>
+    <div class="b-g">
+        <div class="body-wrapper">
+            <div class="header">
+                <div class="img-holder">
+                    <a href="@Url.Action("Home", "Site")">
+                        <img src="content/images/@CommonFunctions.GetCurrentCulturLoginLogo()" alt="" title="logo" /></a>
+                </div>
+                <div class="nav">
+                    <ul>
+                        <li class="homes selected"><a href="/Home" menu="Home">
+                            <img class="home" alt="" src="content/images/home.png"></a></li>
+                        <li><a menu="Feature" href="@Url.Action("Feature", "Site")">@LayoutMenus.FeaturesBenefits</a></li>
+                        <li><a menu="Aboutus" href="@Url.Action("AboutUs", "Site")">@LayoutMenus.AboutUs</a></li>
+                        <li><a menu="MobileCRM" href="@Url.Action("MobileCRM", "Site")">@LayoutMenus.MobileCRM</a></li>
+                        <li class="border-none"><a menu="Login" href="@Url.Action("Login", "Site")">@LayoutMenus.PricingAndSignIn</a></li>
+                    </ul>
+
+
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <div class="nested wrapper">
+            <form class="left-col">
+                @Html.Raw(LayoutHelper.GetActiveCultureIcons())
+
+                <input type="text" placeholder="@LayoutHelper.SearchWaterMark" />
+                <a href="javascript:void(0)" class="search">
+                    <img src="content/images/search.png" alt="" title="@LayoutHelper.SearchWaterMark" /></a>
+                <a href="/Register" class="sign-up">@LayoutHelper.ButtonSignUp</a>
+                <a href="@Url.Action("Login", "Site")" class="log-in">@LayoutHelper.ButtonLogin</a>
+            </form>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+
+        @RenderBody()
+
+    </div>
+
+
+
+
+
+
+    <div class="footer">
+        <div class="footer-section wrapper">
+            <div class="last-section">
+                <ul class="footer-nav">
+                    <li><a href="/Home" menu="Home" class="active">@LayoutMenus.Home</a></li>
+                    <li><a menu="Feature" href="@Url.Action("Feature", "Site")">@LayoutMenus.FeaturesBenefits</a></li>
+                    <li><a menu="Aboutus" href="@Url.Action("AboutUs", "Site")">@LayoutMenus.AboutUs</a></li>
+                    <li><a menu="MobileCRM" href="@Url.Action("MobileCRM", "Site")">@LayoutMenus.MobileCRM</a></li>
+                    @* <li><a menu="Contactus" href="@Url.Action("ContactUs", "Site")">@LayoutMenus.ContactUs</a></li>*@
+                    <li><a menu="Login" href="@Url.Action("Login", "Site")">@LayoutMenus.PricingAndSignIn</a></li>
+
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="latest">
+                <div class="lastest1">
+                    <p>@LayoutFooter.Features</p>
+                    <ul class="footer-nav1">
+                        <li><a data-container="_containerLead" data-tab="_tabLead" href="/Feature#Lead" >@LayoutFooter.FeatureLeadsByStages</a></li>
+                        <li><a data-container="_containerTag" data-tab="_tabTag" href="/Feature#Tag"@DateTime.Now.Millisecond.ToString()>@LayoutFooter.FeatureTagging</a></li>
+                        @* <li><a href="#">@LayoutFooter.FeatureDocumentsLibrary</a></li>*@
+                        <li><a data-container="_containerContact" data-tab="_tabContact" href="/Feature#ContactManagement">@LayoutFooter.FeatureContactManagement</a></li>
+                        <li><a data-container="_containerCase" data-tab="_tabCase" href="/Feature#CustomerRelationship">@LayoutFooter.FeatureCustomerRelationship</a></li>
+                        <li><a data-container="_containerOther" data-tab="_tabOther" href="/Feature#MobileCRM">@LayoutFooter.FeatureMobileCRM</a></li>
+                        @*<li><a href="#">@LayoutFooter.FeatureWeChatIntegration</a></li>*@
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+                @*<div class="lastest1">
+                    <p>@LayoutFooter.Resources</p>
+                    <ul class="footer-nav1">
+                        <li><a class="selected" href="#">@LayoutFooter.ResourcesForum</a></li>
+                        <li><a href="#">@LayoutFooter.ResourcesDeveloperAPI</a></li>
+                        <li><a href="#">@LayoutFooter.ResourcesCaseStudies</a></li>
+                        <li><a href="#">@LayoutFooter.ResourcesHelpVideos</a></li>
+                        <li><a href="#">@LayoutFooter.ResourcesApps</a></li>
+
+                        <div class="clear"></div>
+                    </ul>
+                </div>*@
+                <div class="lastest1">
+                    <p>@LayoutFooter.AboutCRM</p>
+                    <ul class="footer-nav1">
+                        <li><a class="selected" href="#">@LayoutFooter.AboutCRMWhyErucaCRM</a></li>
+                        <li><a href="#">@LayoutFooter.AboutCRMCompany</a></li>
+                        <li><a href="#">@LayoutFooter.AboutCRMCustomers</a></li>
+                        @*<li><a href="#">@LayoutFooter.AboutCRMPricing</a></li>*@
+                        <li><a href="/Contactus">@LayoutFooter.AboutCRMContactUs</a></li>
+
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+                <div class="lastest1">
+                    <p>@LayoutFooter.ContactUs</p>
+                    <ul class="footer-nav1">
+                        <li>
+                            <address class="color-white">
+                                East El Camino Real,
+                                <br />
+                                Sunnyvale, CA 94087,     
+                        <br />
+                                United States 
+                                <br />
+                                <span class="call">(972) 445-7469</span>
+                                <br />
+                                <a class="info" href="mailto:info@crmservices.com">info@crmservices.com</a>
+                            </address>
+                        </li>
+                        <li>
+                            <div class="color-white">
+                               @* <span>@LayoutFooter.SpreadTheWord</span>*@
+                                <br />
+                                <ul class="icon">
+                                    <li><a href="javascript:void(0)">
+                                        <img src="content/images/1.png" /></a></li>
+                                    <li><a href="javascript:void(0)">
+                                        <img src="content/images/2.png" /></a></li>
+                                    <li><a href="javascript:void(0)">
+                                        <img src="content/images/3.png" /></a></li>
+                                    <li><a href="javascript:void(0)">
+                                        <img src="content/images/4.png" /></a></li>
+                                    <div class="clear"></div>
+                                </ul>
+
+                            </div>
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footerlast">
+        @LayoutFooter.FooterLast
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1000516717'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1000516717%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @RenderSection("ReadyScripts", false)
+        });
+    </script>
+</body>
+</html>

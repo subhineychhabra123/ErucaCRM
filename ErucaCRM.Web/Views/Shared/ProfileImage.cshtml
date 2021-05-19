@@ -1,0 +1,29 @@
+﻿@model ErucaCRM.Web.ViewModels.UserProfileVM
+<script src="~/Scripts/UploadImage.js"></script>
+@if (Request.IsAuthenticated)
+{
+    // @Html.HiddenFor(model => model.UserId)
+    if (Model.IsCurrentUser)
+    {
+    <img id="ProfileImage"  src="@Model.ImageURL?t=@DateTime.Now.Ticks" class="floatleft ProfileImage" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'"   /> 
+    }
+    else
+    {
+    <img id="ProfileOtherImage"  src="@Model.ImageURL?t=@DateTime.Now.Ticks" class="floatleft ProfileImage" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'"  /> 
+    }
+    <style>
+        .fupload { clear: both; float: left; height: 27px; margin-top: 10px; overflow: hidden; position: relative; width: 128px; }
+        .qfupload input[type="file"] { position: absolute; right: 0px; }
+        #fileupload::-ms-value { display:none}
+        
+    </style>
+    <div class="fupload">
+        <input type="file" name="fileupload" id="fileupload" size="1"  />
+    </div>
+   
+@* @Html.TextBoxFor(m => m.ImageURL, new { id = "fileupload", type = "file" })*@
+@*   <a href="#" id="hl-start-upload-with-size">Upload</a>*@
+}
+ <div class="hidden" id="profileimgpop" style="overflow: hidden;">
+
+    </div>

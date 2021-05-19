@@ -1,0 +1,415 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.LeadVM
+@{
+    ViewBag.Title = "ErucaCRM |Leads - Edit Lead";
+   
+}
+
+@section scripts {
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    
+}
+<script type="text/javascript">
+    function EditSuccess(response) {
+        $('#LeadDetail').html(response);
+        $("._EditLead").hide();
+        $("._leadDetails").show();
+    }
+
+</script>
+    <h2>@Html.CultureSpecificDisplay(model => model.PageHeaderEdit)</h2>
+    <div class="buttoncontainer">
+       @* <a href="javascript:void(0)" class="button purple small _backToDetail">Back</a>*@
+       @* @Html.ActionLink("Back", "Leads", null, new { @class = "button purple small _backToDetail" })*@
+    </div>
+
+    @using (Ajax.BeginForm("EditLead", new AjaxOptions() { HttpMethod = "Post", OnSuccess = "EditSuccess" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(m => m.LeadId)
+        @Html.HiddenFor(model => model.AddressId)
+        @Html.HiddenFor(model => model.RatingId)
+        @Html.HiddenFor(model => model.Address.CountryId);
+        <div class="control-group-popup">
+            <div class="infoheader-popup">
+                <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderLeadInfo)</span>
+            </div>
+            <div class="floatleft  w50pc">
+                <div class="profile">
+
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-label-popup">
+
+                            @Html.ValidationMessageFor(model => model.FirstName)
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                            @Html.CultureSpecificLabel(model => model.FirstName)
+                        </div>
+                        <span class="requiredfield">*</span>
+                        <div class="display-label-popup">
+                            @Html.EditorFor(model => model.FirstName, new { @class = "input-text" })
+
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-label-popup">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.LastName)</div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                            @Html.CultureSpecificLabel(model => model.LastName)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @Html.EditorFor(model => model.LastName, new { @class = "input-text" })
+
+                        </div>
+                    </div>
+
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.LeadOwnerId)</div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                            @Html.CultureSpecificLabel(model => model.LeadOwnerId)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @(Html.DropDownListFor(model => model.LeadOwnerId, new SelectList(ViewBag.Owners, "LeadOwnerId", "Name", 0), new { @class = "dropdown" }))
+                            @Html.ValidationMessageFor(model => model.LeadOwnerId)
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.Title)</div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                            @Html.CultureSpecificLabel(model => model.Title)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @Html.EditorFor(model => model.Title, new { @class = "input-text" })
+
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.LeadCompanyName)</div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                            @Html.CultureSpecificLabel(model => model.LeadCompanyName)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @Html.EditorFor(model => model.LeadCompanyName, new { @class = "input-text" })
+
+                        </div>
+                    </div>
+
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.Amount) </div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                            @Html.CultureSpecificLabel(model => model.Amount)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @Html.EditorFor(model => model.Amount, new { @class = "input-text" })
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="floatleft">
+                <div class="profile">
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @Html.ValidationMessageFor(model => model.EmailId)
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                            <span class="requiredfield">*</span>  @Html.CultureSpecificLabel(model => model.EmailId)
+                        </div>
+                      
+                        <div class="display-field-popup">
+                            @Html.EditorFor(model => model.EmailId, new { @class = "input-text" })
+
+                        </div>
+                    </div>
+
+                    <div class="control-group-popup">
+                        <div class="display-label-popup"">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.IndustryId) </div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup"">
+                            @Html.CultureSpecificLabel(model => model.IndustryId)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @(Html.DropDownListFor(model => model.IndustryId, new SelectList(ViewBag.Industries, "IndustryId", "IndustryName", 0), new { @class = "dropdown" }))
+                            @Html.ValidationMessageFor(model => model.IndustryId)
+                        </div>
+                    </div>
+
+                    <div class="control-group-popup">
+                        <div class="display-label-popup"">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg"></div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup"">
+                            @Html.CultureSpecificLabel(model => model.Phone)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @Html.EditorFor(model => model.Phone, new { @class = "input-text" })
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup"">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.LeadSourceId)  </div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup"">
+                            @Html.CultureSpecificLabel(model => model.LeadSourceId)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @(Html.DropDownListFor(model => model.LeadSourceId, new SelectList(ViewBag.LeadSources, "LeadSourceId", "LeadSourceName", 0), new { @class = "dropdown" }))
+                           @Html.ValidationMessageFor(model => model.LeadSourceId)
+                             </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup"">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.LeadStatusId)  </div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup"">
+                            @Html.CultureSpecificLabel(model => model.LeadStatusId)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @(Html.DropDownListFor(model => model.LeadStatusId, new SelectList(ViewBag.LeadStatus, "LeadStatusId", "LeadStatusName", 0), new { @class = "dropdown" }))
+                         @Html.ValidationMessageFor(model => model.LeadSourceId)
+                               </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup"">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                         
+                        </div>
+                    </div>
+
+                    <div class="control-group-popup">
+                        <div class="display-label-popup"">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg"></div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup"">
+                            @Html.CultureSpecificLabel(model => model.SkypeId)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field">
+                            @Html.EditorFor(model => model.SkypeId, new { @class = "input-text" })
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="control-group-popup">
+            <div class="infoheader-popup">
+                <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAddressInfo)</span>
+            </div>
+            <div class="floatleft">
+                <div class="profile">
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg"></div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+
+
+                            @Html.CultureSpecificLabel(model => model.Address.Street, Model.AddressModuleName)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @Html.TextAreaFor(model => model.Address.Street, new { maxlength = 50, @class = "input-text" })
+                            @Html.ValidationMessageFor(model => model.Address.Street)
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg"></div>
+                        </div>
+                    </div>
+                   </div>
+                </div>
+               <div class="floatleft">
+                <div class="profile">
+                     <div class="control-group-popup">
+                        <div class="display-label-popup">
+                            @Html.CultureSpecificLabel(model => model.Address.City, Model.AddressModuleName)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @Html.EditorFor(model => model.Address.City, new { @class = "input-text" })
+                            @Html.ValidationMessageFor(model => model.Address.City)
+                        </div>
+                    </div>
+
+          
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.Address.State)  </div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                            @Html.CultureSpecificLabel(model => model.Address.State, Model.AddressModuleName)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @Html.EditorFor(model => model.Address.State, new { @class = "input-text" })
+
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.Address.Zipcode)</div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                            @Html.CultureSpecificLabel(model => model.Address.Zipcode, Model.AddressModuleName)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @Html.EditorFor(model => model.Address.Zipcode, new { @class = "input-text" })
+
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.Address.CountryId)</div>
+                        </div>
+                    </div>
+                    <div class="control-group-popup">
+                        <div class="display-label-popup">
+                            @Html.CultureSpecificLabel(model => model.Address.Country.CountryName, Model.AddressModuleName)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field-popup">
+                            @(Html.DropDownListFor(model => model.Address.Country.CountryId, new SelectList(ViewBag.CountryList, "CountryId", "CountryName", 0), new { @class = "" }))
+    @Html.ValidationMessageFor(model => model.Address.Country.CountryId)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="control-group-popup">
+            <div class="infoheader-popup">
+                <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderDescription)</span>
+            </div>
+            <div class="floatleft">
+                <div class="profile">
+                    <div class="control-group-popup">
+                        <div class="display-label-popup"">
+                            @Html.CultureSpecificLabel(model => model.Description)
+                        </div>
+                        <div class="display-field-popup">
+                            @Html.TextAreaFor(model => model.Description, new { @class = "input-text" })
+                            @Html.ValidationMessageFor(model => model.Description)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="control-group-popup">
+            <div class="display-label-popup">
+            </div>
+            <div class="display-field">
+                <input type="submit" class="button purple small" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" />
+                 <a href="javascript:void(0)" class="button purple small _backToDetail">Cancel</a>
+            </div>
+
+        </div>
+    }

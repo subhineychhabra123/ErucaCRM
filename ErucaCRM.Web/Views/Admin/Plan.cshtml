@@ -1,0 +1,173 @@
+﻿@model ErucaCRM.Web.ViewModels.PlanVM
+
+@{
+    ViewBag.Title = "Plan";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Plan</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+
+    <div class="buttoncontainer">
+        @Html.ActionLink("Back", "Plans", null, new { @class = "button _back" })
+    </div>
+
+
+    <div class="clear pad5px"></div>
+    <div class="profile">
+        @Html.HiddenFor(model => model.PlanId)
+
+        <div class="control-group">
+            <div class="display-label">
+            </div>
+
+            <div class="display-field">
+                <span class="requiredfield"></span>
+                <div class="user-errormsg">@Html.ValidationMessageFor(model => model.PlanName)</div>
+            </div>
+        </div>
+
+        <div class="control-group">
+
+            <div class="display-label">
+                @Html.LabelFor(model => model.PlanName)
+            </div>
+            <div class="display-field">
+                <span class="requiredfield">*</span>
+                @Html.TextBoxFor(model => model.PlanName, new { @class = "input-text" })
+
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label">
+            </div>
+            <span class="requiredfield"></span>
+            <div class="display-field">
+                <div class="user-errormsg"></div>
+            </div>
+        </div>
+
+        <div class="control-group">
+
+            <div class="display-label">
+                <span class="requiredfield"></span>
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="display-field">
+
+                @Html.TextAreaFor(model => model.Description, new { @class = "input-text" })
+
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="display-label">
+            </div>
+            <span class="requiredfield"></span>
+            <div class="display-field">
+                <div class="user-errormsg">@Html.ValidationMessageFor(model => model.Price)</div>
+            </div>
+        </div>
+
+        <div class="control-group">
+
+            <div class="display-label">
+                @Html.LabelFor(model => model.Price)
+            </div>
+            <div class="display-field">
+                <span class="requiredfield">*</span>
+                @Html.TextBoxFor(model => model.Price, new { @class = "input-text" })
+
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label">
+            </div>
+            <span class="requiredfield"></span>
+            <div class="display-field">
+                <div class="user-errormsg">@Html.ValidationMessageFor(model => model.NoOfUsers)</div>
+            </div>
+        </div>
+
+        <div class="control-group">
+
+            <div class="display-label">
+                @Html.LabelFor(model => model.NoOfUsers)
+            </div>
+            <div class="display-field">
+                <span class="requiredfield">*</span>
+                @Html.TextBoxFor(model => model.NoOfUsers, new { @class = "input-text" })
+
+            </div>
+        </div>
+
+        <div class="control-group">
+
+            <div class="display-label">
+                @Html.LabelFor(model => model.Active)
+            </div>
+            <div class="display-field" style="text-align:left; padding:5px;">
+                <span class="requiredfield"></span>
+                @Html.CheckBoxFor(model => model.Active)
+
+            </div>
+        </div>
+
+
+        @*   <div class="control-group">
+            <div class="infoheader">
+                <span>Permission Management</span>
+            </div>
+
+
+            <table id="PlanModules">
+                <tr>
+                    <th class="text-align-left">Module Name
+                    </th>
+                    <th class="text-align-left">Permission
+                    </th>
+                    <th class="text-align-left">Permission After Trail
+                    </th>
+                    <th class="actionHeader"></th>
+                </tr>
+                @foreach (var item in Model.PlanModules)
+                {
+                    <tr>
+                        <td class="text-align-left">
+                            @Html.HiddenFor(modelItem => item.PlanModuleId)
+                            @Html.DisplayFor(modelItem => item.ModuleName)
+                        </td>
+                        <td class="text-align-left">
+                            @Html.CheckBoxFor(modelItem => item.HasPermission)
+                        </td>
+                        <td class="text-align-left">
+                            @Html.CheckBoxFor(modelItem => item.HasPermissionAfterTrail)
+                        </td>
+
+                    </tr>
+                
+                }
+
+
+            </table>
+        </div>*@
+        <div class="control-group">
+            <div class="display-label">
+            </div>
+            <div class="display-field">
+                <input type="submit" class="button purple medium" value="Save" />
+                       @Html.ActionLink("Cancel", "Plans", null, new { @class = "button" })
+            </div>
+
+        </div>
+
+
+    </div>
+
+}

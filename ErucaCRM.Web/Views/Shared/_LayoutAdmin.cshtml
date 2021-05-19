@@ -1,0 +1,142 @@
+﻿@using ErucaCRM.Utility;
+@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Web.ViewModels;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link rel="icon" href="@Url.Content("~/content/images/favicon.ico")"/>
+    @*<link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />*@
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/main.css")" />
+    <link href="@Url.Content("~/Content/css/jquery-ui.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout-3.0.0.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/ErucaCRM.Framework/ErucaCRM.Framework.Core.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/ErucaCRM.Framework/ErucaCRM.Framework.Common.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+    <script src="~/Scripts/file-upload/jquery.form.js"></script>
+    <script src="~/Scripts/ErucaCRM.Framework/ErucaCRM.Framework.DateFormat.js"></script>
+    <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+    <div class="bodywrapper">
+        <div class="header">
+            <div class="menumain">
+                <div class="menu-one _mainmenu">
+                    <span>
+                        <img src="@Url.Content("~/Content/images/logo-dashboard.png")" alt="" title="" /></span>
+                    <a href="javascript:void(0)">@LayoutInnerMenus.Menu</a>
+                    <div class="clear"></div>
+                </div>
+                <div id="divMainMenu" class="drop-down displaynone  _popup">
+                    <img src="@Url.Content("~/Content/images/drop.png")" alt="" title="" class="img" />
+                    <ul>
+                        <li class="menuitem "data-permission="ContentManagementView"><a class="selected" menu="Home" href="@Url.Action("ContentManagement", "Admin")"><span class="left">
+                            <img src="@Url.Content("~/Content/images/home_20.png")" alt="" title="" class="img-small-20"></span> <span class="right">Content Management </span></a></li>
+
+
+                        <li class="menuitem" data-permission="UserManagementView"><a href="@Url.Action("UserList", "Admin")"><span class="left">
+                            <img src="@Url.Content("~/Content/images/Account_20.png")" class="img-small-20" alt="" title="" ></span> <span class="right">User Management </span></a></li>
+
+                        <li class="menuitem "  data-permission="PlanManagementView"><a href="@Url.Action("Plans", "Admin")"><span class="left">
+                            <img src="@Url.Content("~/Content/images/plan_20.png")" class="img-small-20" alt="" title=""></span> <span class="right">Plan Management </span></a></li>
+
+                        <li class="menuitem" data-permission="PlanManagementView"><a href="@Url.Action("Organizations", "Admin")"><span class="left">
+                            <img src="@Url.Content("~/Content/images/Organisation_30.png")" alt="" title="" class="img-small-20"></span> <span class="right">Organization Management</span></a></li>
+
+
+
+
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+
+            </div>
+            <div class="right-section user-profile">
+                <div class="logpart" style="display: inline; padding-left: 20px;">
+                    @{Html.RenderPartial("~/Views/Shared/_loginPartialAdmin.cshtml");}
+                </div>
+                <a href="javascript:void(0)" class="sign usrpic _usrpic">
+                    <img src="~/Uploads/users/@ErucaCRM.Utility.SessionManagement.LoggedInUser.ProfileImageUrl?t=@DateTime.Now.Ticks" class="profileimg" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'"/></a>
+                <div id="divaccount" class="divaccount">
+                    <span class="userarrow"></span>
+                    <div class="userimage">
+                        <img src="~/Uploads/users/@ErucaCRM.Utility.SessionManagement.LoggedInUser.ProfileImageUrl?t=@DateTime.Now.Ticks"  class="profileimg" height="120" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'" />
+                    </div>
+                    <div class="userprofiledetail">
+
+                        <div class="userprofilename">@ErucaCRM.Utility.SessionManagement.LoggedInUser.FullName</div>
+                        <div class="userprofileemail">@ErucaCRM.Utility.SessionManagement.LoggedInUser.EmailId</div>
+
+                        <div class="userprofilelogout">
+                            @using (Html.BeginForm("LogOut", "Admin", FormMethod.Post, new { id = "logoutForm", @class = "floatright" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <a href="javascript:document.getElementById('logoutForm').submit()" class="button purple small">Sign Out</a>
+                              
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="wrapper">
+        <table>
+            <tr>
+                <td class="sidemenutd">
+                    @RenderSection("SideMenuCss", false)
+                    <div id="SideMenu-Configuration" class="sidemenu">
+                        <h1 class="menuhdr">@if (!String.IsNullOrEmpty(ViewBag.Language))
+                                            { 
+                            @ViewBag.Language} </h1>
+                        <ul class="menu">
+                            <li id="configlabels"><a href="#" type="ManageLanguage">Label and Headers</a></li>
+                            @if (ViewBag.ApplicationPages != null)
+                            {
+                                foreach (var item in (List<ApplicationPageVM>)ViewBag.ApplicationPages)
+                                {  <li id="confighome"><a type='@item.PageTitle' href="@Url.Action("EditApplicationPage", "Admin", new { id_encrypted = ViewBag.CultureInformationId, pageId_encrypted = item.ApplicationPageId })" type=@item.PageTitle>@item.PageTitle</a></li>
+                               
+                                }
+                            }
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    <div class="wrapper-inner">@RenderBody()</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @RenderSection("ReadyScripts", false)
+
+            $(".usrpic").click(function () {
+                $("#divaccount").toggle();
+
+            });
+
+            $("._mainmenu").click(function () {
+                $("#divMainMenu").toggle();
+                $("#divSubMenu").hide();
+
+            });
+
+
+
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,246 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+@model ErucaCRM.Web.ViewModels.TaskItemVM
+
+@{
+    ViewBag.Title = "ErucaCRM | ViewTaskItemDetail";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+@section scripts {
+
+    @Scripts.Render("~/bundles/TaskItemDetailScripts")
+}
+@section ReadyScripts
+{
+ErucaCRM.User.ViewActivity.pageLoad();
+
+}
+
+@Html.HiddenFor(modelaudio => Model.AudioFileName)
+@Html.HiddenFor(modelaudiopath => Model.AudioPath)
+
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderDetail)</h2>
+
+@Html.HiddenFor(model => model.TaskId)
+<div class="infoheader">
+    <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderTaskInfo)@*Task Information*@</span>
+</div>
+<div class="clear">
+    <div class="buttoncontainer clear-both">
+        @if (Request.QueryString["returnurl"] != null)
+        {
+            @Html.ActionLink(@Html.CultureSpecificDisplay(model => model.ButtonBack), "Tasks", "User", null, new { @class = "button small purple _back" })
+        }
+        else
+        {
+            @Html.ActionLink(@Html.CultureSpecificDisplay(model => model.ButtonBack), "Tasks", "User", null, new { @class = "button small purple" })
+        }
+        @if (User.IsInRole(String.Concat(Constants.MODULE_TASK, Constants.PERMISSION_EDIT)))
+        {
+            @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonEdit).ToString(), "TaskItem", new { @taskID_encrypted = Model.TaskIdEncrypted }, new { @class = "button purple small _backtohere" })
+        }
+    </div>
+    <div class="control-group">
+
+
+        <div class="floatleft  w50pc">
+            <div class="profile">
+
+                <div class="control-group">
+                    <div class="display-label">
+                        <label>@Html.CultureSpecificDisplay(model => model.OwnerName)</label>
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            <label>@Html.DisplayFor(model => model.OwnerName)</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Subject)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            <label>@Html.DisplayFor(model => model.Subject)</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.TaskStatus)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            <label>@Html.DisplayFor(model => model.TaskStatus)</label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="display-label">
+                            <label>@Html.CultureSpecificDisplay(model => model.PriorityName)</label>
+                        </div>
+                        <div class="display-field">
+                            <div class="display-value">
+                                <label>@Html.DisplayFor(model => model.PriorityName)</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="floatleft">
+            <div class="profile">
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.TaskType)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            <label>@Html.DisplayFor(model => model.TaskType)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                      <label> @Html.CultureSpecificDisplay(model => model.TaskAssociatedPerson)</label>
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            <label>@Html.DisplayFor(model => model.TaskAssociatedPerson)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.DueDate)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            <label>@Html.DisplayFor(model => model.TaskDueDate)</label>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            
+        </div>
+
+        <div class="control-group">
+            <div>
+                <br />
+                <span class="infoheader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderDescription)</span>
+                <br />
+            </div>
+            <div class="display-field">
+                <label>@Html.DisplayFor(model => model.Description)</label>
+
+            </div>
+        </div>
+        <div class="_audio">
+                        <audio id="resource_audio" controls>
+                            <source src="" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <div id="_audio" class="downloadtaskaudio _downloadaudio"><a href="" target="_blank">
+                            <img src="~/Content/images/Download.png" title="Download audio"></a></div>
+                    </div>
+    </div>
+</div>
+<div class="control-group permissionbased" data-permission="@string.Concat(Constants.MODULE_DOCUMENT,Constants.PERMISSION_VIEWDOCUMENT)">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachments)</span>
+    </div>
+    <div class="rellistbL buttoncontainer"><a class="_adddoc button  pad0px floatright permissionbased" data-permission="@string.Concat(Constants.MODULE_DOCUMENT,Constants.PERMISSION_CREATEDOCUMENT)" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonAddNewDocument)</a></div>
+    <table id="activitydocs " class="tablecontainer _roleselector">
+        <tr>
+            <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.FileName)
+            </th>
+            <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.AttachedBy)
+            </th>
+            <th class="actionHeader"></th>
+        </tr>
+        @foreach (var item in Model.FileAttachments)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => item.DocumentId)
+
+                    <a href="@ErucaCRM.Utility.Constants.ACTIVITY_DOCS_PATH@item.DocumentPath" target="_blank">@Html.DisplayFor(modelItem => item.DocumentName)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Name)
+                </td>
+                <td>
+                    @if(User.IsInRole(string.Concat(Constants.MODULE_DOCUMENT,Constants.PERMISSION_DELETEDOCUMENT)))
+                    {
+                    <a docid="@item.DocumentId" class="_deleteDoc" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonDelete)</a>
+                    }
+                </td>
+            </tr>
+        }
+       
+        <tbody id="docActivityList" data-bind="template: { name: 'tmpldDocActivityList', foreach: ActivityDocList }">
+
+        </tbody>
+
+    </table>
+</div>
+<div class="hidden" id="FileUploadSection">
+    <div class="popup">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachFile)</h2></center>
+        <center><span class="error"></span></center>
+        <div class="floatleft " style="margin-left: 41px; width: 70%">
+            <div>
+                <div id="fileuploader">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonUpload)</div>
+            </div>
+            <div class="buttonbottomcontainer clear-both">
+                <input type="button" class="button small purple _attachDoc" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAttach)" />
+                <input type="button" class="button small purple _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script id="tmpldDocActivityList" type="text/html">
+    <tr>
+        <td>
+            <input type="hidden" id="DocumentId" data-bind="Value: DocId" />
+             <a data-bind="attr: { href: FilePath }" target="_blank">
+                 <span data-bind="text: FileName"></span>
+             </a>
+        </td>
+        <td>
+          <span data-bind="text: AttachedBy"></span>
+         </td>
+        <td>
+            <a  data-bind="click: function () { viewModel.RemoveDoc(this)}" class="_deleteDoc permissionbased" data-permission="@string.Concat(Constants.MODULE_DOCUMENT,Constants.PERMISSION_DELETEDOCUMENT)" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonDelete)</a>
+        </td>
+    </tr>
+</script>
+
+<script>
+    $(function () {
+        if ($('#AudioFileName').val() != null && $('#AudioFileName').val()!="") {
+
+            $('audio[id=resource_audio]').children('source').attr("src", $('#AudioPath').val());
+            $('div[id=_audio]').children('a').attr("href", $('#AudioPath').val());
+            $('._audio').show();
+            $('._downloadaudio').show();
+        }
+        else {
+            $('._audio').hide();
+            $('._downloadaudio').hide();
+        }
+    });
+    </script>

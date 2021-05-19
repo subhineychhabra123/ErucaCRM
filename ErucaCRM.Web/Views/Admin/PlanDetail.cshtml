@@ -1,0 +1,126 @@
+﻿@using ErucaCRM.Utility;
+
+@model ErucaCRM.Web.ViewModels.PlanVM
+
+@{
+    ViewBag.Title = "PlanDetail";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>PlanDetail</h2>
+
+
+<div class="buttoncontainer">
+    @Html.ActionLink("Back", "Plans", null, new { @class = "button _back" })
+</div>
+<div class="clear pad5px"></div>
+<div class="floatleft  w50pc">
+    <div class="profile">
+        <div class="control-group">
+            <div class="display-label">
+                @Html.LabelFor(model => model.PlanName)
+            </div>
+            <div class="display-field">
+                <div class="display-value">
+                    @Html.DisplayFor(model => model.PlanName)
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="display-label">
+                @Html.LabelFor(model => model.NoOfUsers)
+            </div>
+            <div class="display-field">
+                <div class="display-value">
+                    @Html.DisplayFor(model => model.NoOfUsers)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="display-field">
+                <div class="display-value">
+                    @Html.DisplayFor(model => model.Description)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="floatleft">
+    <div class="profile">
+        <div class="control-group">
+            <div class="display-label">
+                @Html.LabelFor(model => model.Price)
+            </div>
+            <div class="display-field">
+                <div class="display-value">
+                    @Html.DisplayFor(model => model.Price)
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="display-label">
+                @Html.LabelFor(model => model.Active)
+            </div>
+            <div class="display-field">
+                <div class="display-value">
+                    @Html.CheckBoxFor(model => model.Active)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="control-group">
+    <div class="infoheader">
+        <span>Permission Management</span>
+    </div>
+    <div class="rellistbL">
+        @Html.ActionLink("Add Permission", "PlanModule", "Admin", new { pid_encrypted = Model.PlanId }, new { @class = "button floatright" })
+    </div>
+    <div style="clear: both; margin-bottom: 5px;"></div>
+
+    <table id="PlanModules">
+        <tr>
+            <th class="text-align-left">Module Name
+            </th>
+            <th class="text-align-left">Permission
+            </th>
+            <th class="text-align-left">Permission After Trail
+            </th>
+            <th class="actionHeader"></th>
+        </tr>
+        @if (Model.PlanModules != null)
+        {
+            foreach (var item in Model.PlanModules)
+            {
+            <tr>
+                <td class="text-align-left">
+                    @Html.HiddenFor(modelItem => item.PlanModuleId)
+                    @Html.DisplayFor(modelItem => item.ModuleModel.ModuleName)
+                </td>
+                <td class="text-align-left">
+                    @Html.CheckBoxFor(modelItem => item.HasPermission, new { @disabled = "disabled" })
+                </td>
+                <td class="text-align-left">
+                    @Html.CheckBoxFor(modelItem => item.HasPermissionAfterTrail, new { @disabled = "disabled" })
+                </td>
+                <td>
+
+                    <a  class="floatleft marR25px "    href="@Url.Action("PlanModule", "Admin", new { Id_encrypted = @item.PlanModuleId.Encrypt(), pid_encrypted = @Model.PlanId })" >Edit </a>
+
+
+                </td>
+
+            </tr>
+                
+            }
+        }
+
+
+    </table>
+</div>

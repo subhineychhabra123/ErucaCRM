@@ -1,0 +1,491 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+
+@model ErucaCRM.Web.ViewModels.AccountVM
+
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/AddEditAccountScripts")
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.AddEditAccount.pageLoad();
+}
+<div class="gridspace">
+@if (Model.AccountId == null)
+{
+    <h2>@Html.CultureSpecificDisplay(model => model.PageHeaderCreate)</h2>
+}
+else
+{
+    <h2>@Html.CultureSpecificDisplay(model => model.PageHeaderEdit)</h2>
+}
+
+<div class="buttoncontainer">
+    @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonBack), "Leads", null, new { @class = "button purple small _back" })
+</div>
+
+
+<div class="clear pad5px"></div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.AccountId)
+
+    @Html.Hidden("TagIds");
+    @Html.HiddenFor(m => m.AccountTagIds);
+    @Html.HiddenFor(m => m.NewTagNames);
+    @Html.Hidden("CurrentTagId");
+    @Html.Hidden("CurrentTagName");
+
+
+@*if (!string.IsNullOrEmpty((string)ViewBag.FromParentAccount))
+                                  {
+    @Html.Hidden("FromParentAccount", true)
+                                  }*@
+    <div class="control-group">
+        <div class="infoheader padtop">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAccountInfo)</span>
+        </div>
+        <div class="floatleft">
+            <div class="profile">
+
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg">@Html.ValidationMessageFor(model => model.AccountOwnerId)</div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        <span class="requiredfield">*</span> @Html.CultureSpecificLabel(model => model.PageLabels.AccountOwner)
+                    </div>
+
+                    <div class="display-field">
+                        @(Html.DropDownListFor(model => model.AccountOwnerId, new SelectList(Model.AccountOwnerList, "AccountOwnerId", "Name", 0), new { @class = "dropdown" }))
+
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg">
+                            <div class="user-errormsg">@Html.ValidationMessageFor(model => model.AccountName)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        <span class="requiredfield">*</span>  @Html.CultureSpecificLabel(model => model.AccountName)
+                    </div>
+
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.AccountName, new { @class = "input-text", maxlength = 100 })
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.AccountLocation)
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.AccountLocation, new { @class = "input-text", maxlength = 50 })
+                    </div>
+                </div>
+                @*@if ((!string.IsNullOrEmpty(Model.AccountId) && Model.ParentAccountId.HasValue) || (string.IsNullOrEmpty(Model.AccountId)))
+                {
+                    <div class="control-group">
+                        <div class="display-label">
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field">
+                            <div class="user-errormsg"></div>
+                        </div>
+                    </div>
+                    <div class="control-group" style=" margin-bottom: 45px;">
+                        <div class="display-label">
+                            @Html.CultureSpecificLabel(model => model.PageLabels.ParentAccount)
+                        </div>
+                        <span class="requiredfield"></span>
+                        <div class="display-field">
+                            @(Html.DropDownListFor(model => model.ParentAccountId, new SelectList(Model.ParentAccountList, "AccountId", "AccountName", 0), new { @class = "dropdown" }))
+                        </div>
+                    </div>
+                }*@
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg"></div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.PageLabels.Industry)
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        @(Html.CultureSpecificDropDownList(model => model.IndustryId, new SelectList(Model.IndustryList, "IndustryId", "IndustryName", 0), new { @class = "dropdown" }))
+                    </div>
+                </div>
+
+                <div class="control-group" style="margin-bottom: 22px;">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg">@Html.ValidationMessageFor(model => model.AccountAnnualRevenue)</div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.AnnualRevenue)
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.AnnualRevenue, new { @class = "input-text", @maxlength = "15" })
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="floatleft">
+            <div class="profile">
+
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.PageLabels.AccountType)
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        @(Html.CultureSpecificDropDownList(model => model.AccountTypeId, new SelectList(Model.AccountTypeList, "AccountTypeId", "AccountTypeName", 0), new { @class = "dropdown" }))
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Phone)
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Phone, new { @class = "input-text", maxlength = 20 })
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Fax)
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Fax, new { @class = "input-text", maxlength = 20 })
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Mobile)
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Mobile, new { @class = "input-text", maxlength = 20 })
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.AccountWebsite)
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.AccountWebsite, new { @class = "input-text", maxlength = 50 })
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        <div class="user-errormsg"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.NumberOfEmployee)
+                    </div>
+                    <span class="requiredfield"></span>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.NumberOfEmployee, new { @class = "input-text" , maxlength="8" })
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    
+     
+    <div class="control-group">
+        <div class="infoheader tag4">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderTags)</span>
+        </div>
+    </div>
+
+    <div id="divAddTag">
+        <div class="pad0px1 floatleft fleft w50pc ">
+
+
+            <div class="control-group displayinlineblock pad5px">
+
+                <div class="display-field  displayinlineblock pad5px">
+                    <input type="text" id="Tag" maxlength="50" placeholder="@Html.CultureSpecificDisplay(model => model.PageLabels.EnterTagPlaceHolder)" />
+
+                </div>
+                <div class="display-field  displayinlineblock pad5px">
+                    <input type="button" class="button _submitbtn"  onclick="return viewModel.AddTagToAccount();" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddTag)" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+      
+
+    <div class="control-group">
+        <div class="tagmain">
+
+
+
+            @if (Model.AccountTags != null && Model.AccountTags.Count() > 0)
+            {
+                foreach (var item in Model.AccountTags)
+                { 
+                <div class="tag tagwidth" tagid="@item.TagId.Encrypt()" tagname="@item.TagModel.TagName">
+                    <div>
+                        <div class='tagname'><a target="_blank" href="/User/TagDetail/@item.TagId.Encrypt()"><span>@item.TagModel.TagName  </span></a><a onclick='viewModel.RemoveTag(this)'>&nbsp;&nbsp;X</a></div>
+                    </div>
+                </div>
+                
+                 
+                }
+            }
+
+
+        </div>
+
+    </div>
+    <div class="control-group">
+        <div class="infoheader tag4">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAddressInfo)</span>
+        </div>
+
+        <div class="floatleft fleft">
+            <div class="control-group">
+
+                <div class="infosubheader">
+                    <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderShippingAddressInfo)</span>
+                </div>
+            </div>
+            <div class="profile">
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address.Street, Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextAreaFor(model => model.Address.Street, new { @class = "input-text _street", maxlength = 250 })
+                        @Html.ValidationMessageFor(model => model.Address.Street)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address.City, Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Address.City, new { @class = "_city input-text", maxlength = 50 })
+                        @Html.ValidationMessageFor(model => model.Address.City)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address.State, Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Address.State, new { @class = "input-text _state", maxlength = 50 })
+                        @Html.ValidationMessageFor(model => model.Address.State)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address.Zipcode, Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Address.Zipcode, new { @class = "input-text _zipcode", maxlength = 20 })
+                        @Html.ValidationMessageFor(model => model.Address.Zipcode)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address.CountryId, Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @(Html.DropDownListFor(model => model.Address.CountryId, new SelectList(Model.CountryList, "CountryId", "CountryName", 0), new { @class = "dropdown _country" }))
+                        @Html.ValidationMessageFor(model => model.Address.CountryId)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="floatleft fleft">
+            <div class="control-group">
+
+                <div class="infosubheader">
+                    <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderBillingAddressInfo)</span>
+                </div>
+            </div>
+            <div class="profile">
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address1.Street, Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextAreaFor(model => model.Address1.Street, new { @class = "input-text _otherstreet", maxlength = 250 })
+                        @Html.ValidationMessageFor(model => model.Address1.Street)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address1.City, Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Address1.City, new { @class = "input-text _othercity", maxlength = 50 })
+                        @Html.ValidationMessageFor(model => model.Address1.City)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address1.State, Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Address1.State, new { @class = "input-text _otherstate", maxlength = 50 })
+                        @Html.ValidationMessageFor(model => model.Address1.State)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address1.Zipcode, Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextBoxFor(model => model.Address1.Zipcode, new { @class = "input-text _otherzipcode", maxlength = 20 })
+                        @Html.ValidationMessageFor(model => model.Address1.Zipcode)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address1.CountryId, Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @(Html.DropDownListFor(model => model.Address1.CountryId, new SelectList(Model.CountryList, "CountryId", "CountryName", 0), new { @class = "dropdown _country" }))
+                        @Html.ValidationMessageFor(model => model.Address1.CountryId)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="infoheader tag4">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderDescription)</span>
+        </div>
+        <div class="floatleft fleft">
+            <div class="profile">
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Description)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextAreaFor(model => model.Description, new { @class = "input-text" })
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="control-group">
+        <div class="display-field one buttoncontainer floatnone">
+                <input type="submit" class="marleft button purple small floatleft "  onclick=" viewModel.SaveTagToAccount();" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" />
+            </div>
+             </div>
+        <div class="control-group">
+            <div class="display-label">
+            </div>
+            
+
+        </div>
+
+
+
+    </div>
+   
+    
+}
+</div>

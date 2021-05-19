@@ -1,0 +1,113 @@
+﻿@model ErucaCRM.Web.ViewModels.ApplicationPageVM
+@{
+    ViewBag.Title = "AddCustomPage";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Add Custom Page</h2>
+
+@section scripts {
+
+    <script src="@Url.Content("~/Scripts/ckEditor/ckEditor.js")"></script>
+}
+<script type="text/javascript">
+</script>
+
+@section SideMenuCss
+{
+   @* <style>
+        .sidemenu {   position: fixed;}        
+        .wrapper-inner { border-left: 1px solid #B6B6B6; margin-left: 230px; padding-left: 10px; overflow: hidden;}
+        #SideMenu-Configuration { display: block; }
+           #SideMenu-Configuration a[type*='@ViewBag.redirectedFrom'] { background: #fff; color: #17B5F0; }
+    </style>*@
+    <style>
+        .sidemenutd { display: block; }
+
+        .inner-body .wrapper-inner { max-width: 980px; }
+
+        #SideMenu-Configuration { display: block; }
+
+           
+          #SideMenu-Configuration a[type*='@ViewBag.redirectedFrom'] { background: #fff; color: #17B5F0; }
+    </style>
+}
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(r => r.ApplicationPageId)
+    @Html.HiddenFor(r => r.ContentApplicationPage.CultureInformationId)
+     <div class="profile">
+       <div class="control-group">
+            <div class="display-label ">
+                Page Title
+            </div>
+            <div class="display-field ">
+                @Html.TextBoxFor(r => r.PageTitle, new { @class = "input-text" })
+            </div>
+
+        </div>
+             <div class="control-group">
+            <div class="display-label ">
+                Page Url
+            </div>
+            <div class="display-field ">
+                @Html.TextBoxFor(r => r.PageUrl, new {  @class = "input-text" })
+            </div>
+
+        </div>
+        <div class="control-group ">
+            <div class="display-label ">
+                Page Description
+            </div>
+            <div class="display-field ">
+                @Html.TextAreaFor(r => r.PageDescription, new {  @class = "input-text" })
+            </div>
+        </div>
+
+        <div class="control-group ">
+            <div class="display-label ">
+                Content
+            </div>
+            <div class="display-field ">
+                @Html.TextAreaFor(r => r.ContentApplicationPage.PageContent, new { @class = "ckeditor" })
+            </div>
+        </div>
+        <div class="control-group ">
+            <div class="display-label ">
+                Meta Title
+            </div>
+            <div class="display-field ">
+                @Html.TextBoxFor(r => r.ContentApplicationPage.MetaTitle, new {  @class = "input-text" })
+            </div>
+        </div>
+        <div class="control-group ">
+            <div class="display-label ">
+                Meta Description
+            </div>
+            <div class="display-field ">
+                @Html.TextBoxFor(r => r.ContentApplicationPage.MetaDescription, new { @class = "input-text" })
+            </div>
+        </div>
+
+        <div class="control-group ">
+            <div class="display-label ">
+                Active
+            </div>
+            <div class="display-field ">
+                @Html.CheckBoxFor(r=>r.IsActive)
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label  ">
+            </div>
+            <div class="display-field  ">
+                <div class="btnsManageLabel">
+                    <input type="submit" class="button small _Save purple" value="Save" />
+                    <input type="button" class="button small purple" value="Cancel" />
+                </div>
+                <div class="hidden btnsManagePublicPages">
+                </div>
+            </div>
+        </div>
+    </div>
+}

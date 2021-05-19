@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "ManageOuterPageContent";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section SideMenuCss
+{@*<style>
+        .sidemenu {   position: fixed;}        
+        .wrapper-inner { border-left: 1px solid #B6B6B6; margin-left: 230px; padding-left: 10px; overflow: hidden;}
+        #SideMenu-Configuration { display: block; }
+            #SideMenu-Configuration a[href*='UserList'] { background: #fff; color: #17B5F0; }
+    </style>*@
+    <style>
+        .sidemenutd { display: block; }
+
+        .inner-body .wrapper-inner { max-width: 980px; }
+
+        #SideMenu-Configuration { display: block; }
+
+            #SideMenu-Configuration a[type*='ManageLanguage'] { background: #fff; color: #17B5F0; }
+    </style>
+}
+
+
+<h2>ManageOuterPageContent</h2>

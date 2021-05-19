@@ -1,0 +1,172 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+@model ErucaCRM.Web.ViewModels.TaskItemVM
+
+@{
+    ViewBag.Title = "ErucaCRM | Task";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+@section scripts {
+    @*<script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.TaskItem.js")" language="javascript" type="text/javascript"></script>*@
+    @Scripts.Render("~/bundles/TaskItemScripts")
+}
+<style>
+    .txtsmall { width: 100px !important; }
+
+    .classdisabled { }
+
+    .message { color: green; font-size: 10px; }
+</style>
+<div class="gridspace">
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderCreate)</h2>
+
+
+@using (Html.BeginForm("TaskItem", "User", FormMethod.Post, new { @id = "taskID" }))
+{
+
+    <p class="message">@TempData["ShowMessage"]
+    </p>
+    <p class="successmessage">
+        @Html.ValidationSummary(true)
+    </p>
+         
+    <div class="floatleft">
+        <div class="profile ">
+            @Html.HiddenFor(model => model.TaskId)
+            @Html.HiddenFor(model => model.OwnerId)
+            @Html.HiddenFor(model => model.CreatedBy)
+            @Html.HiddenFor(model => model.CreatedDate)
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.OwnerName)
+                </div>
+                <div class="display-field">
+                    @{
+                       if (Model.Owners.Count > 1)    
+                       {
+                        @Html.DropDownListFor(model => model.OwnerId, new SelectList(Model.Owners, "OwnerId", "OwnerName"), new { @class = "txtBig", @id = "drpOwners" })   
+                       }
+                       else
+                       {
+                        @Html.TextBoxFor(model => model.OwnerName, new { disabled = "disabled", @readonly = "readonly" })                        
+                       }    
+                    }
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                </div>
+
+                <div class="display-field">
+                    <div class="user-errormsg">@Html.ValidationMessageFor(model => model.Subject)</div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label"><span class="requiredfield">*</span>
+                    @Html.CultureSpecificLabel(model => model.Subject)
+                </div>
+
+                <div class="display-field">
+                    @Html.TextBoxFor(model => model.Subject, new { maxlength = 100, @class = "input-text" })
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                </div>
+
+                <div class="display-field">
+                    <div class="user-errormsg">@Html.ValidationMessageFor(model => model.DueDate)</div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.DueDate)
+                </div>
+                <div class="display-field">
+                    @Html.TextBoxFor(model => model.DueDate, "{0:d}", new { @class = "datepicker" })
+                </div>
+            </div>
+
+            @if (Model.AssociatedModuleId != (int)ErucaCRM.Utility.Enums.Module.AccountCase)
+            {
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificDropDownList(model => model.AssociatedModuleId, new SelectList(Model.AssociatedModules, "ModuleId", "ModuleName"), new { @class = "txtsmall" })
+                    </div>
+                    <div class="display-field">
+                        @Html.HiddenFor(model => model.AssociatedModuleValue)
+                        <select id="drpAssociateModule"></select>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.AccountName)
+                    </div>
+                    <div class="display-field pad5px text-align-left">
+                        @Html.DisplayFor(model => model.AccountName)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label ">
+                        @Html.CultureSpecificLabel(model => model.AccountCaseNumber)
+                    </div>
+                    <div class="display-field pad5px text-align-left">
+
+                        @Html.DisplayFor(model => model.AccountCaseNumber)
+                        @Html.HiddenFor(model => model.AssociatedModuleId)
+                        @Html.HiddenFor(model => model.AssociatedModuleValue)
+                    </div>
+                </div>
+
+            }
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Status)
+                </div>
+                <div class="display-field">
+                    @Html.CultureSpecificDropDownList(model => model.Status, new SelectList(ViewBag.TaskStatus, "TaskStatusId", "StatusName"), new { @class = "txtBig" })
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.PriorityName)
+                </div>
+                <div class="display-field">
+                    @Html.CultureSpecificDropDownList(model => model.PriorityId, new SelectList(ViewBag.Priorities, "PriorityId", "PriorityName"), new { @class = "txtBig" })
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="infoheader">
+                    <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderDescription)</span>
+                </div>
+                <div class="display-label">
+                </div>
+                <div class="display-field">
+                    @Html.TextAreaFor(model => model.Description, new { @class = "txtBig" })
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label"></div>
+                <div class="display-field text-align-left buttoncontainer">
+                    <input type="submit" class="button purple normal" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" />
+                    <a class="button purple normal _back">@Html.CultureSpecificDisplay(model => model.ButtonBack)                     
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+}
+    </div>
+

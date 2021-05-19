@@ -1,0 +1,15 @@
+﻿@using ErucaCRM.Utility;
+@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Web.ViewModels;
+
+@if (Request.IsAuthenticated) {
+    <text>
+       @LayoutInner.LoginInfoWelCome, <a href="#">@ErucaCRM.Utility.SessionManagement.LoggedInUser.UserName</a>
+    </text>
+} else {
+    <ul>
+        <li>@Html.ActionLink("Register", "Register", "Site", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+       @* <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+    </ul>
+}
+ 

@@ -1,0 +1,321 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.HomeVM
+@using ErucaCRM.Web.ViewModels;
+@using ErucaCRM.Utility;
+@{
+    ViewBag.Title = "ErucaCRM | Home";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+@section scripts {
+
+    @Scripts.Render("~/bundles/HomeScripts")
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.Home.pageLoad()
+    ErucaCRM.Framework.Common.ApplyHelp("DashBoard");       
+
+    }
+@section SideMenuCss
+{
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class=""></h3>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="row">
+        <div class="col-lg-8 ">
+            @if (User.IsInRole(string.Concat(Constants.MODULE_REPORTSANDDASHBOARDS, Constants.PERMISSION_VIEW)))
+            {
+                <div class="clearfix">
+                    <div class="panel panel-default">
+                        <div class="panel-heading panelheaderbg panelheaderboder">
+                            @Html.CultureSpecificDisplay(HomeVM => HomeVM.PageSubHeaders.Dashboard)
+                            <div class="pull-right">
+                                <a href="@Url.Action("Dashboard", "User")" >
+                                    <img src="/Content/images/dashboardclock-logo.png" alt="" title=""></a>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.Dashboard)
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 clearfix">
+                                        <div class="pull-right">
+                                            <div class="btn-group _filter-button dashfilterbtn">
+
+                                                <ul>
+                                                    <li><a class="_year-wise" onclick=" viewHomeModel.GetDashboardAnalytics('Year');">Year</a></li>
+                                                    <li><a class="_month-wise" onclick=" viewHomeModel.GetDashboardAnalytics('Month');">Month</a></li>
+                                                    <li class="active"><a class="_week-wise" onclick=" viewHomeModel.GetDashboardAnalytics('Week');">Week</a></li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="row">
+                                            <div class="text-center">
+                                                <div id="divFirstchart">
+
+                                                    <div id="newclients"></div>
+
+                                                </div>
+
+                                                <b><span>@Html.CultureSpecificDisplay(HomeVM => HomeVM.PageSubHeaders.NewLeads)</span><span id="spannewlead"></span></b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="row">
+                                            <div class="text-center">
+                                                <div id="divSecondchart">
+
+                                                    <div id="closedleads"></div>
+                                                </div>
+                                                <b><span>@Html.CultureSpecificDisplay(HomeVM => HomeVM.PageSubHeaders.LeadsClosed)</span><span id="spanclosedlead"></span></b>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="row">
+                                            <div class="text-center">
+                                                <div id="divThirdChart">
+                                                    <div id="revenues"></div>
+                                                </div>
+                                                <b><span>@Html.CultureSpecificDisplay(HomeVM => HomeVM.PageSubHeaders.ExpectedRevenue)</span><span id="spantotalsales"></span></b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+
+
+                                        <div class="row">
+                                            <div class="text-center">
+                                                <div id="divFourthchart">
+                                                    <div id="winlostleads"></div>
+                                                </div>
+                                                <img src="~/Content/images/win-lead.png" class="winlostleadcolor" /><span><b>@Html.CultureSpecificDisplay(HomeVM => HomeVM.PageSubHeaders.WinLeads)</b></span>&nbsp;&nbsp;<span id="spanwinleads"></span>&nbsp;&nbsp;<img src="~/Content/images/lost-lead.png" class="winlostleadcolor" /><span><b>@Html.CultureSpecificDisplay(HomeVM => HomeVM.PageSubHeaders.LostLeads)</b></span>&nbsp;&nbsp;<span id="spanlostleads"></span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="panel panel-default">
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div id="containerLeadsInPipeLine">
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.col-lg-4 (nested) -->
+                                <div class="col-lg-6">
+                                    <div id="containerLeadYearCountChartWeekBasis">
+                                    </div>
+                                    <!-- /.col-lg-8 (nested) -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (User.IsInRole(string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_VIEW)))
+            {        
+                <div class="panel panel-default">
+                    <div class="panel-heading panelheaderbg ">
+                        <a href="/User/AccountCases"><span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.MyTasks)</span></a>
+                        <span class="pull-right">
+                            <a class="pull-right fa" href="javascript:void(0)" onclick="viewHomeModel.GetTaskItemList()" title="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonRefreshToolTip)">
+                                <img src="~/Content/images/refrish.png" alt=""></a>
+                            <a  href="@Url.Action("TaskItem", "User")" data-helpkey="addactivity" data-helppos="top-left" class="permissionbased _backtohere "     
+
+   data-permission="@String.Concat(ErucaCRM.Utility.Constants.MODULE_TASK, ErucaCRM.Utility.Constants.PERMISSION_CREATE)" >@Html.CultureSpecificDisplay(model => model.PageButtons.LinkButtonAddActivity)</a>
+                        </span>
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div id="NoHomeActivityFound">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.NoRecordFound)</div>
+
+                        <div id="taskListContainer" data-bind="template: { name: 'templHomeActivities', foreach: TaskItemList }">
+                        </div>
+
+                    </div>
+                    <!-- /.panel-body -->
+                    <div class="panel-footer panelFooterbg">
+                        <div class="input-group">
+                            <a class="_backtohere" href="/User/Tasks">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.AllTasks)</a>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <!-- /.col-lg-8 -->
+        @if (User.IsInRole(string.Concat(Constants.MODULE_CASE, Constants.PERMISSION_VIEW)))
+        { 
+            <div class="col-lg-4">
+                <div class="panel panel-default ">
+                    <div class="panel-heading panelheaderbg ">
+                        <a href="/User/AccountCases"><span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.MyCases)</span></a>
+                        <span class="pull-right fa">
+                            <a href="javascript:void(0)" onclick="viewHomeModel.GetAccountCaseList()" title="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonRefreshToolTip)">
+                                <img src="/Content/images/refrish.png" alt="" title="" class="ref">
+                            </a>
+                        </span>
+                        <span class="pull-right">
+                            <a href="/User/AccountCase" class="permissionbased _backtohere"  data-permission="@String.Concat(ErucaCRM.Utility.Constants.MODULE_CASE, ErucaCRM.Utility.Constants.PERMISSION_CREATE)">@Html.CultureSpecificDisplay(model => model.PageButtons.LinkButtonAddCase)</a>
+                        </span>
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+
+                        <div id="divNoCaseFound" class="">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.NoRecordFound)</div>
+                        <div id="HomeTopAccountCasesWithMessage" data-bind="template: { name: 'templHomeAccountCasesComment', foreach: AccountCaseList }">
+                        </div>
+
+
+                    </div>
+                    <!-- /.panel-body -->
+                    <div class="panel-footer panelFooterbg">
+                        <div class="input-group">
+                            <div><a class="_backtohere" href="/User/AccountCases">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.AllCases)</a></div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel -->
+            </div>
+        }
+        <!-- /.col-lg-4 -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.row -->
+<script type="text/html" id="templHomeAccountCasesComment">
+    <div data-bind="if: showhr">
+        <hr class="casehr" />
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="media-list">
+                <li class="media">
+                    <a class="pull-left" data-bind="attr: { href: OwnerDetail }">
+                        <img class="img-responsive userimg" alt="" title="" data-bind="attr: { src: AccountCaseOwnerImg }" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'" /></a>
+                    <div class="media-body">
+                        <div>
+                            <b><a class="" data-bind="attr: { href: DetailUrl }"><span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.CaseNumber) #: </span><span data-bind="    text: CaseNumber"></span></a></b>
+                            <span data-bind="text: CaseOwnerName"></span>
+
+                        </div>
+                        <div class="AccountCasedate pull-right" data-bind="text: CreatedDate"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="CaseSubject">
+                <span><b>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.Subject) :</b></span><span class="text" data-bind="    text: Subject"></span>
+            </div>
+            <div>
+                <span><b>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.Description) :</b></span><span class="text" data-bind="    text: Description"></span>
+            </div>
+            <div data-bind="if: ShowReplies">
+                <div class="floatleft">
+                    <span><b>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.Replies)</b>
+                        <img class="fa" src="/Content/images/arrow-down.png" alt="" /></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h6></h6>
+    <div class="comments">
+        <div id="AccountCommentInfo" data-bind="template: { name: 'TemplateAccountCaseComment', foreach: CaseMessageBoards }">
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div data-bind="if: ShowViewMoreComment">
+                    <a data-bind="attr: { href: MessageDetailUrl, title: Subject }"><i>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.ViewMoreComments)</i></a>
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <textarea class="_addNewCaseComment form-control" placeholder="@Html.CultureSpecificDisplay(model => model.PageSubHeaders.AddComment)"  maxlength="500" onkeypress="viewHomeModel.setHeight(this,event);"    data-bind="attr: { 'data-AccountCaseComment': AccountCaseId }"  />
+            </div>
+            <div class="col-xs-4">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h1></h1>
+                    </div>
+                    <div class="col-xs-12">
+                        <h1></h1>
+                    </div>
+                    <div class="col-xs-0">
+                        <button type="button" class="btn btn-default btn-xs buttoncolor" data-bind="click: function () { viewHomeModel.SaveNewCommentForAccountCase(AccountCaseId) }">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonPostComment)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="TemplateAccountCaseComment" type="text/html">
+    <ul class="media-list">
+        <li class="media">
+            <a class="pull-left" data-bind="attr: { href: OwnerDetail }">
+                <img class="img-responsive userimg" alt="" data-bind="attr: { src: CommentedbyImg }" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'"></a>
+            <div class="media-body">
+                <div>
+                    <b><a data-bind="attr: { href: OwnerDetail }"><span data-bind="    text: CommentedbyName"></span></a></b>
+                    <p><span data-bind="text: Comment"></span></p>
+                    <p><span data-bind="text: CommentCreatedDate"></span></p>
+                </div>
+            </div>
+        </li>
+    </ul>
+</script>
+
+<script type="text/html" id="templHomeActivities">
+    <div class="home-task-backcolor">
+        <ul class="media-list">
+            <li class="media">
+                <a class="pull-left" data-bind="attr: { href: OwnerDetail }">
+                    <img class="img-responsive userimg" alt="" data-bind="attr: { src: OwnerImage }" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'"></a>
+                <div class="media-body">
+                    <div>
+                        <a data-bind="attr: { href: DetailUrl, title: Subject }"><span data-bind="    text: Subject"></span>
+                        </a>
+                        <p><span data-bind="text: DueDate"></span></p>
+                        <hr class="hrow" />
+                        <p class="ActivitiesDescription" data-bind="text: Description">
+                        </p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</script>
+

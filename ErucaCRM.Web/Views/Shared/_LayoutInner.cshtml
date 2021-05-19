@@ -1,0 +1,219 @@
+@using ErucaCRM.Utility;
+@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Web.ViewModels;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @*  <meta charset="utf-8" />*@
+    <title>@ViewBag.Title</title>
+    <link rel="icon" href="@Url.Content("~/content/images/favicon.ico")"/>
+    @*  <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/main.css")" />
+    <link href="@Url.Content("~/Content/css/jquery-ui.css")" rel="stylesheet" type="text/css" />*@
+
+    @Scripts.Render("~/bundles/MainScripts")
+    @Styles.Render("~/Content/MainCss")
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Scripts/ErucaCRM.Messages/@CommonFunctions.GetCurrentCulturScript()?t=@DateTime.Today.Ticks"></script>
+    <script type="text/javascript" src="~/Scripts/ErucaCRM.Helps/@CommonFunctions.GetCurrentCulturScript()?t=@DateTime.Today.Ticks"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+        $(function () {
+
+            $("#popupboxes").click(function () {
+                $(this).hide();
+            })
+            ErucaCRM.Framework.Core.Config.CultureSpecificDateFormat = "@HtmlHelpers.jQueryDatePickerFormat()";
+        })
+
+    </script>
+
+
+</head>
+<body>
+    <div class="bodywrapper _bodywrapperinner">
+        <div class="header">
+
+            <div class="right-shift-pic right-acc" id="Notification">
+                <a href="javascript:void(0)" class="sign helpimg _helpclick">
+                    <img src="~/Content/images/help.png" class="profilehelpimg" title="Help" /></a>
+
+
+                <div class="system-configuration">
+                    <a href="@(User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_USER, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) ? "/user/UserList/" : User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_ROLE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) ? "/user/Roles/" : User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_PROFILE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) ? "/user/ProfileType/" : User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_STAGE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) ? "/user/Stages/" : "#")" class="settingicon logoup" title="@LayoutInner.SettingToolTip" style="@(User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_USER, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) || User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_ROLE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) || User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_PROFILE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) || User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_STAGE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)) ? "display:block" : "display:none")" ></a>
+                </div>
+                <a href="javascript:void(0)" class="sign usrpic _usrpic">
+                    <img src="@ErucaCRM.Utility.SessionManagement.LoggedInUser.ProfileImageUrl?t=@DateTime.Now.Ticks" class="profileimg _profileimg" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'" title="@ErucaCRM.Utility.SessionManagement.LoggedInUser.FullName"/></a>
+
+
+                <div class="btn-group _btn-group">
+                    <div>
+                        <a>
+                            <i class="icon-globe _icon-globe" style="display: none"><span class="notify-tip _notify-tip"></span></i>
+                        </a>
+                        <div class="dropdown-menu pull-right ">
+                            <a class="msg-container clearfix">
+                                <span class="notification-thumb">
+                                    <img src="~/Content/images/Bell.png" alt="" title="@LayoutInnerMenus.BellTitle"></span>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="NotificationList">
+                    <div id="NoNotification">
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+
+
+    <div class="right-section">
+        <div id="divaccount" class="divaccount _popup _divaccount">
+            <span class="userarrow"></span>
+            <div class="userimage">
+                <img src="@ErucaCRM.Utility.SessionManagement.LoggedInUser.ProfileImageUrl?t=@DateTime.Now.Ticks"  class="profileimg" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'" />
+            </div>
+            <div class="userprofiledetail">
+
+                <div class="userprofilename">@ErucaCRM.Utility.SessionManagement.LoggedInUser.FullName</div>
+                <div class="userprofileemail">@ErucaCRM.Utility.SessionManagement.LoggedInUser.EmailId</div>
+                <div class="userprofilemyaccount">
+                    @Html.ActionLink(LayoutInner.MyAccount, "MyProfile", new { @id_encrypted = @ErucaCRM.Utility.SessionManagement.LoggedInUser.UserId.Encrypt() })
+                </div>
+                <div class="userprofilelogout">
+                    @using (Html.BeginForm("LogOut", "User", FormMethod.Post, new { id = "logoutForm", @class = "floatright" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <a href="javascript:document.getElementById('logoutForm').submit()" class="button purple small">@LayoutInner.SignOut</a>
+                              
+                    }
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+
+    <div class="wrapper">
+
+        @RenderSection("SideMenuCss", false)
+        <div id="SideMenu-Configuration" class="sidemenu">
+            <h1 class="menuhdr">@LayoutInnerMenus.SideMenuConfiguration</h1>
+            <ul class="menu">
+                <li id="configusers" class="permissionbased" data-permission="@string.Concat(Constants.MODULE_USER, Constants.PERMISSION_VIEW)"><a href="/User/UserList">@LayoutInnerMenus.SideMenuConfigurationUsers</a></li>
+                <li id="configroles" class="permissionbased" data-permission="@string.Concat(Constants.MODULE_ROLE, Constants.PERMISSION_VIEW)"><a href="/User/Roles">@LayoutInnerMenus.SideMenuConfigurationRoles</a></li>
+                <li id="configprofiles" class="permissionbased" data-permission="@string.Concat(Constants.MODULE_PROFILE, Constants.PERMISSION_VIEW)"><a href="/User/ProfileType">@LayoutInnerMenus.SideMenuConfigurationProfiles</a></li>
+                <li id="configstages" class="permissionbased" data-permission='@String.Concat(ErucaCRM.Utility.Constants.MODULE_STAGE, ErucaCRM.Utility.Constants.PERMISSION_VIEW)'><a href="/User/Stages">@LayoutInnerMenus.SideMenuConfigurationStages</a></li>
+                <li id="Account"><a href="/User/AccountSettings">@LayoutInnerMenus.SideMenuConfigurationAccountSettings</a></li>
+            </ul>
+        </div>
+        <div class="clear pad5px"></div>
+        <div class="leads">
+            <div class="left-leads _left-leads">
+                <ul id="mainsidemenus">
+                    <li>
+
+                        <a href="/User/Home" class="pad0px">
+                            <img class="width116px " src="~/Content/images/@CommonFunctions.GetCurrentCulturMenuLogo()" alt="" title=""></a>
+
+                    </li>
+                    <li class="permissionbased" data-permission="@string.Concat(Constants.MODULE_REPORTSANDDASHBOARDS, Constants.PERMISSION_VIEW)" class="selected"><a menu="Dashboard" href="@Url.Action("Dashboard", "User")"><span class="left">
+                        <img src="@Url.Content("~/Content/images/dashboardclock-logo.png")" alt="" title="" class="img-small-20"></span>
+
+                        <span class="right">@LayoutInnerMenus.Dashboard</span></a></li>
+                    <li   class="permissionbased" data-permission="@string.Concat(Constants.MODULE_LEAD, Constants.PERMISSION_VIEW)"><a menu="Leads" href="@Url.Action("Leads", "User")"><span class="left">
+                        <img src="@Url.Content("~/Content/images/leads-menu.png")" class="img-small-20" alt="" title="" ></span>
+
+                        <span class="right">@LayoutInnerMenus.Leads </span></a></li>
+                    @if (User.IsInRole(string.Concat(Constants.MODULE_ACCOUNT, Constants.PERMISSION_VIEW)) || User.IsInRole(string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_VIEW)))
+                    {    
+                        <li><a menu="Accounts" href="@Url.Action("Accounts", "User")"><span class="left">
+                            <img src="@Url.Content("~/Content/images/account.png")" class="img-small-20" alt="" title=""></span>
+                            @* <br />*@
+                            <span class="right">@LayoutInnerMenus.Accounts </span></a></li>
+                    }
+                    <li class="permissionbased" data-permission="@string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_VIEW)"><a menu="Activities" href="@Url.Action("Tasks", "User")"><span class="left">
+                        <img src="@Url.Content("~/Content/images/activities.png")" alt="" title="" class="img-small-20" ></span>@*<br />*@
+                        <span class="right">@LayoutInnerMenus.Activities </span></a></li>
+                    <li class="permissionbased" data-permission="@string.Concat(Constants.MODULE_TAG, Constants.PERMISSION_VIEW)"><a menu="Tags"  href="@Url.Action("Tags", "User")"><span class="left">
+                        <img src="@Url.Content("~/Content/images/Tags.png")" class="img-small-20" alt="" title="" ></span>
+                        <span class="right">@LayoutInnerMenus.Tags </span></a></li>
+                    <li class="permissionbased" data-permission="@string.Concat(Constants.MODULE_SALESORDER, Constants.PERMISSION_VIEW)"><a  menu="SaleOrders" href="@Url.Action("SaleOrders", "User")"><span class="left">
+                        <img src="@Url.Content("~/Content/images/sale.png")" alt="" title="" class="img-small-20"></span>
+                        <span class="right">@LayoutInnerMenus.SaleOrders</span></a></li>
+                    <li class="menuitem permissionbased" data-permission="@string.Concat(Constants.MODULE_CASE, Constants.PERMISSION_VIEW)"><a menu="AccountCases" href="@Url.Action("AccountCases", "User")"><span class="left">
+                        <img src="@Url.Content("~/Content/images/cases.png")" alt="" title="" class="img-small-20"></span>
+                        <span class="right">@LayoutInnerMenus.Cases</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="wrapper-inner">
+            <div id="InnerContentContainer">
+                @RenderBody()
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ErucaCRM.User.InnerLayout.pageLoad();
+
+            @RenderSection("ReadyScripts", false)
+
+        });
+
+    </script>
+
+    <div id="popcontainer">
+    </div>
+
+    <div class="hidden helpPop _Help _helpClose" id="Help">
+    </div>
+    <button type="button" name="close" class="helpPopClose _closepop button _helpClose">
+        @LayoutInnerMenus.Helpbutton</button>
+
+    <div id="HelpTips" data-bind="template: { name: 'HelpTemplate', foreach: HelpList }" class="_helpPop _helpClose"></div>
+    <script type="text/html" id="HelpTemplate">
+        <div data-bind="css: Class, attr: { id: ElementId }, event: { mouseover: highlightThis, mouseout: showall }" class="_helptip">
+            <div class="helpbox">
+                <div data-bind="text: Title" class="helptitle">
+                </div>
+                <div data-bind="text: Description" class="helpdescrip">
+                    </div>
+                <div class="userarrwl _arrow"></div>
+                    <ul id="Helplinks" class="helplk" data-bind="template: { name: 'HelpLinkTemplate', foreach: Links }"></ul>
+                    <script type="text/html" id="HelpLinkTemplate">
+        <li class="helpli">
+            <a data-bind="attr: { href: Linkaddress }, text: LinkTitle" target="_blank" class="helpanchor"></a>
+        </li>
+    </script>
+            </div>
+            
+        </div>
+    </script>
+   
+    
+</body>
+
+
+</html>

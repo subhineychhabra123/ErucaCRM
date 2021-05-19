@@ -1,0 +1,369 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.SalesOrderVM
+@{
+    ViewBag.Title = "ErucaCRM | Sales Order";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderDetail)</h2>
+
+<div class="buttoncontainer">
+    @if (Request.QueryString["retrunurl"] != null)
+    {
+         @Html.ActionLink(@Html.CultureSpecificDisplay(model => model.ButtonBack), "", null, new { @class = "button purple small _back" })
+    }
+    else
+    {
+         @Html.ActionLink(@Html.CultureSpecificDisplay(model => model.ButtonBack), "SaleOrders", "User",null, new { @class = "button purple small" })
+    }
+   
+    @if (User.IsInRole(String.Concat(ErucaCRM.Utility.Constants.MODULE_SALESORDER, ErucaCRM
+        .Utility.Constants.PERMISSION_EDIT)))
+    {
+        @Html.ActionLink(@Html.CultureSpecificDisplay(model => model.ButtonEdit), "EditSalesOrder", new { @id_encrypted = Model.SalesOrderId }, new { @class = "button purple small _backtohere" })
+    }
+</div>
+<div class="control-group">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderSaleOrderInfo)</span>
+    </div>
+    <div class="floatleft  w50pc">
+        <div class="profile">
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.OwnerId)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.User.FullName)
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Subject)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Subject)
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.DueDate)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.DueDate)
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.OrderAmount)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.ViewOrderAmount)
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+    <div class="floatleft">
+        <div class="profile">
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Account.AccountName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Account.AccountName)
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+
+                    @Html.CultureSpecificLabel(model => model.Carrier)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Carrier)
+                    </div>
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+
+                    @Html.CultureSpecificLabel(model => model.SalesCommission)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.SalesCommission)
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="control-group">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAddressInfo)</span>
+    </div>
+    <div class="floatleft  w50pc">
+
+        <div class="profile">
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.Street, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address.Street)
+                    </div>
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.City, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address.City)
+                    </div>
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.State, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address.State)
+                    </div>
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.Zipcode, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address.Zipcode)
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Address.CountryId, Model.AddressModuleName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Address.Country.CountryName)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="control-group">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderDescription)</span>
+    </div>
+    <div class="floatleft">
+        <div class="profile">
+            <div class="control-group">
+              @*  <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Description)
+                </div>*@
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Description)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="control-group">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderProductDetails)</span>
+    </div>
+
+    <table id="leadProducts tablecontainer">
+        <tr>
+            <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderProductName)
+            </th>
+            <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderQtyInStock)
+            </th>
+            <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderQty)
+            </th>
+            <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderUnitPrice)
+            </th>
+            <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderListPrice)
+            </th>
+            <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.GridHeaderTotal)
+            </th>
+        </tr>
+        @foreach (var item in Model.ProductSalesOrderAssociations)
+        {
+            <tr id="row_@item.AssociatedProductId">
+                <td class="vartical-align">
+                    @Html.DisplayFor(modelItem => item.AssociatedProduct.Product.ProductName)
+                </td>
+                <td class="vartical-align">
+                    @Html.DisplayFor(modelItem => item.AssociatedProduct.QtyInStock)
+                </td>
+                <td class="vartical-align">
+                    @Html.DisplayFor(modelItem => item.AssociatedProduct.Quantity)
+                </td>
+                <td class="vartical-align">
+                    @Html.DisplayFor(modelItem => item.AssociatedProduct.UnitPrice)
+                </td>
+                <td>
+
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="vartical-align">
+                                    <div class=" "><span id="value_txtListPrice1">@Html.DisplayFor(modelItem => item.AssociatedProduct.ListPrice)</span></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="alignright">@Html.CultureSpecificDisplay(model => model.PageLabels.Discount):</td>
+                            </tr>
+                            <tr>
+                                <td class="alignright">@Html.CultureSpecificDisplay(model => model.PageLabels.TotalAfterDiscount):</td>
+                            </tr>
+                            <tr>
+                                <td class="alignright">@Html.CultureSpecificDisplay(model => model.PageLabels.Tax):</td>
+                            </tr>
+                            <tr>
+                                <td class="alignright"><b>@Html.CultureSpecificDisplay(model => model.PageLabels.NetTotal):</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="text-align-right padR5px">
+                                    <div class=""><span id="value_hdnTotal1">@Html.DisplayFor(modelItem => item.AssociatedProduct.TotalAmount)</span></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="text-align-right padR5px">@Html.DisplayFor(modelItem => item.AssociatedProduct.TotalDiscount)</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="text-align-right padR5px">@Html.DisplayFor(modelItem => item.AssociatedProduct.TotalAfterDiscount)</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="text-align-right padR5px">@Html.DisplayFor(modelItem => item.AssociatedProduct.TotalTax)</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="text-align-right padR5px">@Html.DisplayFor(modelItem => item.AssociatedProduct.NetTotal)</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        }
+
+        <tr>
+
+
+            <td colspan="5">
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="alignright">
+                                <b>@Html.CultureSpecificDisplay(model => model.PageLabels.SubTotal):</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="vartical-align alignright"><b>@Html.CultureSpecificDisplay(model => model.PageLabels.Discount):</b></td>
+                        </tr>
+                        <tr>
+                            <td class="vartical-align alignright"><b>@Html.CultureSpecificDisplay(model => model.PageLabels.TotalAfterDiscount):</b></td>
+                        </tr>
+                        <tr>
+                            <td class="vartical-align alignright"><b>@Html.CultureSpecificDisplay(model => model.PageLabels.Tax):</b></td>
+                        </tr>
+                        <tr>
+                            <td class="vartical-align alignright"><b>@Html.CultureSpecificDisplay(model => model.PageLabels.GrandTotal):</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="text-align-right padR5px">@Html.DisplayFor(model => model.TotalMainAmount)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="text-align-right padR5px">@Html.DisplayFor(model => model.TotalMainDiscount)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="text-align-right padR5px">@Html.DisplayFor(model => model.TotalMainAfterDiscount)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="text-align-right padR5px">@Html.DisplayFor(model => model.TotalMainTax)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="text-align-right padR5px">@Html.DisplayFor(model => model.ViewGrandTotal)</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+
+        </tr>
+
+    </table>
+
+</div>

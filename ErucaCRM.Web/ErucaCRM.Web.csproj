@@ -1,0 +1,1093 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{85365004-EB8A-4F1A-85F5-52D3DBA00663}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ErucaCRM.Web</RootNamespace>
+    <AssemblyName>ErucaCRM.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=3.1.3.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EPPlus.3.1.3.3\lib\net35\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Excel">
+      <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageResizer, Version=3.4.3.103, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ImageResizer.3.4.3\lib\ImageResizer.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageResizer.Mvc">
+      <HintPath>..\packages\ImageResizer.Mvc.3.4.2\lib\ImageResizer.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.1.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.1.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Web.Optimization.WebForms">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.WebForms.1.1.2\lib\net45\Microsoft.AspNet.Web.Optimization.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.2.0.2\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.0.2\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.2.0.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WindowsAzure.Storage.4.2.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Recaptcha.Web, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RecaptchaNet.1.3\lib\net40\Recaptcha.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=3.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\structuremap.3.0.5.130\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4, Version=3.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\structuremap.3.0.5.130\lib\net40\StructureMap.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Data\App_Start\BundleConfig.cs" />
+    <Compile Include="App_Data\App_Start\FilterConfig.cs" />
+    <Compile Include="App_Data\App_Start\RouteConfig.cs" />
+    <Compile Include="App_Data\App_Start\SignalRConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\SiteController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\AutoMapperWebProfile.cs" />
+    <Compile Include="Infrastructure\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Infrastructure\CultureModuleManagement.cs" />
+    <Compile Include="Infrastructure\RememberMeAttribute.cs" />
+    <Compile Include="Infrastructure\CultureModuleAttribute.cs" />
+    <Compile Include="Infrastructure\EncryptedActionParameterAttribute.cs" />
+    <Compile Include="Infrastructure\HtmlHelpers.cs" />
+    <Compile Include="Infrastructure\StructureMap.cs" />
+    <Compile Include="IRealTimeNotificationHub.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RealTimeNotificationHub.cs" />
+    <Compile Include="Service References\ServiceReference1\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\AccountContactVM.cs" />
+    <Compile Include="ViewModels\AccountSettingVM.cs" />
+    <Compile Include="ViewModels\AccountTypeVM.cs" />
+    <Compile Include="ViewModels\AccountVM.cs" />
+    <Compile Include="ViewModels\ApplicationPageVM.cs" />
+    <Compile Include="ViewModels\AssociatedCutomPagesVM.cs" />
+    <Compile Include="ViewModels\AssociatedProductVM.cs" />
+    <Compile Include="ViewModels\AssociationApplicationPageVM.cs" />
+    <Compile Include="ViewModels\BaseModel.cs" />
+    <Compile Include="ViewModels\CaseMessageBoardVM.cs" />
+    <Compile Include="ViewModels\AccountCaseVM.cs" />
+    <Compile Include="ViewModels\ContactVM.cs" />
+    <Compile Include="ViewModels\ContentApplicationPageVM.cs" />
+    <Compile Include="ViewModels\CultureInformationVM.cs" />
+    <Compile Include="ViewModels\DashBoardVM.cs" />
+    <Compile Include="ViewModels\DropDownHelper.cs" />
+    <Compile Include="ViewModels\HomeVM.cs" />
+    <Compile Include="ViewModels\LayoutFooter.cs" />
+    <Compile Include="ViewModels\InvoicesVM.cs" />
+    <Compile Include="ViewModels\InvoiceVM.cs" />
+    <Compile Include="ViewModels\LayoutHelper.cs" />
+    <Compile Include="ViewModels\LayoutInner.cs" />
+    <Compile Include="ViewModels\LayoutInnerFooter.cs" />
+    <Compile Include="ViewModels\LayoutInnerMenus.cs" />
+    <Compile Include="ViewModels\LayoutMenus.cs" />
+    <Compile Include="ViewModels\LeadAuditVM.cs" />
+    <Compile Include="ViewModels\LeadCommentVM.cs" />
+    <Compile Include="ViewModels\LeadContactVM.cs" />
+    <Compile Include="ViewModels\LeadStagesJSONVm.cs" />
+    <Compile Include="ViewModels\LeadTagVM.cs" />
+    <Compile Include="ViewModels\PlanModuleVM.cs" />
+    <Compile Include="ViewModels\PlanVM.cs" />
+    <Compile Include="ViewModels\ProductInvoiceAssociationVM.cs" />
+    <Compile Include="ViewModels\ProductLeadAssociationVM.cs" />
+    <Compile Include="ViewModels\FileAttachmentVM.cs" />
+    <Compile Include="ViewModels\IndustryVM.cs" />
+    <Compile Include="ViewModels\LeadSourceVM.cs" />
+    <Compile Include="ViewModels\LeadStatusVM.cs" />
+    <Compile Include="ViewModels\LeadUserVM.cs" />
+    <Compile Include="ViewModels\LeadVM.cs" />
+    <Compile Include="ViewModels\ProductQuoteAssociationVM.cs" />
+    <Compile Include="ViewModels\ProductSalesOrderAssociationVM.cs" />
+    <Compile Include="ViewModels\ProductVM.cs" />
+    <Compile Include="ViewModels\ProfileAddressVM.cs" />
+    <Compile Include="ViewModels\CountryVM.cs" />
+    <Compile Include="ViewModels\ForgotPasswordVM.cs" />
+    <Compile Include="ViewModels\LoginModel.cs" />
+    <Compile Include="ViewModels\CompanyVM.cs" />
+    <Compile Include="ViewModels\ProfileVM.cs" />
+    <Compile Include="ViewModels\BillingAddressVM.cs" />
+    <Compile Include="ViewModels\CultureSpecificSiteContentVM.cs" />
+    <Compile Include="ViewModels\PublicAboutUsPageVM.cs" />
+    <Compile Include="ViewModels\PublicFeaturePageVM.cs" />
+    <Compile Include="ViewModels\PublicHomePageVM.cs" />
+    <Compile Include="ViewModels\PublicMobileCRMPageVM.cs" />
+    <Compile Include="ViewModels\QuotesVM.cs" />
+    <Compile Include="ViewModels\QuoteVM.cs" />
+    <Compile Include="ViewModels\RatingVM.cs" />
+    <Compile Include="ViewModels\RegistrationVM.cs" />
+    <Compile Include="ViewModels\RoleVM.cs" />
+    <Compile Include="ViewModels\SaleOrdersVM.cs" />
+    <Compile Include="ViewModels\SalesOrderVM.cs" />
+    <Compile Include="ViewModels\ShippingAddressVM.cs" />
+    <Compile Include="ViewModels\StageVM.cs" />
+    <Compile Include="ViewModels\TagVM.cs" />
+    <Compile Include="ViewModels\TaskItemVM.cs" />
+    <Compile Include="ViewModels\TaskStatusVM.cs" />
+    <Compile Include="ViewModels\TimeZoneVM.cs" />
+    <Compile Include="ViewModels\UserProfileVM.cs" />
+    <Compile Include="ViewModels\UserVM.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="Content\css\bootstrap-theme.css" />
+    <Content Include="Content\css\bootstrap-theme.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\default.css" />
+    <Content Include="Content\css\editor.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\immersive-slider.css" />
+    <Content Include="Content\css\jquery-ui.css" />
+    <Content Include="Content\css\jquery.ennui.contentslider.css" />
+    <Content Include="Content\css\Main.css" />
+    <Content Include="Content\css\OuterLayoutCss.css" />
+    <Content Include="Content\css\perfect-scrollbar.css" />
+    <Content Include="Content\css\inner.css" />
+    <Content Include="Content\css\uploadfile.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\fonts\images.jpg" />
+    <Content Include="Content\images\1.png" />
+    <Content Include="Content\images\2.png" />
+    <Content Include="Content\images\3.png" />
+    <Content Include="Content\images\4.png" />
+    <Content Include="Content\images\about-img.png" />
+    <Content Include="Content\images\account.png" />
+    <Content Include="Content\images\Account_20.png" />
+    <Content Include="Content\images\activities.png" />
+    <Content Include="Content\images\add.png" />
+    <Content Include="Content\images\admin_management.png" />
+    <Content Include="Content\images\amount.png" />
+    <Content Include="Content\images\Android-icon.png" />
+    <Content Include="Content\images\Android.png" />
+    <Content Include="Content\images\aro-infor.png" />
+    <Content Include="Content\images\aro.png" />
+    <Content Include="Content\images\aro1.png" />
+    <Content Include="Content\images\aro2.png" />
+    <Content Include="Content\images\arro.png" />
+    <Content Include="Content\images\arrow-d.png" />
+    <Content Include="Content\images\arrow-down.png" />
+    <Content Include="Content\images\arrow-left.png" />
+    <Content Include="Content\images\arrow-top.png" />
+    <Content Include="Content\images\arrow-u.png" />
+    <Content Include="Content\images\arrow-up.png" />
+    <Content Include="Content\images\arrow.png" />
+    <Content Include="Content\images\arrows.png" />
+    <Content Include="Content\images\Attachment_icon.png" />
+    <Content Include="Content\images\back-bg.png" />
+    <Content Include="Content\images\back-button.png" />
+    <Content Include="Content\images\back-pop-up.png" />
+    <Content Include="Content\images\back.png" />
+    <Content Include="Content\images\background-button-hover.png" />
+    <Content Include="Content\images\background-button.png" />
+    <Content Include="Content\images\background-button1.png" />
+    <Content Include="Content\images\background.png" />
+    <Content Include="Content\images\backstrip.png" />
+    <Content Include="Content\images\banner.png" />
+    <Content Include="Content\images\bcak-bg.png" />
+    <Content Include="Content\images\Bell.png" />
+    <Content Include="Content\images\bg-scrollbar-thumb-y.png" />
+    <Content Include="Content\images\bg-scrollbar-track-y.png" />
+    <Content Include="Content\images\bg-scrollbar-trackend-y.png" />
+    <Content Include="Content\images\billing.png" />
+    <Content Include="Content\images\bottom.png" />
+    <Content Include="Content\images\box.png" />
+    <Content Include="Content\images\building.png" />
+    <Content Include="Content\images\bullet-down.png" />
+    <Content Include="Content\images\bullet.png" />
+    <Content Include="Content\images\button-bg.png" />
+    <Content Include="Content\images\button-leads.png" />
+    <Content Include="Content\images\button.png" />
+    <Content Include="Content\images\button1.png" />
+    <Content Include="Content\images\calender-icon.png" />
+    <Content Include="Content\images\call.png" />
+    <Content Include="Content\images\calling.png" />
+    <Content Include="Content\images\calnder.png" />
+    <Content Include="Content\images\Cancel.png" />
+    <Content Include="Content\images\CancelLead.png" />
+    <Content Include="Content\images\Case-management.png" />
+    <Content Include="Content\images\cases.png" />
+    <Content Include="Content\images\cellphone_20.png" />
+    <Content Include="Content\images\CHACK.png" />
+    <Content Include="Content\images\chart-01.png" />
+    <Content Include="Content\images\chart.png" />
+    <Content Include="Content\images\chart2.png" />
+    <Content Include="Content\images\charts.png" />
+    <Content Include="Content\images\circle-arrow.png" />
+    <Content Include="Content\images\cock.png" />
+    <Content Include="Content\images\company-name.png" />
+    <Content Include="Content\images\contact.png" />
+    <Content Include="Content\images\contactmenu.png" />
+    <Content Include="Content\images\contacts.png" />
+    <Content Include="Content\images\contact_management.png" />
+    <Content Include="Content\images\cs_leftImg.jpg" />
+    <Content Include="Content\images\cs_leftImg.png" />
+    <Content Include="Content\images\cs_rightImg.png" />
+    <Content Include="Content\images\dashboard-logo.png" />
+    <Content Include="Content\images\dashboardclock-logo.png" />
+    <Content Include="Content\images\email-id.png" />
+    <Content Include="Content\images\en-US.png" />
+    <Content Include="Content\images\en-US_loginlogo.png" />
+    <Content Include="Content\images\en-US_logo.png" />
+    <Content Include="Content\images\en-US_menulogo.png" />
+    <Content Include="Content\images\frist-name.png" />
+    <Content Include="Content\images\glyphicons-halflings-white.png" />
+    <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\images\help.png" />
+    <Content Include="Content\images\helparro.png" />
+    <Content Include="Content\images\imageSlider2.png" />
+    <Content Include="Content\images\images-1.png" />
+    <Content Include="Content\images\img-coment.png" />
+    <Content Include="Content\images\img.png" />
+    <Content Include="Content\images\leadfilter-icon.png" />
+    <Content Include="Content\images\leadgreencross-icon.png" />
+    <Content Include="Content\images\leads-menu.png" />
+    <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\costomer-service.png" />
+    <Content Include="Content\images\cri.png" />
+    <Content Include="Content\images\crosearro.png" />
+    <Content Include="Content\images\cross-arrow.png" />
+    <Content Include="Content\images\cross-gray-hover.png" />
+    <Content Include="Content\images\cross-gray.png" />
+    <Content Include="Content\images\cross-hover.png" />
+    <Content Include="Content\images\cross.png" />
+    <Content Include="Content\images\dash-borad.png" />
+    <Content Include="Content\images\Dashboard.png" />
+    <Content Include="Content\images\delete.png" />
+    <Content Include="Content\images\Download.png" />
+    <Content Include="Content\images\drop.png" />
+    <Content Include="Content\images\Edit.jpg" />
+    <Content Include="Content\images\edit.png" />
+    <Content Include="Content\images\email.png" />
+    <Content Include="Content\images\Enhance.png" />
+    <Content Include="Content\images\ErucaTech_final.jpg" />
+    <Content Include="Content\images\ErucaTech_final.png" />
+    <Content Include="Content\images\facebook.png" />
+    <Content Include="Content\images\favestar.png" />
+    <Content Include="Content\images\filter-icon.png" />
+    <Content Include="Content\images\find-down.png" />
+    <Content Include="Content\images\five_stars.png" />
+    <Content Include="Content\images\form--back.png" />
+    <Content Include="Content\images\form.png" />
+    <Content Include="Content\images\four_stars.png" />
+    <Content Include="Content\images\frist.png" />
+    <Content Include="Content\images\google.png" />
+    <Content Include="Content\images\grad.png" />
+    <Content Include="Content\images\gray-star.png" />
+    <Content Include="Content\images\green.png" />
+    <Content Include="Content\images\greencross-icon.png" />
+    <Content Include="Content\images\grow-bussiness-img1.png" />
+    <Content Include="Content\images\grow-bussiness-img2.png" />
+    <Content Include="Content\images\header-bg.gif" />
+    <Content Include="Content\images\home-img.png" />
+    <Content Include="Content\images\home.png" />
+    <Content Include="Content\images\home_20.png" />
+    <Content Include="Content\images\hover-effect.png" />
+    <Content Include="Content\images\images.png" />
+    <Content Include="Content\images\img.jpg" />
+    <Content Include="Content\images\kye.png" />
+    <Content Include="Content\images\lead-aro.png" />
+    <Content Include="Content\images\lead-generation-icon_20.png" />
+    <Content Include="Content\images\leads-1.png" />
+    <Content Include="Content\images\leads-2.png" />
+    <Content Include="Content\images\leads-page.png" />
+    <Content Include="Content\images\leads.png" />
+    <Content Include="Content\images\lead_management.png" />
+    <Content Include="Content\images\left-login.png" />
+    <Content Include="Content\images\li-back.png" />
+    <Content Include="Content\images\li-back2.png" />
+    <Content Include="Content\images\linkdin.png" />
+    <Content Include="Content\images\live-chat.png" />
+    <Content Include="Content\images\log-in.png" />
+    <Content Include="Content\images\login-img.png" />
+    <Content Include="Content\images\login-left-banner.jpg" />
+    <Content Include="Content\images\logo-1.png" />
+    <Content Include="Content\images\logo-dashboard.png" />
+    <Content Include="Content\images\logo-dashbord.png" />
+    <Content Include="Content\images\logo_new.png" />
+    <Content Include="Content\images\lost-lead.png" />
+    <Content Include="Content\images\lostlead.png" />
+    <Content Include="Content\images\man.png" />
+    <Content Include="Content\images\map-zoom.png" />
+    <Content Include="Content\images\map.png" />
+    <Content Include="Content\images\mark.png" />
+    <Content Include="Content\images\marks.png" />
+    <Content Include="Content\images\markting.png" />
+    <Content Include="Content\images\message.png" />
+    <Content Include="Content\images\mobile.png" />
+    <Content Include="Content\images\mobileQRCode.png" />
+    <Content Include="Content\images\nav-bg.gif" />
+    <Content Include="Content\images\nav-devider.png" />
+    <Content Include="Content\images\new-dashboard.png" />
+    <Content Include="Content\images\new-dashboard1.png" />
+    <Content Include="Content\images\new-dashboard2.png" />
+    <Content Include="Content\images\new-dashboard3.png" />
+    <Content Include="Content\images\new-leads.png" />
+    <Content Include="Content\images\next.png" />
+    <Content Include="Content\images\oder.png" />
+    <Content Include="Content\images\oders.png" />
+    <Content Include="Content\images\one_star.png" />
+    <Content Include="Content\images\ordeers-icon_20.png" />
+    <Content Include="Content\images\orders.png" />
+    <Content Include="Content\images\organisation_30.png" />
+    <Content Include="Content\images\p-background.png" />
+    <Content Include="Content\images\password.png" />
+    <Content Include="Content\images\phone-img.png" />
+    <Content Include="Content\images\phone.png" />
+    <Content Include="Content\images\phone2.png" />
+    <Content Include="Content\images\plan_20.png" />
+    <Content Include="Content\images\position.png" />
+    <Content Include="Content\images\red.png" />
+    <Content Include="Content\images\ref.png" />
+    <Content Include="Content\images\refrish.png" />
+    <Content Include="Content\images\Report-bag.png" />
+    <Content Include="Content\images\sale-transactions1.png" />
+    <Content Include="Content\images\sale-transactions2.png" />
+    <Content Include="Content\images\sale.png" />
+    <Content Include="Content\images\saperator.png" />
+    <Content Include="Content\images\SaveLead.png" />
+    <Content Include="Content\images\search.png" />
+    <Content Include="Content\images\setting_20.png" />
+    <Content Include="Content\images\shop.png" />
+    <Content Include="Content\images\sign up.png" />
+    <Content Include="Content\images\slide-right.png" />
+    <Content Include="Content\images\slider.png" />
+    <Content Include="Content\images\soping.png" />
+    <Content Include="Content\images\sports-img.png" />
+    <Content Include="Content\images\stars.png" />
+    <Content Include="Content\images\star_empty.png" />
+    <Content Include="Content\images\star_full.png" />
+    <Content Include="Content\images\star_highlight.png" />
+    <Content Include="Content\images\stop.png" />
+    <Content Include="Content\images\support.png" />
+    <Content Include="Content\images\sv-SE_loginlogo.png" />
+    <Content Include="Content\images\sv-SE_logo.png" />
+    <Content Include="Content\images\sv-SE_menulogo.png" />
+    <Content Include="Content\images\System-Configuration.png" />
+    <Content Include="Content\images\Tags.png" />
+    <Content Include="Content\images\tasks.png" />
+    <Content Include="Content\images\tasks_20.png" />
+    <Content Include="Content\images\teg.png" />
+    <Content Include="Content\images\three_star.PNG" />
+    <Content Include="Content\images\top.png" />
+    <Content Include="Content\images\trans.png" />
+    <Content Include="Content\images\treeview-default-line.gif" />
+    <Content Include="Content\images\treeview-default.gif" />
+    <Content Include="Content\images\two_star.PNG" />
+    <Content Include="Content\images\video.png" />
+    <Content Include="Content\images\wechat.png" />
+    <Content Include="Content\images\weixin.png" />
+    <Content Include="Content\images\win-lead.png" />
+    <Content Include="Content\images\winlead.png" />
+    <Content Include="Content\images\yahoo.png" />
+    <Content Include="Content\images\yellow-star.png" />
+    <Content Include="Content\images\zh-CN_loginlogo.png" />
+    <Content Include="Content\images\zh-CN_logo.png" />
+    <Content Include="Content\images\zh-CN_menulogo.png" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\canvasjs.min.js" />
+    <Content Include="Scripts\circles.js" />
+    <Content Include="Scripts\ckEditor\ckEditor.js" />
+    <Content Include="Scripts\ckEditor\config.js" />
+    <Content Include="Scripts\ckEditor\contents.css" />
+    <Content Include="Scripts\ckEditor\lang\en.js" />
+    <Content Include="Scripts\ckEditor\plugin.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\da.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\de.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\el.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\es.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\fr-ca.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\gl.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\he.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\id.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\it.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\km.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\ko.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\no.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\si.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\sq.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\sr-latn.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\sr.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\th.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\zh.js" />
+    <Content Include="Scripts\ckEditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Scripts\ckEditor\plugins\about\dialogs\about.js" />
+    <Content Include="Scripts\ckEditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="Scripts\ckEditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="Scripts\ckEditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="Scripts\ckEditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="Scripts\ckEditor\plugins\fakeobjects\images\spacer.gif" />
+    <Content Include="Scripts\ckEditor\plugins\icons.png" />
+    <Content Include="Scripts\ckEditor\plugins\icons_hidpi.png" />
+    <Content Include="Scripts\ckEditor\plugins\image\dialogs\image.js" />
+    <Content Include="Scripts\ckEditor\plugins\image\images\noimage.png" />
+    <Content Include="Scripts\ckEditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="Scripts\ckEditor\plugins\link\dialogs\link.js" />
+    <Content Include="Scripts\ckEditor\plugins\link\images\anchor.png" />
+    <Content Include="Scripts\ckEditor\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="Scripts\ckEditor\plugins\magicline\images\hidpi\icon.png" />
+    <Content Include="Scripts\ckEditor\plugins\magicline\images\icon.png" />
+    <Content Include="Scripts\ckEditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="Scripts\ckEditor\plugins\scayt\dialogs\options.js" />
+    <Content Include="Scripts\ckEditor\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\ar.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\bg.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\ca.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\cs.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\de.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\el.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\eo.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\es.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\fi.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\fr-ca.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\fr.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\gl.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\he.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\hr.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\hu.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\id.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\it.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\ja.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\km.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\ku.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\lv.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\nb.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\nl.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\no.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\pl.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\pt.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\ru.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\si.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\sk.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\sl.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\sq.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\sv.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\th.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\tr.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\ug.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\uk.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\vi.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\zh.js" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Scripts\ckEditor\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="Scripts\ckEditor\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="Scripts\ckEditor\plugins\table\dialogs\table.js" />
+    <Content Include="Scripts\ckEditor\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="Scripts\ckEditor\plugins\wsc\dialogs\tmp.html" />
+    <Content Include="Scripts\ckEditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="Scripts\ckEditor\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="Scripts\ckEditor\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="Scripts\ckEditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="Scripts\ckEditor\skins\moono\dialog.css" />
+    <Content Include="Scripts\ckEditor\skins\moono\dialog_ie.css" />
+    <Content Include="Scripts\ckEditor\skins\moono\dialog_ie7.css" />
+    <Content Include="Scripts\ckEditor\skins\moono\dialog_ie8.css" />
+    <Content Include="Scripts\ckEditor\skins\moono\dialog_iequirks.css" />
+    <Content Include="Scripts\ckEditor\skins\moono\dialog_opera.css" />
+    <Content Include="Scripts\ckEditor\skins\moono\editor.css" />
+    <Content Include="Scripts\ckEditor\skins\moono\editor_gecko.css" />
+    <Content Include="Scripts\ckEditor\skins\moono\editor_ie.css" />
+    <Content Include="Scripts\ckEditor\skins\moono\editor_ie7.css" />
+    <Content Include="Scripts\ckEditor\skins\moono\editor_ie8.css" />
+    <Content Include="Scripts\ckEditor\skins\moono\editor_iequirks.css" />
+    <Content Include="Scripts\ckEditor\skins\moono\icons.png" />
+    <Content Include="Scripts\ckEditor\skins\moono\icons_hidpi.png" />
+    <Content Include="Scripts\ckEditor\skins\moono\images\arrow.png" />
+    <Content Include="Scripts\ckEditor\skins\moono\images\close.png" />
+    <Content Include="Scripts\ckEditor\skins\moono\images\hidpi\close.png" />
+    <Content Include="Scripts\ckEditor\skins\moono\images\hidpi\lock-open.png" />
+    <Content Include="Scripts\ckEditor\skins\moono\images\hidpi\lock.png" />
+    <Content Include="Scripts\ckEditor\skins\moono\images\hidpi\refresh.png" />
+    <Content Include="Scripts\ckEditor\skins\moono\images\lock-open.png" />
+    <Content Include="Scripts\ckEditor\skins\moono\images\lock.png" />
+    <Content Include="Scripts\ckEditor\skins\moono\images\refresh.png" />
+    <Content Include="Scripts\ckEditor\styles.js" />
+    <Content Include="Scripts\ErucaCRM.Admin\ErucaCRM.Admin.ContentManagement.js" />
+    <Content Include="Scripts\ErucaCRM.Admin\ErucaCRM.Admin.EditApplicationPage.js" />
+    <Content Include="Scripts\ErucaCRM.Admin\ErucaCRM.Admin.Plans.js" />
+    <Content Include="Scripts\ErucaCRM.Admin\ErucaCRM.Admin.Users.js" />
+    <Content Include="Scripts\ErucaCRM.Admin\ErucaCRM.Admin.OrganisationDetail.js" />
+    <Content Include="Scripts\ErucaCRM.Framework\ErucaCRM.Framework.Common.js" />
+    <Content Include="Scripts\ErucaCRM.Helps\en-US.js" />
+    <Content Include="Scripts\ErucaCRM.Messages\en-US.js" />
+    <Content Include="Scripts\ErucaCRM.Messages\sv-SE.js" />
+    <Content Include="Scripts\ErucaCRM.Messages\zh-CN.js" />
+    <Content Include="Scripts\ErucaCRM.Site\ErucaCRM.Site.Login.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.InnerLayout.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.ViewAllRecentActivity.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.AccountAndContact.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.AccountCases.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Accounts.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.AddEditAccount.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.AddEditContact.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.AddUser.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.CreateCaseMessageBoard.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.ContactView.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.CreateInvoice.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.CreateQuote.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Dashboard.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Home.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Invoices.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Quotes.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Reports.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.SaleOrders.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Stages.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.TagDetail.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Tags.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.UserProfileView.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.ViewAccount.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.ViewActivity.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.ViewLead.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.CreateQuote.Old.js" />
+    <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.CreateSalesOrder.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Leads.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.AssignProfile.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Contacts.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.ProfileDetail.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.RoleAssignment.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.TaskItem.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Tasks.js" />
+    <Content Include="Scripts\file-upload\jquery.form.js" />
+    <Content Include="Scripts\HighCharts\exporting.js" />
+    <Content Include="Scripts\HighCharts\funnel.js" />
+    <Content Include="Scripts\HighCharts\highcharts.js" />
+    <Content Include="Scripts\immersive-slider.js" />
+    <Content Include="AndroidApk\ErucaCRM.apk" />
+    <Content Include="Scripts\jquery-1.11.0.js" />
+    <Content Include="Scripts\jquery-ui-scrollbar-mi.js" />
+    <Content Include="Scripts\jquery-ui-scrollbar.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.easing.1.3.js" />
+    <Content Include="Scripts\jquery.ennui.contentslider.js" />
+    <Content Include="Scripts\jquery.mousewheel.js" />
+    <Content Include="Scripts\jquery.signalR-2.1.0.js" />
+    <Content Include="Scripts\jquery.signalR-2.1.0.min.js" />
+    <Content Include="Scripts\jquery.tinyscrollbar.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.ContactDocs.js" />
+    <Content Include="Scripts\file-upload\jquery.uploadfile.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.LeadDocs.js" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Scripts\ErucaCRM.User\jquery-1.11.1.min.map" />
+    <Content Include="Content\css\bootstrap-theme.css.map" />
+    <Content Include="Content\css\bootstrap.css.map" />
+    <None Include="Service References\ServiceReference1\Service1.disco" />
+    <None Include="Service References\ServiceReference1\configuration91.svcinfo" />
+    <None Include="Service References\ServiceReference1\configuration.svcinfo" />
+    <None Include="Service References\ServiceReference1\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Scripts\jQuery1.9.1.js" />
+    <Content Include="Scripts\metisMenu.min.js" />
+    <Content Include="Scripts\morris-data.js" />
+    <Content Include="Scripts\morris.min.js" />
+    <Content Include="Scripts\perfect-scrollbar.js" />
+    <Content Include="Content\images\plus-down.png" />
+    <Content Include="Content\images\previous.png" />
+    <Content Include="Content\images\sale-transactions.png" />
+    <Content Include="Content\images\twitter.png" />
+    <Content Include="Scripts\ErucaCRM.Framework\ErucaCRM.Framework.Core.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.EditProfile.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.ProfileType.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Roles.js" />
+    <Content Include="Scripts\ErucaCRM.User\ErucaCRM.User.Users.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\knockout-3.0.0.js" />
+    <Content Include="Scripts\knockout.mapping.js" />
+    <Content Include="Scripts\raphael.min.js" />
+    <Content Include="Scripts\sb-admin-2.js" />
+    <Content Include="Scripts\UploadImage.js" />
+    <Content Include="RecaptchaNet.ReadMe.txt" />
+    <Content Include="Scripts\file-upload\jquery.fileupload-ui.js" />
+    <Content Include="Scripts\file-upload\jquery.fileupload.js" />
+    <Content Include="Scripts\file-upload\jquery.iframe-transport.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-ui-1.9.2.js" />
+    <Content Include="Scripts\ErucaCRM.Site\ErucaCRM.Site.ForgotPassword.js" />
+    <Content Include="Scripts\sliderscript.js" />
+    <Content Include="Uploads\CultureIcons\de-DE.png" />
+    <Content Include="Uploads\CultureIcons\en-GB.png" />
+    <Content Include="Uploads\CultureIcons\en-US.png" />
+    <Content Include="Uploads\CultureIcons\es-ES.png" />
+    <Content Include="Uploads\CultureIcons\es-MX.png" />
+    <Content Include="Uploads\CultureIcons\fr-FR.png" />
+    <Content Include="Uploads\CultureIcons\hi-IN.png" />
+    <Content Include="Uploads\CultureIcons\it-IT.png" />
+    <Content Include="Uploads\CultureIcons\ja-JP.png" />
+    <Content Include="Uploads\CultureIcons\nl-BE.png" />
+    <Content Include="Uploads\CultureIcons\ru-RU.png" />
+    <Content Include="Uploads\CultureIcons\sv-SE.png" />
+    <Content Include="Uploads\CultureIcons\zh-CN.png" />
+    <Content Include="Uploads\users\no_image.gif" />
+    <Content Include="Uploads\users\ProfileImage_1.png" />
+    <Content Include="Uploads\users\ProfileImage_15.jpg" />
+    <Content Include="Uploads\users\ProfileImage_24.jpg" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\User\CreateProfileType.cshtml" />
+    <Content Include="Views\User\DashBoardAndReports.cshtml" />
+    <Content Include="Views\User\DashBoard.cshtml" />
+    <Content Include="Views\Site\MobileCRM.cshtml" />
+    <Content Include="Views\Shared\_ContactsDetail.cshtml" />
+    <Content Include="Views\User\AccountAndContact.cshtml" />
+    <Content Include="Views\Site\SetProfile.cshtml" />
+    <Content Include="Views\User\AccountSettings.cshtml" />
+    <Content Include="Uploads\contacts\BulkUpload\Sample.xlsx" />
+    <Content Include="Uploads\CultureXLS\Chinese - China%28zh-CN%29.xlsx" />
+    <Content Include="Uploads\CultureXLS\English - United States%28en-US%29.xlsx" />
+    <Content Include="Views\Shared\_LayoutDashboard.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Uploads\accounts\" />
+    <Folder Include="Uploads\activities\" />
+    <Folder Include="Uploads\leads\LeadAudio\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ErucaCRM.Business\ErucaCRM.Business.csproj">
+      <Project>{6c53563d-89f2-4591-9c56-758e57f2aa8a}</Project>
+      <Name>ErucaCRM.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ErucaCRM.Domain\ErucaCRM.Domain.csproj">
+      <Project>{215c3458-ab79-42b6-a893-bc99efcb0c19}</Project>
+      <Name>ErucaCRM.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ErucaCRM.Repository\ErucaCRM.Repository.csproj">
+      <Project>{a5d3ce91-7121-4193-a41e-5be094c409fa}</Project>
+      <Name>ErucaCRM.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ErucaCRM.Utility\ErucaCRM.Utility.csproj">
+      <Project>{4da23c60-ebb3-48fe-8a07-3c6e787364a1}</Project>
+      <Name>ErucaCRM.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Site\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Site\Register.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Home.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Site\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Site\ForgotPassword.cshtml" />
+    <Content Include="Views\User\UserProfile.cshtml" />
+    <Content Include="Views\User\EditUserProfile.cshtml" />
+    <Content Include="Views\Shared\ProfileImage.cshtml" />
+    <Content Include="Views\User\UserList.cshtml" />
+    <Content Include="Views\Shared\_LayoutInner.cshtml" />
+    <Content Include="Views\User\ProfileTypeList.cshtml" />
+    <Content Include="Views\User\EditProfileType.cshtml" />
+    <Content Include="Views\User\Roles.cshtml" />
+    <Content Include="Views\User\EditUser.cshtml" />
+    <Content Include="Views\User\AddUser.cshtml" />
+    <Content Include="Views\User\ProfileDetail.cshtml" />
+    <Content Include="Views\Shared\UserProfileDetailPartial.cshtml" />
+    <Content Include="Views\User\UserDetail.cshtml" />
+    <Content Include="Views\User\Contacts.cshtml" />
+    <Content Include="Views\User\RoleAssignment.cshtml" />
+    <Content Include="Views\User\AssignProfile.cshtml" />
+    <Content Include="Views\User\Tasks.cshtml" />
+    <Content Include="Views\User\AddContact.cshtml" />
+    <Content Include="Views\User\CreateLead.cshtml" />
+    <Content Include="Views\User\TaskItem.cshtml" />
+    <Content Include="Views\User\ViewLeadDetail.cshtml" />
+    <Content Include="Views\User\EditContact.cshtml" />
+    <Content Include="Views\User\ContactList.cshtml" />
+    <Content Include="Views\User\ContactView.cshtml" />
+    <Content Include="Views\User\CreateQuote.cshtml" />
+    <Content Include="Views\User\EditLead.cshtml" />
+    <Content Include="Views\User\CreateSalesOrder.cshtml" />
+    <Content Include="Views\Shared\TasksPartial.cshtml" />
+    <Content Include="Views\User\CreateInvoice.cshtml" />
+    <Content Include="Views\User\ViewQuoteDetail.cshtml" />
+    <Content Include="Views\User\ViewSalesOrderDetail.cshtml" />
+    <Content Include="Views\User\ViewInvoiceDetail.cshtml" />
+    <Content Include="Views\User\Quotes.cshtml" />
+    <Content Include="Views\User\SaleOrders.cshtml" />
+    <Content Include="Views\User\Invoices.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Error\Internal.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Shared\_AddProduct.cshtml" />
+    <Content Include="Views\User\ViewTaskItemDetail.cshtml" />
+    <Content Include="Views\User\EditQuote.cshtml" />
+    <Content Include="Views\User\EditSalesOrder.cshtml" />
+    <Content Include="Views\User\EditInvoice.cshtml" />
+    <Content Include="Views\Admin\ManageLanguage.cshtml" />
+    <Content Include="Scripts\ErucaCRM.Admin\ErucaCRM.Admin.UplodDocs.js" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Admin\ContentManagement.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialAdmin.cshtml" />
+    <Content Include="Views\Admin\ManageOuterPageContent.cshtml" />
+    <Content Include="Views\Admin\EditApplicationPage.cshtml" />
+    <Content Include="Scripts\ckEditor\plugins\scayt\LICENSE.md" />
+    <Content Include="Scripts\ckEditor\plugins\scayt\README.md" />
+    <Content Include="Scripts\ckEditor\plugins\wsc\LICENSE.md" />
+    <Content Include="Scripts\ckEditor\plugins\wsc\README.md" />
+    <Content Include="Scripts\ckEditor\skins\moono\readme.md" />
+    <Content Include="Views\Site\AboutUs.cshtml" />
+    <Content Include="Views\Site\ContactUs.cshtml" />
+    <Content Include="Views\Site\Feature.cshtml" />
+    <Content Include="Views\Admin\AddCustomPage.cshtml" />
+    <Content Include="Views\Shared\_Registration.cshtml" />
+    <Content Include="Views\User\Account.cshtml" />
+    <Content Include="Views\User\AccountDetail.cshtml">
+    </Content>
+    <Content Include="Views\User\Accounts.cshtml" />
+    <Content Include="Views\User\Tags.cshtml" />
+    <Content Include="Views\User\Leads.cshtml" />
+    <Content Include="Views\User\AccountCase.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\User\AccountCaseDetail.cshtml" />
+    <Content Include="Views\User\TagDetail.cshtml" />
+    <Content Include="Views\Shared\CaseMessageBoard.cshtml" />
+    <Content Include="Views\Shared\_CreateLead.cshtml" />
+    <Content Include="Views\Admin\UserList.cshtml" />
+    <Content Include="Views\Admin\Plan.cshtml" />
+    <Content Include="Views\Admin\AddUser.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Admin\UserProfile.cshtml" />
+    <Content Include="Views\Admin\Plans.cshtml" />
+    <Content Include="Views\Admin\Organizations.cshtml" />
+    <Content Include="Scripts\ErucaCRM.Admin\ErucaCRM.Admin.Organisations.js" />
+    <Content Include="Views\Admin\OrganizationDetail.cshtml" />
+    <Content Include="Scripts\ErucaCRM.Framework\ErucaCRM.Framework.DateFormat.js" />
+    <Content Include="Views\Admin\PlanDetail.cshtml" />
+    <Content Include="Views\Admin\PlanModule.cshtml" />
+    <Content Include="Views\User\AccountCases.cshtml" />
+    <Content Include="Views\User\Stages.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Shared\_ViewLeadDetail.cshtml" />
+    <None Include="Service References\ServiceReference1\Service1.wsdl" />
+    <None Include="Service References\ServiceReference1\Service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference1\Service11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ServiceReference1\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>2399</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:43388/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

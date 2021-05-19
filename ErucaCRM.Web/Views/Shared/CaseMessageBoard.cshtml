@@ -1,0 +1,41 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@model ErucaCRM.Web.ViewModels.CaseMessageBoardVM
+
+@Html.HiddenFor(model => model.AccountCaseId)
+<div class="control-group">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderCaseMessageBoard)</span>
+    </div>
+    <div class="floatleft">
+        <div class="profile">
+
+            <div class="control-group">
+                <div class="display-label">
+                </div>
+                <span class="requiredfield"></span>
+                <div class="display-field">
+                    <div class="user-errormsg">@Html.ValidationMessageFor(model => model.Description)</div>
+                </div>
+            </div>
+            <div class="rellistbL"><a class="_adddoc button small purple floatright permissionbased" data-permission="DocumentsPermissionsCreateDocument" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonAddNewDocument).ToString()</a></div>
+
+        </div>
+    </div>
+</div>
+<div class="hidden" id="FileUploadSection">
+    <div class="popup">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachFile)</h2></center>
+        <center><span class="error"></span></center>
+        <div class="floatleft " style="margin-left: 70px; width: 70%">
+            <div style="height: 120px">
+                <div id="fileuploader">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonUpload)</div>
+            </div>
+            <div class="buttonbottomcontainer clear-both">
+                <input type="button" class="button small purple _attachDoc" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAttach)" />
+                <input type="button" class="button small purple _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+            </div>
+        </div>
+
+    </div>
+</div>

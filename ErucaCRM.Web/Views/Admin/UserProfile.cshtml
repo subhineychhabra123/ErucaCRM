@@ -1,0 +1,103 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.UserProfileVM
+@{
+    ViewBag.Title = "ErucaCRM | Profile";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.UserProfileView.js")" type="text/javascript"></script>
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.UserProfileView.pageLoad();
+
+}
+
+<h2>Manage Account</h2>
+
+<div class="buttoncontainer">
+    <div class="floatleft ">@Html.ActionLink("Back", "UserList", null, new { @class = "button purple small _back" })</div>
+    <div class="floatleft marL10px ">@Html.ActionLink("Edit", "AddUser", new { @id_encrypted = Model.UserId }, new { @class = "button purple small" })</div>
+</div>
+
+
+
+<div class="usrinfo">
+    <h3 class="usrstrip">
+        @Html.DisplayFor(model => model.Role.RoleName)
+
+    </h3>
+
+    <div class="floatleft profile-image">
+
+        <img src="~/Uploads/users/@Model.ImageURL?t=@DateTime.Now.Ticks" onerror="this.onerror=null;this.src='/Uploads/users/no_image.gif'">
+    </div>
+    <div class="floatleft w50pc">
+        <div class="profile">
+
+            <div class="userprofile_detail_box">
+                <h3 class="usrstrip">Contact Information</h3>
+            </div>
+
+            <div class="control-group">
+
+                <div class="display-label">
+                    @Html.LabelFor(model => model.FirstName)
+                </div>
+                <div class="display-label">
+                    <div class="display-value">
+                        <label>@Html.DisplayFor(model => model.FirstName) </label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="control-group">
+
+                <div class="display-label">
+                    @Html.LabelFor(model => model.LastName)
+                </div>
+                <div class="display-label">
+                  <div class="display-value">
+                       <label>@Html.DisplayFor(model => model.LastName) </label>
+                      </div>
+                </div>
+
+            </div>
+
+            <div class="control-group">
+
+                <div class="display-label">
+                    @Html.LabelFor(model => model.EmailId)
+                </div>
+                <div class="display-label">
+                     <div class="display-value">
+                    <label>@Html.DisplayFor(model => model.EmailId) </label>
+                         </div>
+                </div>
+                <div class="userprofile_detail_box"></div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.LabelFor(model => model.PageLabels.Address)
+                </div>
+                <div class="display-label">
+                    <label>@Html.DisplayFor(model => model.AddressDetails)</label>
+
+                </div>
+                <div class="userprofile_detail_box"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

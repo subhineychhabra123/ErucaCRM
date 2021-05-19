@@ -1,0 +1,84 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.HomeVM
+@using ErucaCRM.Web.ViewModels;
+@using ErucaCRM.Utility;
+@{
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+@section scripts {
+    
+ @*   <script src="~/Scripts/ErucaCRM.User/ErucaCRM.User.Dashboard.js" type="text/javascript"></script>
+    <script src="~/Scripts/HighCharts/highcharts.js"></script>
+    <script src="~/Scripts/HighCharts/exporting.js"></script>
+    <script src="~/Scripts/HighCharts/funnel.js"></script>*@
+
+     @Scripts.Render("~/bundles/DashBoardScripts")
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.Dashboard.pageLoad()
+    ErucaCRM.Framework.Common.ApplyHelp("DashBoard");
+    }
+<h2>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.Dashboard)</h2>
+
+
+<div class="chartdiv _LeadsInPipeLine floatleft">
+    <ul>
+        <li >
+
+            <a class="chartbutton floatleft _monthwise pad0px" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonMonthly) </a>
+        </li>
+        <li class="active">
+            <a class="chartbutton _yearWise pad0px ">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonYearly)</a><br />
+        </li>
+        <li  data-helpkey="showall" data-helppos="top-left" >
+            <a class="chartbutton _forAll pad0px">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonOverAll)</a><br />
+        </li>
+        <div class="clear"></div>
+    </ul>
+
+
+
+    <div class="clear"></div>
+
+
+    <div id="containerLeadsInPipeLine"></div>
+
+</div>
+<div id="containerAccountByTopHighestSaleRevenueChart" class="chartdiv floatright"></div>
+
+
+<div id="containerMonthWiseAccountSaleRevenueChart" class="chartdiv floatright"></div>
+<div id="containerLeadsByStarRatingPercentage" class="chartdiv floatleft"></div>
+@*<div id="containerLeadYearCountChart" class="chartdiv floatleft"></div>*@
+<div class="chartdiv _AllLeadRecord floatleft ">
+    <ul>
+        <li class="active">
+
+            <a class="chartbutton floatleft _monthwiseAllLead pad0px" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonMonthly) </a>
+        </li>
+        <li >
+            <a class="chartbutton _yearWiseAllLead pad0px">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonYearly)</a><br />
+        </li>
+       
+        <div class="clear"></div>
+    </ul>
+
+
+
+    <div class="clear"></div>
+
+
+    <div id="containerLeadYearCountChartMonthbasis"></div>
+
+</div>
+
+
+@*<div id="containerLeadYearCountChart">
+                            </div>*@
+
+

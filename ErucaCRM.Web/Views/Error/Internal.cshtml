@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Access Denied";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+<h2>Access Denied</h2>
+<div class="buttoncontainer clear-both">
+    @Html.ActionLink("Back", "profileType", "admin", null, new { @class = "button small purple _back" })
+</div>
+<div class="clear pad5px"></div>
+<div class="accessdenied">
+    oops! Something went wrong.
+</div>

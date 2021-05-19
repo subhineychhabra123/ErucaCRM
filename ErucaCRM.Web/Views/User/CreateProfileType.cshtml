@@ -1,0 +1,86 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.ProfileVM
+
+@{
+    ViewBag.Title = "ErucaCRM | CreateProfileType";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+@section scripts {
+
+    @Scripts.Render("~/bundles/ValidateScripts")
+}
+@section SideMenuCss
+{<style>
+     .wrapper-inner { border-left: 1px solid #B6B6B6; width: 88%; padding-left: 10px; overflow: hidden; }
+     /*.sidemenu {   position: fixed; min-height:600px;}*/
+     /*.wrapper-inner { border-left: 1px solid #B6B6B6; margin-left: 230px; padding-left: 10px;overflow: hidden; }*/
+     #SideMenu-Configuration { display: block; }
+         #SideMenu-Configuration a[href*='ProfileType'] { background: #0798BC; color: #ffffff; }
+ </style>
+    @*<style>
+        .sidemenutd { display: block; }
+        .inner-body .wrapper-inner { max-width: 980px; }
+        #SideMenu-Configuration { display: block; }
+            #SideMenu-Configuration a[href*='ProfileType'] { background: #fff; color: #800080; }
+    </style>*@
+}
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderCreate) </h2>
+<div class="buttoncontainer clear-both">
+    @Html.ActionLink(Convert.ToString(@Html.CultureSpecificDisplay(model => model.ButtonBack)), "profileType", "admin", null, new { @class = "button small purple _back" })
+</div>
+
+@using (Html.BeginForm("CreateProfileType", "User", FormMethod.Post, new { @id = "CreateProfileType" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div>
+        <div class="profile">
+            @Html.HiddenFor(model => model.CompanyId)
+
+            <div class="control-group">
+                <span class="requiredfield"></span>
+                <div class="display-label">
+                </div>
+
+                <div class="display-field text-align-left">
+                    @Html.ValidationMessageFor(model => model.ProfileName)
+
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+                    <span class="requiredfield">*</span>  @Html.CultureSpecificLabel(model => model.ProfileName)
+                </div>
+
+                <div class="display-field">
+                    @Html.EditorFor(model => model.ProfileName, new { @class = "input-text", maxlength = 250 })
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Description)
+                </div>
+                <span class="requiredfield"></span>
+                <div class="display-field r">
+                    @Html.TextAreaFor(model => model.Description, new { @class = "input-text", maxlength = 800 })
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+                </div>
+                <div class="display-field text-align-left buttoncontainer">
+                    <input type="submit" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" class="button small purple _savePermissions">
+                    <a href="/User/ProfileType" class="button purple normal">@Html.CultureSpecificDisplay(model => model.ButtonBack)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+}
+

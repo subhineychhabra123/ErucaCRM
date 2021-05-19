@@ -1,0 +1,351 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+@model ErucaCRM.Web.ViewModels.AccountCaseVM
+
+
+@{
+    ViewBag.Title = "ErucaCRM | CaseDetail";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+<style>
+    .tablecontainer { margin: 1px 0 0;}
+</style>
+@section scripts {
+    @* <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.CreateCaseMessageBoard.js")" type="text/javascript"></script>*@
+    @Scripts.Render("~/bundles/AccountCaseDetailScripts")
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.CreateCaseMessageBoard.pageLoad()
+}
+
+<div class="hidden _accountCaseId">
+    @Html.HiddenFor(model => model.AccountCaseId)
+</div>
+@Html.Hidden("hdnCaseMessageBoardId")
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderDetail)</h2>
+<div class="buttoncontainer">
+    @if (Request.QueryString["returnurl"] != null)
+    {
+        @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonBack).ToString(), "AccountCases", null, new { @class = "button purple small _back" })
+    }
+    else
+    {
+        @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonBack).ToString(), "AccountCases", null, new { @class = "button purple small" })
+    }
+    @if (User.IsInRole(String.Concat(Constants.MODULE_CASE, Constants.PERMISSION_EDIT)))
+    {
+        @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonEdit).ToString(), "AccountCase", new { @accountId_encrypted = Model.AccountIdEncrypted, @caseId_encrypted = Model.AccountCaseId }, new { @class = "button purple small " })
+    }
+</div>
+<div class="control-group">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderCaseInfo)</span>
+    </div>
+    <div class="floatleft">
+        <div class="profile">
+
+            @* <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.PageLabels.AccountOwner)
+                </div>
+                <div class="display-field">
+                    <label>@Html.DisplayFor(model => model.AccountId)</label>
+                </div>
+            </div>*@
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.PageLabels.AccountName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        <a href="/User/AccountDetail/@Model.AccountIdEncrypted" style="text-decoration:underline" class="_backtohere">
+                            @Html.DisplayFor(model => model.AccountName)
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.PageLabels.CaseOwnerName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        <label>@Html.DisplayFor(model => model.User.FullName) </label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Subject)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        <label>@Html.DisplayFor(model => model.Subject) </label>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.PriorityName)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        <label>@Html.DisplayFor(model => model.PriorityName) </label>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.CaseStatus)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        <label>@Html.DisplayFor(model => model.CaseStatus) </label>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.CaseOrigin)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        <label>@Html.DisplayFor(model => model.CaseOrigin) </label>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.PageLabels.CaseType)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        <label>@Html.DisplayFor(model => model.CaseType) </label>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="control-group">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderDescription)</span>
+    </div>
+    <div class="floatleft">
+        <div class="profile">
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Description)
+                </div>
+                <div class="display-field">
+                    <div class="display-value">
+                        @Html.DisplayFor(model => model.Description)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="control-group permissionbased _roleselector" data-permission="@string.Concat(Constants.MODULE_DOCUMENT, Constants.PERMISSION_VIEWDOCUMENT)">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachmentsInfo)</span>
+    </div>
+    <div class="rellistbL buttoncontainer"><a class="_AddAccountCaseDoc button  pad0px floatright permissionbased" data-permission="@string.Concat(Constants.MODULE_DOCUMENT, Constants.PERMISSION_CREATEDOCUMENT)" href="javascript:void(0)">@Html.CultureSpecificDisplay(model => model.ButtonAddNewDocument)</a></div>
+    <table id="AccountDocs" class="tablecontainer">
+        <tr>
+            <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.FileName)
+            </th>
+            <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.AttachedBy)
+            </th>
+            <th class="actionHeader"></th>
+        </tr>
+        <tbody id="AccountCaseAttachments" data-bind="template: { name: 'tmplAccountCaseAttachments', foreach: AccountCaseAttachments }"></tbody>
+        <tbody>
+            <tr id="noAccountCaseAtttachmentsFound" class="_noAccountCaseAtttachmentsFound">
+                <td colspan="3">
+
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+<div class="_AccountCaseAttachmentPager"></div>
+<div class="control-group permissionbased" data-permission="@string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_VIEW)">
+    <div class="infoheader ">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderActivitiesInfo)</span>
+    </div>
+    <div class="rellistbL buttoncontainer">
+        <a id="btnAddActivity" class="button pad0px permissionbased floatright _backtohere"  data-permission="@string.Concat(Constants.MODULE_TASK, Constants.PERMISSION_CREATE)" href="/User/taskitem?mod=AccountCase&val_encrypted=@Model.AccountCaseId" >@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddActivity)</a>
+
+    </div>
+    <div style="clear: both; margin-bottom: -1px;"></div>
+
+    <div class="_roleselector">
+        @Html.Partial("TasksPartial", new ErucaCRM.Web.ViewModels.TaskItemVM())
+    </div>
+
+
+</div>
+<div class="control-group">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderCaseMessageBoardInfo)</span>
+    </div>
+    <div class="rellistbL buttoncontainer">
+        <a href="#" casemessageboardid="" class="_newCaseMessageBoard button small purple floatright">@Html.CultureSpecificDisplay(model => model.ButtonCreate)</a>
+    </div>
+    <table id="case" class="">
+        <tr>
+
+            @*<th class="actionHeader"></th>*@
+        </tr>
+
+        <tbody id="AssociatedMessageBoardMessages" data-bind="template: { name: 'tmplAssociatedMessageBoardMessages', foreach: CaseMessageBoardList }"></tbody>
+        <tr class="_MessageBoardNoRecord tabletd" style="display: none">
+            <td colspan="3"></td>
+        </tr>
+    </table>
+    @*<div class="_MessageBoardNoRecord feat_prod_box box_centerc" style="display: none">
+    </div>*@
+    <div id="AllComments" class="_MessageBoardPager"></div>
+
+</div>
+
+
+<div class="hidden _AddNewMessageBoard">
+    <div class="popup overflowhidden">
+        <span class="close-btn"><a class="_close" href="#">X</a></span>
+        <center><h2 class="_tagHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderCaseMessageBoardInfo)</h2></center>
+        <span class="error"></span>
+        <div class="floatleft ">
+            <div class="profile">
+                <input type="hidden" id="hdnTagId" value="0" />
+                <div class="control-group">
+                    <div class="display-label">
+                        <label>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderMessageBoardDescription)</label>
+                    </div>
+                    <div class="display-field">
+
+                        <textarea class="input-text _MessageBoardDescription" style="width: 300px"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                </div>
+                <div class="display-field">
+
+                    <div id="FileUploadSection">
+                        <div class="" style="overflow: hidden">
+                            <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachFile)</h2></center>
+                            <center><span class="error"></span></center>
+                            <div class="floatleft " style="width: 70%">
+                                <div class="uploder">
+                                    <div id="fileuploader">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonUpload)</div>
+                                </div>
+                                <div class="buttonbottomcontainer clear-both" style="display:none">
+                                    <input type="button" class="button small purple _attachDoc" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAttach)" />
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                </div>
+                <div class="display-field text-align-center buttoncontainer floatnone buttonmarginl">
+
+                    <input type="button" class="button purple small _submitNewMessageBoard" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" />
+                    <input type="button" class="button purple small _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hidden _AccountCaseFileUploadSection" id="AccountCaseFileUploadSection">
+    <div class="popup overflowhidden">
+        <span class="close-btn"><a class="_close" href="javascript:void(0)">X</a></span>
+        <center><h2 class="_roleHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachFile)</h2></center>
+        <center><span class="error"></span></center>
+        <div class="floatleft divdocupload ">
+            <div>
+                <div id="AccountCaseFileuploader">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonUpload)</div>
+            </div>
+            <div class="buttonbottomcontainer clear-both">
+                <input type="button" class="button small purple _AccountCaseAttachDoc" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAttach)" />
+                <input type="button" class="button small purple _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/html" id="tmplAssociatedMessageBoardMessages">
+
+    <tr>
+        <td colspan="3" class="MessageBordTdRemoveDotted">
+            <div class="MessageBord">
+                <div class="MessageBordHeader">
+                    <div class="MessageBordHeaderBy">
+                        <a data-bind="attr: { href: UserDetailUrl, title: CreatedBy }" target="_blank" class="MessageBordTextColor">
+                            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAttachmentBy)</span> 
+                            <span data-bind="text: CreatedBy" class="MessageBordTextColor MessageBordHeaderByspan"></span>
+                        </a>
+                    </div>
+                    <div class="MessageBordHeaderDate">
+                        <span data-bind="text: CreatedDate"></span>
+                    </div>
+                </div>
+                <div class="MessageBordDescription">
+                    <span data-bind="text: Description"></span>
+                </div>
+                <div class="hidden _caseMessageBoardDescription" data-bind="text: Description"></div>
+                <div class="_messageBoardattachments MessageBordFooter">
+                    <span>@Html.CultureSpecificDisplay(model => model.PageLabels.Attachment):</span>
+                    <div id="MessageBordFooterFile" data-bind="template: { name: 'tmplAssociatedMessageBoardAttachments', foreach: Attachments }">
+                    </div>
+                </div>
+
+            </div>
+
+        </td>
+
+    </tr>
+</script>
+<script type="text/html" id="tmplAssociatedMessageBoardAttachments">
+    <a data-bind="attr: { href: FileSrc, title: Title }" target="_blank" class="floatleft marR25px MessageBordLinkUnderlineColor">
+        <span data-bind="text: FileName" class="MessageBordTextColor"></span>
+    </a>
+
+</script>
+<script type="text/html" id="tmplAccountCaseAttachments">
+    <tr rowtype="data">
+        <td>
+            <input type="hidden" data-bind="value: DocumentId" />
+            <a data-bind="attr: { href: DocumentPath, title: Title }" class="_docPath" target="_blank">
+                <span data-bind="text: DocumentName"></span></a>
+        </td>
+        <td>
+            <a data-bind="attr: { href: UserDetailUrl, title: Name }" target="_blank">
+                <span data-bind="text: Name"></span>
+            </a>
+        </td>
+        <td>
+            <a  data-bind="click: DeleteDoc" class="_deleteAccountCaseDoc permissionbased" data-permission="@string.Concat(Constants.MODULE_DOCUMENT,Constants.PERMISSION_DELETEDOCUMENT)" href="javascript:void();">@Html.CultureSpecificDisplay(model => model.ButtonDelete)</a>
+
+        </td>
+    </tr>
+
+</script>

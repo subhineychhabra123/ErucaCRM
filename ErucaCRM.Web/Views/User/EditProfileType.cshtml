@@ -1,0 +1,112 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.ProfileVM
+
+@{
+    ViewBag.Title = "ErucaCRM | EditProfileType";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+@section scripts {
+
+     @Scripts.Render("~/bundles/ValidateScripts")
+    }
+@section SideMenuCss
+{<style>
+  .wrapper-inner { border-left: 1px solid #B6B6B6; width: 88%; padding-left: 10px; overflow: hidden; }
+        /*.sidemenu {   position: fixed; min-height:600px;}*/
+        /*.wrapper-inner { border-left: 1px solid #B6B6B6; margin-left: 230px; padding-left: 10px;overflow: hidden; }*/
+        #SideMenu-Configuration { display: block; }
+        #SideMenu-Configuration a[href*='ProfileType'] { background: #0798BC; color: #ffffff; }
+ </style>
+    @*<style>
+        .sidemenutd { display: block; }
+        .inner-body .wrapper-inner { max-width: 980px; }
+        #SideMenu-Configuration { display: block; }
+            #SideMenu-Configuration a[href*='ProfileType'] { background: #fff; color: #800080; }
+    </style>*@
+}
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderEdit) </h2>
+<div class="error"></div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="">
+        <div class="buttoncontainer clear-both">
+            @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonBack).ToString(), "profileType", "admin", null, new { @class = "button small purple _back" })
+        </div>
+        <div class="profile">
+            @Html.HiddenFor(model => model.ProfileId)
+            <div class="control-group">
+                <span class="requiredfield"></span>
+                <div class="display-label">
+                </div>
+
+                <div class="display-field text-align-left">
+                    @Html.ValidationMessageFor(model => model.ProfileName)
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.ProfileName)
+                </div>
+
+                <div class="display-field">
+
+                    @if ((Model.IsDefaultForRegisterdUser == true) && (Model.IsDefaultForStaffUser == false))
+                    { 
+                       
+                        @Html.TextBoxFor(model => model.ProfileName, new { @class = "input-text", disabled = "disabled", @readonly = "readonly" })
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(model => model.ProfileName, new { @class = "input-text", maxlength = 250 })
+                    }
+
+
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="display-label">
+                    @Html.CultureSpecificLabel(model => model.Description)
+                </div>
+                <div class="display-field">
+                    @if ((Model.IsDefaultForRegisterdUser == true) && (Model.IsDefaultForStaffUser == false))
+                    { 
+                        @Html.TextBoxFor(model => model.Description, new { @class = "input-text", disabled = "disabled", @readonly = "readonly" })
+                    }
+                    else
+                    {
+                        @Html.TextAreaFor(model => model.Description, new { @class = "input-text"})
+                    }
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="display-label">
+                </div>
+                <div class="display-field text-align-left buttoncontainer">
+                    @if (!(((Model.IsDefaultForRegisterdUser == true) && (Model.IsDefaultForStaffUser == false))))
+                    { 
+                        <input type="submit" class="button small purple" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" />
+                        <a href="/User/profileType">
+                            <input type='button'class="button purple normal" value='@Html.CultureSpecificDisplay(model => model.ButtonBack)' /></a>
+                    
+                    }
+                    else
+                    {
+                        <span></span>
+                    }
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+}
+
+

@@ -1,0 +1,238 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+@model ErucaCRM.Web.ViewModels.TagVM
+
+@{
+    ViewBag.Title = "TagDetail";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+@section SideMenuCss
+{
+    @* <style>
+        .sidemenu { position: fixed; }
+        .wrapper-inner { border-left: 1px solid #B6B6B6; margin-left: 230px; padding-left: 10px; overflow: hidden; }
+        #SideMenu-Configuration { display: block; }
+            #SideMenu-Configuration a[href*='Tags'] { background: #fff; color: #17B5F0; }
+    </style>*@
+    @* <style>
+        .sidemenutd { display: block; }
+        .inner-body .wrapper-inner { max-width: 980px; }
+        #SideMenu-Configuration { display: block; }
+            #SideMenu-Configuration a[href*='Tags'] { background: #fff; color: #17B5F0; }
+    </style>*@
+}
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.TagDetail.js")" type="text/javascript"></script>
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.TagDetail.pageLoad();
+ErucaCRM.Framework.Common.ApplyHelp("Tag");
+}
+<div class="gridspace">
+<script type="text/html" id="tmplAccount">
+    <tr>
+        <td class="text-align-left">
+            @if (User.IsInRole(string.Concat(Constants.MODULE_ACCOUNT, Constants.PERMISSION_VIEW)))
+            {
+                <a data-bind="attr: { href: DetailUrl, title: AccountName }"><span data-bind="    text: AccountName"></span></a>
+            }
+            else
+            {
+                <span data-bind="    text: AccountName"></span>
+            }
+        </td>
+        <td>
+            <span data-bind=" text: AccountType"></span>
+        </td>
+        <td>
+            <div data-bind="text: AccountOwner"></div>
+        </td>
+
+    </tr>
+</script>
+
+<script type="text/html" id="ContactListTemplate">
+    <tr>
+
+        <td>
+            @if (User.IsInRole(string.Concat(Constants.MODULE_CONTACT, Constants.PERMISSION_VIEW)))
+            {
+                <a data-bind="attr: { href: UrlViewContact, title: ContactName }"><span data-bind="    text: ContactName"></span></a>
+            }
+            else
+            {
+                <span data-bind="    text: ContactName"></span>
+            }
+        </td>
+        <td>
+            <div data-bind="text: ContactPhone"></div>
+        </td>
+        <td >
+            <div data-bind="text: ContactEmail"></div>
+        </td>
+        <td>
+            <div data-bind="text: Company"></div>
+        </td>
+
+    </tr>
+</script>
+<script type="text/html" id="LeadListTemplate">
+    <tr>
+
+        <td >
+            @if (User.IsInRole(string.Concat(Constants.MODULE_LEAD, Constants.PERMISSION_VIEW)))
+            {
+                <a data-bind="attr: { href: UrlViewLead, title: Title }"><span data-bind="    text: Title"></span></a>      
+            }
+            else
+            {
+                <span data-bind="text: Title"></span>
+            }
+        </td>
+        <td>
+            <div data-bind="text: LeadCompany"></div>
+        </td>
+        <td>
+            <div data-bind="text: Description"></div>
+        </td>
+    </tr>
+</script>
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderDetail)</h2>
+<div class="buttoncontainer">
+    @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonBack).ToString(), "Tags", null, new { @class = "button purple small _back" })
+</div>
+
+<div class="control-group">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderTagInfo)</span>
+    </div>
+    <div>
+        @Html.HiddenFor(model => model.TagId)
+
+    </div>
+    <div class="control-group">
+        <div class="floatleft">
+            <div class="profile">
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.TagName)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.TagName)
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Description)
+                    </div>
+                    <div class="display-field">
+                        <div class="display-value">
+                            @Html.DisplayFor(model => model.Description)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="control-group">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderTagAccounts)</span>
+    </div>
+
+    <div class="tablecontainer  clear _roleselector">
+        <table>
+            <tr>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.AccountName)
+                </th>
+                <th >@Html.CultureSpecificDisplay(model => model.GridHeaders.AccountType)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.AccountOwner)
+                </th>
+
+                <th class="actionHeader"></th>
+            </tr>
+            <tbody id="AccountList" data-bind="template: { name: 'tmplAccount', foreach: AccountList }"></tbody>
+        </table>
+        <div id="divNoRecordAccount" class="feat_prod_box " style="display: none">
+        </div>
+        <div id="PagerAccountList"></div>
+
+    </div>
+</div>
+
+<div class="control-group">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderTagContacts)</span>
+    </div>
+
+    <div class="tablecontainer clear-both _roleselector">
+        <table>
+            <tr>
+
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.ContactName)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.Phone)
+                </th>
+
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.Email)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.Company)
+                </th>
+                <th class="actionHeader"></th>
+            </tr>
+            <tbody id="ContactList" data-bind="template: { name: 'ContactListTemplate', foreach: ContactList }"></tbody>
+
+        </table>
+        <div id="divNoRecordContact" class="feat_prod_box" style="display: none">
+        </div>
+    </div>
+
+
+
+
+    <div id="PagerContactList"></div>
+
+</div>
+
+
+<div class="control-group">
+    <div class="infoheader">
+        <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderTagLeads)</span>
+    </div>
+
+    <div class="tablecontainer clear-both _roleselector">
+        <table>
+            <tr>
+
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.LeadTitle)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.LeadCompanyName)
+                </th>
+                <th>@Html.CultureSpecificDisplay(model => model.GridHeaders.Description)
+                </th>
+
+                <th class="actionHeader"></th>
+            </tr>
+            <tbody id="LeadList" data-bind="template: { name: 'LeadListTemplate', foreach: LeadList }"></tbody>
+
+        </table>
+        <div id="divNoRecordLead" class="feat_prod_box " style="display: none">
+        </div>
+    </div>
+    <div id="PagerLeadList"></div>
+    </div>
+</div>

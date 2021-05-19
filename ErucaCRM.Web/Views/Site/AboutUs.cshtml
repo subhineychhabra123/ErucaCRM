@@ -1,0 +1,26 @@
+﻿@model ErucaCRM.Web.ViewModels.PublicAboutUsPageVM
+@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+
+@{
+    ViewBag.Title = Model.CultureSpecificPageMetaTitle;
+    ViewBag.MetaTag = Model.CultureSpecificPageMetaTags;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/ecmascript">
+
+    $(document).ready(function () {
+        $('._question').click(function () {
+
+            $(this).next().toggle('fast');
+        })
+    })
+</script>
+<div class="cultureContentblock">
+    <div class="cultureContent">
+
+        @Html.Raw(string.IsNullOrWhiteSpace(Model.CultureSpecificPageContent) ? "" : Model.CultureSpecificPageContent.Replace("&nbsp;", " "))
+    </div>
+</div>
+

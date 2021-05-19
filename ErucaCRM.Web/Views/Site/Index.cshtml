@@ -1,0 +1,110 @@
+﻿@model ErucaCRM.Web.ViewModels.PublicHomePageVM
+@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+@{
+    ViewBag.Title = Model.CultureSpecificPageMetaTitle;
+    ViewBag.MetaTag = Model.CultureSpecificPageMetaTags;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />*@
+<link href="~/Content/css/default.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/jquery.ennui.contentslider.css" rel="stylesheet" type="text/css" />
+<div class="banner-slider">
+    <div id="one" class="contentslider">
+
+        <div class="cs_wrapper">
+            <div class="cs_slider">
+
+                <div class="cs_article">
+                    <div class="div-sales">
+                        <h2><a>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderSliderSalesByStages)</a> </h2>
+                        <a href="#">
+                            <img src="content/images/banner.png"  class="sliderimg"
+                                alt="Artist's interpretation of article headline" />
+                        </a>
+                        <p class="paragraph">
+                            @Html.CultureSpecificDisplay(model => model.PageContents.SliderStalesByStagesContent)
+                        </p>
+
+                    </div>
+                    <div class="clear"></div>
+                    <a class="aro" href="/Register">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonStartYourFreeTrail)</a>
+                    @*<a href="#" class="readmore">Read More</a>*@
+                </div>
+                <!-- End cs_article -->
+
+                <div class="cs_article">
+                    <div class="div-sales">
+                        <h2><a>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderSliderErucaTechMobileCRM)</a> </h2>
+                        <a href="#">
+                            <img src="content/images/imageSlider2.png" class="sliderimg"
+                                alt="Artist's interpretation of article headline" />
+                        </a>
+                        <p class="paragraph">
+                            @Html.CultureSpecificDisplay(model => model.PageContents.SliderErucaTechMobileCRMContent)
+
+                        </p>
+                        <div class="divQRCode">
+
+                            <img src="content/images/mobileQRCode.png" />
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="clear"></div>
+
+
+                    @*  <a class="aro" href="/Register">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonStartYourFreeTrail)</a>
+                  <a href="#" class="readmore">Read More</a>*@
+                </div>
+                <!-- End cs_article -->
+
+
+
+
+
+            </div>
+            <!-- End cs_slider -->
+        </div>
+        <!-- End cs_wrapper -->
+    </div>
+</div>
+<!-- End contentslider -->
+
+
+@*<script type="text/javascript"
+			src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>*@
+
+
+<script type="text/javascript" src="~/Scripts/jquery.easing.1.3.js"></script>
+
+<script type="text/javascript" src="~/Scripts/jquery.ennui.contentslider.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#one').ContentSlider({
+            width: '900px',
+            height: '340px',
+            speed: 800,
+            easing: 'easeInOutBack'
+        });
+    });
+    $(function () {
+        $('#two').ContentSlider({
+            width: '600px',
+            height: '266px',
+            speed: 400,
+            easing: 'easeOutQuad',
+            textResize: true
+        });
+    });
+</script>
+<div class="cultureContentblock">
+    <div class="cultureContent">
+
+        @Html.Raw(string.IsNullOrWhiteSpace(Model.CultureSpecificPageContent) ? "" : Model.CultureSpecificPageContent.Replace("&nbsp;", " "))
+    </div>
+</div>
+
+

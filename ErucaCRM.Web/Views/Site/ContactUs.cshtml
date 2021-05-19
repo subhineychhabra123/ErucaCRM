@@ -1,0 +1,37 @@
+﻿@model ErucaCRM.Web.ViewModels.CultureSpecificSiteContentVM
+
+@{
+    ViewBag.Title = Model.CultureSpecificPageMetaTitle;
+    ViewBag.MetaTag = Model.CultureSpecificPageMetaTags;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="body-wrapper">
+    <div class="contact-pages">
+        <div class="contact-page-left">
+            <h1>Contact Us</h1>
+            <p class="para-graph">Sales Enquiries</p>
+            <p class="email">Email : <span><a href="javascript:void(0)">sales@erucatech.com</a></span></p>
+            <p class="para-graph">Phone :</p>
+            <p class="addresh">US : <span><a href="javascript:void(0)">+1 888-888-8888</a></span></p>
+            <p class="addresh">US : <span><a href="javascript:void(0)">+45 (25) 1 888-888-8888</a></span></p>
+            <p class="addresh">US : <span><a href="javascript:void(0)">+1 888-888-8888</a></span></p>
+            <p class="addresh">Chandigarh : <span><a href="javascript:void(0)">+1 888-888-8888</a></span></p>
+        </div>
+        <div class="contact-page-right">
+            <div class="map">
+                <img src="content//Content/images/map.png" alt="" title="" class="img"></div>
+            <a href="javascript:void(0)" class="zoom-aro">
+                <img src="/Content/images/map-zoom.png" alt="" title="zoom"></a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+@*  <div class="cultureContentblock">
+            <div class="cultureContent">
+                @Html.Raw(string.IsNullOrWhiteSpace(Model.CultureSpecificPageContent) ? "" : Model.CultureSpecificPageContent.Replace("&nbsp;", " "))
+            </div>
+        </div>
+   *@

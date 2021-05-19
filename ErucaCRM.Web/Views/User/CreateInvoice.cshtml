@@ -1,0 +1,517 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.InvoiceVM
+@{
+    ViewBag.Title = "ErucaCRM | Invoice";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderManage)</h2>
+@section scripts {
+    <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.CreateInvoice.js")" type="text/javascript"></script>
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.CreateInvoice.pageLoad();
+
+}
+
+
+    <div class="buttoncontainer">
+            @Html.ActionLink(@Html.CultureSpecificDisplay(model => model.ButtonBack), "Invoices", null, new { @class = "button purple small _back" })
+    </div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="control-group">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderInvoiceInfo)</span>
+        </div>
+        <div class="floatleft  w50pc">
+            <div class="profile">
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.OwnerId)
+                    </div>
+                    <div class="display-field">
+                        @(Html.DropDownListFor(model => model.OwnerId, new SelectList(Model.OwnerList, "OwnerId", "Name", ErucaCRM.Utility.SessionManagement.LoggedInUser.UserId), new { @class = "dropdown _owner" }))
+                        @Html.ValidationMessageFor(model => model.OwnerId)
+                    </div>
+                </div>              
+                 <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <div class="display-field">
+                        @*  @Html.EditorFor(model => model.Subject, new { @class = "input-text _subject" })*@
+
+                        <span class="user-errormsg  _subjectError"></span>
+                        @*  @Html.ValidationMessageFor(model => model.Subject)*@
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Subject)
+                    </div>
+                    <div class="display-field">
+                        @*  @Html.EditorFor(model => model.Subject, new { @class = "input-text _subject" })*@
+                        <input type="text" id="Subject" class="input-text _subject" />
+                     @*   <span class="error _subjectError"></span>
+                      @Html.ValidationMessageFor(model => model.Subject)*@
+                    </div>
+                </div>
+                 <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.InvoiceDate)
+                    </div>
+                    <div class="display-field">
+                        @Html.EditorFor(model => model.InvoiceDate, new { @class = "input-text _invoiceDate" })
+                        @Html.ValidationMessageFor(model => model.InvoiceDate)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.DueDate)
+                    </div>
+                    <div class="display-field">
+                        @Html.EditorFor(model => model.DueDate, new { @class = "input-text _dueDate" })
+                        @Html.ValidationMessageFor(model => model.DueDate)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="floatleft">
+            <div class="profile">
+                  <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.LeadId)
+                    </div>
+                    <div class="display-field">
+                        @if (ViewBag.LeadId != null)
+                        {
+                             @Html.Hidden("InvoiceLeadId", (string)ViewBag.LeadId)
+                            @(Html.DropDownListFor(model => model.LeadId, new SelectList(Model.LeadList, "LeadId", "Name", ViewBag.LeadId), new { @class = "dropdown " }))
+                        }
+                        else
+                        {
+                            @(Html.DropDownListFor(model => model.LeadId, new SelectList(Model.LeadList, "LeadId", "Name", 0), new { @class = "dropdown " }))
+                        
+                        }
+                        @Html.ValidationMessageFor(model => model.LeadId)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.SalesOrderId)
+                    </div>
+                    <div class="display-field">                       
+                            @(Html.DropDownListFor(model => model.SalesOrderId, new SelectList(Model.SalesOrderList, "SalesOrderId", "Subject", 0), new { @class = "dropdown " }))
+                                               
+                        @Html.ValidationMessageFor(model => model.SalesOrderId)
+                    </div>
+                </div>
+                  <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.StatusId)
+                    </div>
+                    <div class="display-field">                       
+                            @(Html.DropDownListFor(model => model.StatusId, new SelectList(Model.StatusList, "StatusId", "Status", 0), new { @class = "dropdown " }))
+                                               
+                        @Html.ValidationMessageFor(model => model.StatusId)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.SalesCommission)
+                    </div>
+                    <div class="display-field">
+                        @Html.EditorFor(model => model.SalesCommission, new { @class = "input-text _salesCommission" })
+                        @Html.ValidationMessageFor(model => model.SalesCommission)
+                    </div>
+                </div>
+                 
+            </div>
+        </div>
+    </div>
+   <div class="control-group">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderAddressInfo)</span>
+        </div>
+        <div class="floatleft  w50pc">
+            <div class="profile">
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address.Street,Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextAreaFor(model => model.Address.Street, new { @class = "input-text _street" })
+                        @Html.ValidationMessageFor(model => model.Address.Street)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address.City,Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.EditorFor(model => model.Address.City, new { @class = "_city input-text" })
+                        @Html.ValidationMessageFor(model => model.Address.City)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address.State,Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.EditorFor(model => model.Address.State, new { @class = "input-text _state" })
+                        @Html.ValidationMessageFor(model => model.Address.State)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address.Zipcode,Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.EditorFor(model => model.Address.Zipcode, new { @class = "input-text _zipcode" })
+                        @Html.ValidationMessageFor(model => model.Address.Zipcode)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address.CountryId,Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @(Html.DropDownListFor(model => model.Address.CountryId, new SelectList(Model.CountryList, "CountryId", "CountryName", 0), new { @class = "dropdown _country" }))
+                        @Html.ValidationMessageFor(model => model.Address.CountryId)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="floatleft">
+            <div class="profile">
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address1.Street,Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextAreaFor(model => model.Address1.Street, new { @class = "input-text _otherstreet" })
+                        @Html.ValidationMessageFor(model => model.Address1.Street)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address1.City,Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.EditorFor(model => model.Address1.City, new { @class = "input-text _othercity" })
+                        @Html.ValidationMessageFor(model => model.Address1.City)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address1.State,Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.EditorFor(model => model.Address1.State, new { @class = "input-text _otherstate" })
+                        @Html.ValidationMessageFor(model => model.Address1.State)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address1.Zipcode,Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @Html.EditorFor(model => model.Address1.Zipcode, new { @class = "input-text _otherzipcode" })
+                        @Html.ValidationMessageFor(model => model.Address1.Zipcode)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Address1.CountryId,Model.AddressModuleName)
+                    </div>
+                    <div class="display-field">
+                        @(Html.DropDownListFor(model => model.Address1.CountryId, new SelectList(Model.CountryList, "CountryId", "CountryName", 0), new { @class = "dropdown _othercountry" }))
+                        @Html.ValidationMessageFor(model => model.Address1.CountryId)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="quote-product">
+        <div class="control-group">
+            <div class="infoheader">
+                <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderProductDetails)</span>
+            </div>
+            <div class="hidden">
+                @(Html.DropDownList("hdnProduct", new SelectList(Model.ProductList, "ProductId", "ProductName", 0), new { @class = "dropdown othercountry " }))
+            </div>
+            <div class="control-group">
+                <table id="invoiceProduct">
+                    <thead>
+                    <tr id="tablehead" class="tableHeadBg">
+                        <th nowrap="" style="padding: 3px;"><span class="tableheadrequiredfield">&nbsp;</span>@Html.CultureSpecificDisplay(model=>model.GridHeaders.GridHeaderProductName)
+                        </th>
+                        <th nowrap="" style="padding: 3px;"><span class="tableheadrequiredfield">&nbsp;</span>@Html.CultureSpecificDisplay(model=>model.GridHeaders.GridHeaderQtyInStock)</th>
+                        <th nowrap="" style="padding: 3px;"><span class="tableheadrequiredfield">*</span>@Html.CultureSpecificDisplay(model=>model.GridHeaders.GridHeaderQty)</th>
+                        <th nowrap="" style="padding: 3px;"><span class="tableheadrequiredfield">*</span>@Html.CultureSpecificDisplay(model=>model.GridHeaders.GridHeaderUnitPrice)</th>
+                        <th nowrap="" style="padding: 3px;"><span class="tableheadrequiredfield">*</span>@Html.CultureSpecificDisplay(model=>model.GridHeaders.GridHeaderListPrice)</th>
+                        <th nowrap="" style="padding: 3px;"><span class="tableheadrequiredfield">&nbsp;</span>@Html.CultureSpecificDisplay(model=>model.GridHeaders.GridHeaderTotal)</th>
+                        <th width="15" align="center" style="padding: 3px;">&nbsp;</th>
+                    </tr>
+                        </thead>
+                    <tbody id="salesOrderProductBody" data-bind="template: { name: 'tmplAssociatedProducts', foreach: ProductInvoiceAssociations }" ></tbody>
+
+
+
+
+                </table>
+            </div>
+            <div class="infoheader _infoheader" style="padding: 5px">
+                <input type="button" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddProduct)" class="button purple normal _addproduct">
+            </div>
+            <div class="control-group">
+
+                <table id="maintotal" border="0">
+                    <tbody data-bind="template: { name: 'tmplInvoice', foreach: ProductInvoice }" ></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderDescription)</span>
+        </div>
+        <div class="floatleft">
+            <div class="profile">
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Description)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextAreaFor(model => model.Description, new { @class = "input-text _description" })
+                        @Html.ValidationMessageFor(model => model.Description)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+     <div class="control-group">
+        <div class="infoheader">
+            <span>@Html.CultureSpecificDisplay(model=>model.PageSubHeaders.PageSubHeaderTermAndConditions)</span>
+        </div>
+        <div class="floatleft">
+            <div class="profile">
+                <div class="control-group">
+                    <div class="display-label">
+                        @Html.CultureSpecificLabel(model => model.Terms)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextAreaFor(model => model.Terms, new { @class = "input-text _description" })
+                        @Html.ValidationMessageFor(model => model.Terms)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="control-group">
+        <div class="display-label">
+        </div>
+        <div class="display-field">
+            <input type="button" class="button purple small _saveInvoice" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" />
+
+        </div>
+
+    </div>
+}
+
+<script type="text/html" id="tmplInvoice">
+    <tr>
+        <td width="150"></td>
+        <td class="tableData">
+            <div class="alignright"><b>@Html.CultureSpecificDisplay(model => model.PageLabels.SubTotal):</b></div>
+        </td>
+        <td width="150" class="tableData" style="padding-right: 35">
+            <input type="text" style="border: 1px solid #000; padding: 2px" value="0.00" id="txtSubTotal" readonly="true" class="alignright"></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td class="tableData">
+            <div class="alignright">
+                (-)<b><a class="link" href="javascript:;" id="discountFinal">@Html.CultureSpecificDisplay(model => model.PageLabels.Discount):</a></b>
+                <select id="ddlDiscount" class="drpdiscount" data-bind="value: DiscountType" class="margin_bottom-0 _drpdiscount">
+                   <option value="1">@Html.CultureSpecificDisplay(model => model.PageDropDownItemsText.NoDiscount)</option>
+                    <option value="2">@Html.CultureSpecificDisplay(model => model.PageDropDownItemsText.PercentOfPrice)</option>
+                    <option value="3">@Html.CultureSpecificDisplay(model => model.PageDropDownItemsText.FixedPrice)</option>
+                </select>
+            </div>
+        </td>
+        <td width="150" class="tableData" style="padding-right: 35">
+            <div class="alignright">
+                <input type="text" readonly="true" id="txtCalMainDiscount" data-bind="value: PercDiscount" class="txtbox20px _calMainDiscount" />
+                <input type="text" class="width108px" value="0" data-bind="value: FixedDiscount" id="txtMainDiscount">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div class="alignright">
+                <b>@Html.CultureSpecificDisplay(model => model.PageLabels.TotalAfterDiscount):</b>
+            </div>
+        </td>
+        <td valign="bottom">
+            <div class="alignright">
+                <input type="text" size="10" id="txtTotalAfterDiscount">
+            </div>
+        </td>
+
+
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td class="tableData">
+            <div class="alignright">
+                (+)<b><a class="link" href="javascript:;" id="taxFinal">@Html.CultureSpecificDisplay(model => model.PageLabels.Tax):</a></b>
+                @Html.CultureSpecificDisplay(model => model.PageLabels.SaleTax)
+                <input type="checkbox" id="chkSaleTax" data-bind="checked: TaxApplied" class="_chksalestax" />
+                <input id="txtSalesTax" data-bind=" value: TaxAmount" type="text" class="txtbox20px _txtsalestax" />
+                @Html.CultureSpecificDisplay(model => model.PageLabels.Vat)<input type="checkbox" id="chkVat" data-bind=" checked: VatApplied" class="_chkvat" /
+                    ><input type="text" id="txtVat" data-bind="value: VatAmount" class="txtbox20px _txtvat" />
+            </div>
+        </td>
+        <td width="150" class="tableData" style="padding-right: 35">
+            <div class="alignright">
+                <input type="text" readonly="true" value="0" id="txtTax">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td class="tableData">
+            <div class="alignright">
+                <b>@Html.CultureSpecificDisplay(model => model.PageLabels.Adjustment):</b>
+                <select id="operator" data-bind="value: AdjustmentType" class="margin-bottom-0">
+                    <option value="1">@Html.CultureSpecificDisplay(model => model.PageDropDownItemsText.Plus)</option>
+                    <option value="2">@Html.CultureSpecificDisplay(model => model.PageDropDownItemsText.Minus)</option>
+                </select>
+            </div>
+        </td>
+        <td width="150" class="tableData" style="padding-right: 35">
+            <div class="alignright">
+                <input type="text" value="0" id="txtAdjustment" data-bind="value: AdjustmentAmount">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td class="tableData">
+            <div class="alignright"><b>@Html.CultureSpecificDisplay(model => model.PageLabels.GrandTotal):</b></div>
+        </td>
+        <td width="150" class="tableData" style="padding-right: 35">
+            <input type="text" style="border: 1px solid #000; padding: 2px" readonly="true" id="txtGrandTotal" data-bind="value: GrandTotal" value="0.00" class=" alignright"></td>
+    </tr>
+
+</script>
+<script type="text/html" id="tmplAssociatedProducts">
+    <tr class="parentRow" data-bind="Id: RowId, identity: Identity">
+        <td valign="top" style="padding: 3px;" class="tableData">           
+            <select class="_productList" data-bind="options: ProductsList, value: ProductId, optionsValue: 'value', optionsText: 'text'"></select>
+        </td>
+        <td valign="top" style="padding: 3px;" class="tableData">
+            <input type="text" class="_txtQtyStock" data-bind="value: QtyInStock" /></td>
+        <td valign="top" style="padding: 3px;" class="tableData">
+            <input type="text" class="_txtQty" data-bind="value: Quantity" />
+
+        </td>
+        <td valign="top" style="padding: 3px;" class="tableData">
+            <input type="text" class="_txtUnitPrice" data-bind="value: UnitPrice" /></td>
+        <td valign="top" class="tableData">
+            <div class="control-group">
+                <table class="childtable">
+                    <tbody>
+                        <tr>
+                            <td valign="top">
+                                <input type="text" class="_txtListPrice" data-bind="value: ListPrice" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="alignright">
+                                    (-)<b><a class="link" href="javascript:;">@Html.CultureSpecificDisplay(model => model.PageLabels.Discount):</a></b>
+                                    <select class="margin-bottom-0 drpdiscount _drpdiscount" data-bind="value: DiscountType">
+                                         <option value="1">@Html.CultureSpecificDisplay(model => model.PageDropDownItemsText.NoDiscount)</option>
+                    <option value="2">@Html.CultureSpecificDisplay(model => model.PageDropDownItemsText.PercentOfPrice)</option>
+                    <option value="3">@Html.CultureSpecificDisplay(model => model.PageDropDownItemsText.FixedPrice)</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="alignright">@Html.CultureSpecificDisplay(model => model.PageLabels.TotalAfterDiscount):</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="alignright">
+                                    (+)<b>
+                                        <a class="link" href="javascript:;">@Html.CultureSpecificDisplay(model => model.PageLabels.Tax):</a></b>
+                                    @Html.CultureSpecificDisplay(model => model.PageLabels.SaleTax)<input type="checkbox" class="_chksalestax" data-bind="checked: TaxApplied" />
+                                    <input type="text" class="txtbox20px _txtsalestax" readonly="true" data-bind="    value: TaxAmount" />
+                                    @Html.CultureSpecificDisplay(model => model.PageLabels.Vat)<input type="checkbox" class="_chkvat" data-bind="checked: VatApplied" />
+                                    <input type="text" class="txtbox20px _txtvat" readonly="true" data-bind="    value: VatAmount" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="alignright">@Html.CultureSpecificDisplay(model => model.PageLabels.NetTotal):</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </td>
+        <td style="padding: 3px;" class="tableData">
+            <div class="control-group">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" readonly="true" size="10" class="_total">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="bottom">
+                                <input type="text" readonly="true" class="txtbox20px _caltxtdiscount" data-bind="value: PercDiscount" />
+                                <input type="text" class="width114px _txtdiscount" data-bind="value: FixedDiscount">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="bottom">
+                                <input type="text" class="_txttotalAfterDiscount">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="bottom">
+                                <input type="text" class="_txttax" />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="bottom">
+                                <input type="text" class="_txtnetTotal">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+           <a  data-bind="click: function () { viewModel.removeProduct(RowId); }" class=" normal floatright">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonRemoveProduct)</a> 
+        </td>
+        <td width="15" align="center" class="tableData" style="padding: 3px;">&nbsp;</td>
+    </tr>
+</script>

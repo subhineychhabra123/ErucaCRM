@@ -1,0 +1,18 @@
+﻿@using ErucaCRM.Utility;
+@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Web.ViewModels;
+
+@if (Request.IsAuthenticated)
+{
+    <text>
+    @LayoutInner.LoginInfoWelCome, @Html.ActionLink(ErucaCRM.Utility.SessionManagement.LoggedInUser.UserName, "UserProfile", "User", routeValues: new { @id_encrypted = @ErucaCRM.Utility.SessionManagement.LoggedInUser.UserId.Encrypt() }, htmlAttributes: new { @class = "username", title = @ErucaCRM.Utility.SessionManagement.LoggedInUser.UserName + " " + @LayoutInner.LoginInfoAt + " " + @ErucaCRM.Utility.SessionManagement.LoggedInUser.CompanyName })   @LayoutInner.LoginInfoAt @ErucaCRM.Utility.SessionManagement.LoggedInUser.CompanyName
+
+    </text>
+}
+else
+{
+    <ul>
+        <li>@Html.ActionLink("Register", "Register", "Site", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        @* <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+    </ul>
+}

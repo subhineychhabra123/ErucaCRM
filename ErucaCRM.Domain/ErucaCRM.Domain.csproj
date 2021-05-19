@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{215C3458-AB79-42B6-A893-BC99EFCB0C19}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ErucaCRM.Domain</RootNamespace>
+    <AssemblyName>ErucaCRM.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\C#\AzureEmailService\obj\Debug\MvcWebRole\bin\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics.StorageUtility, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\C#\AzureEmailService\obj\Debug\MvcWebRole\bin\Microsoft.WindowsAzure.Diagnostics.StorageUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=3.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\C#\AzureEmailService\obj\Debug\MvcWebRole\bin\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Pvc.Core">
+      <HintPath>..\packages\Pvc.Core.0.0.2.0\lib\net45\Pvc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Pvc.NuGet">
+      <HintPath>..\packages\Pvc.NuGet.0.0.1.2\lib\net45\Pvc.NuGet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountContactModel.cs" />
+    <Compile Include="AccountListModel.cs" />
+    <Compile Include="AccountModel.cs" />
+    <Compile Include="AccountSaleRevenueModel.cs" />
+    <Compile Include="AccountSettingModel.cs" />
+    <Compile Include="AccountTagModel.cs" />
+    <Compile Include="AccountTypeModel.cs" />
+    <Compile Include="AddressModel.cs" />
+    <Compile Include="ApplicationPageModel.cs" />
+    <Compile Include="AppVersionModel.cs" />
+    <Compile Include="AssociatedProductModel.cs" />
+    <Compile Include="AssociationApplicationPageModel.cs" />
+    <Compile Include="AccountCaseModel.cs" />
+    <Compile Include="AutoCompleteModel.cs" />
+    <Compile Include="CaseMessageBoardModel.cs" />
+    <Compile Include="CaseOriginListModel.cs" />
+    <Compile Include="CaseOwnerListModel.cs" />
+    <Compile Include="CaseTypeModel.cs" />
+    <Compile Include="CompanyModel.cs" />
+    <Compile Include="CompanyPlanModel.cs" />
+    <Compile Include="ContactBulkUploadModel.cs" />
+    <Compile Include="ContactModel.cs" />
+    <Compile Include="ContactTagModel.cs" />
+    <Compile Include="ContentApplicationPageModel.cs" />
+    <Compile Include="CountryModel.cs" />
+    <Compile Include="CultureSpecificSiteContentModel.cs" />
+    <Compile Include="DashboarActivitiesModel.cs" />
+    <Compile Include="DashBoardModel.cs" />
+    <Compile Include="DasshboardLeadModel.cs" />
+    <Compile Include="FileAttachmentModel.cs" />
+    <Compile Include="HomeModel.cs" />
+    <Compile Include="IgnoreScript.cs" />
+    <Compile Include="IndustryModel.cs" />
+    <Compile Include="InvoiceModel.cs" />
+    <Compile Include="LeadAuditModel.cs" />
+    <Compile Include="LeadByStarRatingPercentageModel.cs" />
+    <Compile Include="LeadCommentModel.cs" />
+    <Compile Include="LeadContactModel.cs" />
+    <Compile Include="LeadEmailNotificationModel.cs" />
+    <Compile Include="LeadHistoryChartModel.cs" />
+    <Compile Include="LeadModel.cs" />
+    <Compile Include="LeadsInPipeLineModel.cs" />
+    <Compile Include="LeadSourceModel.cs" />
+    <Compile Include="LeadStagesJSONModel.cs" />
+    <Compile Include="LeadStatusModel.cs" />
+    <Compile Include="LeadTagModel.cs" />
+    <Compile Include="ModuleListModel.cs" />
+    <Compile Include="ModuleModel.cs" />
+    <Compile Include="ModulePermissionModel.cs" />
+    <Compile Include="OwnerListModel.cs" />
+    <Compile Include="ParentAccountListModel.cs" />
+    <Compile Include="ParentCaseListModel.cs" />
+    <Compile Include="PermissionModel.cs" />
+    <Compile Include="PlanModel.cs" />
+    <Compile Include="PlanModuleModel.cs" />
+    <Compile Include="ProductInvoiceAssociationModel.cs" />
+    <Compile Include="ProductLeadAssociationModel.cs" />
+    <Compile Include="ProductModel.cs" />
+    <Compile Include="ProductQuoteAssociationModel.cs" />
+    <Compile Include="ProductSalesOrderAssociationModel.cs" />
+    <Compile Include="ProfileModel.cs" />
+    <Compile Include="ProfilePermissionModel.cs" />
+    <Compile Include="QuoteModel.cs" />
+    <Compile Include="RatingModel.cs" />
+    <Compile Include="RealTimeNotificationModel.cs" />
+    <Compile Include="RoleModel.cs" />
+    <Compile Include="SalesOrderModel.cs" />
+    <Compile Include="StageModel.cs" />
+    <Compile Include="StatusModel.cs" />
+    <Compile Include="TagModel.cs" />
+    <Compile Include="TaskItemModel.cs" />
+    <Compile Include="TaskStatusModel.cs" />
+    <Compile Include="CultureInformationModel.cs" />
+    <Compile Include="TimeZoneModal.cs" />
+    <Compile Include="UserAccess.cs" />
+    <Compile Include="UserModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserSettingModel.cs" />
+    <Compile Include="YearWiseLeadModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ErucaCRM.Utility\ErucaCRM.Utility.csproj">
+      <Project>{4da23c60-ebb3-48fe-8a07-3c6e787364a1}</Project>
+      <Name>ErucaCRM.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

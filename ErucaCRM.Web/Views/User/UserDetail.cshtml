@@ -1,0 +1,115 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+
+@model ErucaCRM.Web.ViewModels.UserVM
+
+
+@{
+    ViewBag.Title = "ErucaCRM | UserDetail";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderDetail)</h2>
+
+
+
+@*@Html.Partial("UserProfileDetailPartial", Model)
+   *@
+<div class="floatleft profile-image">
+
+    <img src="@Model.ImageURL">
+</div>
+<div class="floatleft">
+    <div class="profile">
+
+        <div class="control-group">
+            <div class="display-label">
+                @Html.CultureSpecificLabel(model => model.FirstName)
+            </div>
+            <div class="display-field">
+                <label>@Html.DisplayFor(model => model.FirstName)</label>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label">
+                @Html.CultureSpecificLabel(model => model.LastName)
+            </div>
+            <div class="display-field">
+                <label>@Html.DisplayFor(model => model.LastName) </label>
+
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label">
+                @Html.CultureSpecificLabel(model => model.EmailId)
+            </div>
+            <div class="display-field">
+                <label>@Html.DisplayFor(model => model.EmailId) </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label">
+                @Html.CultureSpecificLabel(model => model.Address.Street)
+            </div>
+            <div class="display-field">
+                <label>@Html.DisplayFor(model => model.Address.Street) </label>
+
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label">
+                @Html.CultureSpecificLabel(model => model.Address.City)
+            </div>
+            <div class="display-field">
+                <label>@Html.DisplayFor(model => model.Address.City) </label>
+
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label">
+                @Html.CultureSpecificLabel(model => model.Address.Zipcode)
+            </div>
+            <div class="display-field">
+                <label>@Html.DisplayFor(model => model.Address.Zipcode) </label>
+
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label">
+                @Html.CultureSpecificLabel(model => model.Address.Country.CountryName)
+            </div>
+            <div class="display-field">
+                <label>@Html.DisplayFor(model => model.Address.Country.CountryName) </label>
+
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label">
+                @Html.CultureSpecificLabel(model => model.Role.RoleName)
+            </div>
+            <div class="display-field">
+                <label>@Html.DisplayFor(model => model.Role.RoleName) </label>
+
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label">
+                @Html.CultureSpecificLabel(model => model.Profile.ProfileName)
+            </div>
+            <div class="display-field">
+                <label>@Html.DisplayFor(model => model.Profile.ProfileName) </label>
+
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="display-label">
+            </div>
+            <div class="display-field">
+                @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonEdit), "EditUser", new { id = Model.UserId }, new { @class = "link-purple" })
+                 @Html.ActionLink(Html.CultureSpecificDisplay(model => model.ButtonBack), "UserList", new { /* id=Model.PrimaryKey */ }, new { @class = "link-purple" })
+            </div>
+        </div>
+         
+    </div>
+</div>
+
+
+

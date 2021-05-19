@@ -1,0 +1,124 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+
+@model ErucaCRM.Web.ViewModels.TagVM
+
+@{
+    ViewBag.Title = "Tags";
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+}
+
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/ErucaCRM.User/ErucaCRM.User.Tags.js")" type="text/javascript"></script>
+}
+
+@section ReadyScripts
+{
+ErucaCRM.User.Tags.pageLoad();
+      ErucaCRM.Framework.Common.ApplyHelp("Tag");
+
+}
+<div class="gridspace">
+<h2>@Html.CultureSpecificDisplay(model => model.PageHeaderManage)</h2>
+@section SideMenuCss
+{@*<style>
+        .sidemenu {   position: fixed;}        
+        .wrapper-inner { border-left: 1px solid #B6B6B6; margin-left: 230px; padding-left: 10px;overflow: hidden; }
+        #SideMenu-Configuration { display: block; }
+            #SideMenu-Configuration a[href*='Tags'] { background: #fff; color: #17B5F0; }
+    </style>*@
+   @* <style>
+        .sidemenutd { display: block; }
+        .inner-body .wrapper-inner { max-width: 980px; }
+        #SideMenu-Configuration { display: block; }
+            #SideMenu-Configuration a[href*='Tags'] { background: #fff; color: #17B5F0; }
+    </style>*@
+}
+
+
+<script type="text/html" id="TagListTemplate">
+    <div class="tag">
+        <div>
+            <div class="tagname">
+                <a data-bind="attr: { href: TagDetailUrl, title: TagName }"><span data-bind="    text: TagName"></span></a>
+
+
+            </div>
+            <a id="tagEdit" title="@Html.CultureSpecificDisplay(model=>model.PageButtons.EditButtonToolTip)" data-bind="event: { click: function () { viewModel.EditTag(this) } }" class="tagbutton permissionbased" data-permission="@string.Concat(Constants.MODULE_TAG, Constants.PERMISSION_EDIT)" >@Html.CultureSpecificDisplay(model => model.PageButtons.LinkButtonEdit)</a>
+            <a id="tagDelete" data-helpkey="deletetag" data-helppos="top-left"  title="@Html.CultureSpecificDisplay(model=>model.PageButtons.DeleteButtonToolTip)" data-bind="event: { click: function () { viewModel.DeleteTag(this) } }" class="tagbutton permissionbased" data-permission="@string.Concat(Constants.MODULE_TAG, Constants.PERMISSION_DELETE)"  >@Html.CultureSpecificDisplay(model => model.PageButtons.LinkButtonDelete)</a>
+        </div>
+      <div class="clear-both"></div>
+          <div class="excerpt">
+            <span data-bind="text: Description"></span>
+        </div>
+
+    </div>
+</script>
+
+
+<div class="buttoncontainer permissionbased" data-helpkey="addtag" data-helppos="top-right"  data-permission="@string.Concat(Constants.MODULE_TAG, Constants.PERMISSION_CREATE)">
+    <a href="#" class="_newTag button small">@Html.CultureSpecificDisplay(model => model.ButtonCreate)</a>
+</div>
+<div class="clear pad5px"></div>
+
+
+<div class="tagmain _roleselector">
+
+    <div id="TagListData" data-bind="template: { name: 'TagListTemplate', foreach: TagList }">
+    </div>
+
+</div>
+
+
+
+<div id="Pager" class="tagpagingbottom"></div>
+<div id="divNoRecord" class="feat_prod_box box_center" style="display: none">
+</div>
+
+
+
+
+<div class="hidden" style="overflow:hidden" id="tagpop">
+    <div class="popup" style="height: 300px;">
+        <span class="close-btn"><a class="_close" href="#">X</a></span>
+        <center><h2 class="_tagHeader">@Html.CultureSpecificDisplay(model => model.PageSubHeaders.AddTag)</h2></center>
+
+        <div class="floatleft " >
+            <div class="profile">
+                <input type="hidden" id="hdnTagId" value="0" />
+                <div class="control-group">
+                            <span class="error"></span>
+                    <div class="display-label">
+
+                        <label>@Html.CultureSpecificDisplay(model => model.PageLabels.TagName)</label>
+                    </div>
+                    <div class="display-field">
+                        <input type="text" class="input-text _tagName" maxlength="50" />
+
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                        <label>@Html.CultureSpecificDisplay(model => model.PageLabels.TagDescription)</label>
+                    </div>
+                    <div class="display-field">
+
+                        <textarea class="input-text _tagDescription" ></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="display-label">
+                    </div>
+                    <div class="display-field text-align-left buttoncontainer">
+                        <input type="submit" class="button purple small _submitbtn" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" />
+                        <input type="button" class="button purple small _close" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+    </div>

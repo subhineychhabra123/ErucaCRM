@@ -1,0 +1,79 @@
+﻿@using ErucaCRM.Utility;
+@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Web.ViewModels;
+@model ErucaCRM.Web.ViewModels.LoginModel
+@{
+    ViewBag.Title = Model.CultureSpecificPageMetaTitle;
+    ViewBag.MetaTag = Model.CultureSpecificPageMetaTags;
+}
+
+<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+@*    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/main.css")" />*@
+
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/OuterLayoutCss.css")" />
+
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+<link href="@Url.Content("~/Content/css/font-awesome/css/font-awesome.css")" rel="stylesheet" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/knockout-3.0.0.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/ErucaCRM.Framework/ErucaCRM.Framework.Core.js")"></script>
+<script type="text/javascript" src="~/Scripts/ErucaCRM.Messages/@CommonFunctions.GetCurrentCulturScript()?t=@DateTime.Today.Ticks"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="back-bg">
+        <div class="main-div">
+            <div class="login">
+                <div class="left-login">
+                    <a href="@Url.Content("/Home")">
+                        <img src="/content/images/@CommonFunctions.GetCurrentCulturLoginLogo()" alt="" title="logo"></a>
+                </div>
+                <div class="clear"></div>
+                <div class="right-login">
+                    <div class="login-form">
+                        <p class="sign">
+                            <h1>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderLoginInfo)</h1>
+                        </p>
+                        <br />
+
+                        <div class="login-validation-span">@Html.ValidationMessageFor(m => m.EmailId)</div>
+                        <div class="input-box">
+                            <a href="javascript:void(0)" class="background-img">
+                                <img src="/content/images/man.png" alt="" title=""></a>@Html.TextBoxFor(m => m.EmailId, new { placeholder = Html.CultureSpecificDisplay(model => model.PageLabels.UserName), @tabindex = 1 })
+                        </div>
+                        <div class="login-validation-span">@Html.ValidationMessageFor(m => m.Password)</div>
+                        <div class="input-box">
+                            <a href="javascript:void(0)" class="background-img">
+                                <img src="/content/images/kye.png" alt="" title=""></a>@Html.TextBoxFor(m => m.Password, new { type = "password", placeholder = Html.CultureSpecificDisplay(model => model.PageLabels.Password), @tabindex = 2 })
+                        </div>
+                        <span class="checkrember">
+                            @*  <input type="checkbox" value="" tabindex="3">*@
+                            @Html.CheckBoxFor(m => m.isChecked)
+                            &nbsp; @Html.CultureSpecificDisplay(model => model.PageLabels.KeepMeSingnedIn)</span><br />
+                        <br />
+                        <br />
+                        <a href="javascript:void(0)">
+                            <input type="submit" class="button" tabindex="4" value="@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonSignIn)"></a><br />
+                        <br />
+                        <br />
+                        <p class="log">
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="forword">
+            @* <span class="account"><a href="javascript:void(0)">Create an account</a></span>
+            <span class="account1"><a href="javascript:void(0)">Forword password</a></span>*@
+            <span class="account"><a href="@Url.Content("/Register")" class="_register hyperlink register">@Html.CultureSpecificDisplay(model => model.PageButtons.LinkButtonSignUpNow)&nbsp;|</a></span>
+            <span class="password account1">@Html.ActionLink(@Html.CultureSpecificDisplay(model => model.PageButtons.LinkButtonForgotPassword), "ForgotPassword", "Site", null, new { @class = "hyperlink" })</span>
+        </div>
+    </div>
+}
+

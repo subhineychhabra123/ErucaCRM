@@ -1,0 +1,234 @@
+﻿@using ErucaCRM.Web.Infrastructure;
+@using ErucaCRM.Utility;
+@model ErucaCRM.Web.ViewModels.LeadVM
+@{
+    ViewBag.Title = "ErucaCRM | Leads";
+
+}
+<script>
+    //[reLeadOwnerIdsponse] waris change this name to [response] becuse getting error.
+    var OnSuccess = function (response) {
+       
+        if (response.Status == "Success") {
+            if (response.AccountId != undefined && response.AccountId.length > 1) {
+                $('#AccountId').val("");
+                location.href = "/User/AccountDetail/" + response.AccountId;
+            }
+            else {
+                if (viewModel != null && response.NewLead != null) {
+                    if (response.NewLead.LeadId != null) {
+                        var val = new Object();
+                        val.Title = response.NewLead.Title;
+                        val.LeadId = response.NewLead.LeadId;
+                        val.StageId = response.NewLead.StageId;
+                        val.Rating = response.NewLead.Rating;
+                        val.LeadOwnerImage = response.NewLead.LeadOwnerImage;
+                        val.LeadOwnerName = response.NewLead.LeadOwnerName;
+                        viewModel.RemoveLeadById(val.LeadId, val.StageId);
+                        viewModel.AddNewLeadInArray(val);
+                    } else {
+                        var val = new Object();
+                        val.Title = response.NewLead.Title;
+                        val.LeadId = response.NewLead.LeadId;
+                        val.StageId = response.NewLead.StageId;
+                        val.Rating = response.NewLead.Rating;
+                        val.LeadOwnerImage = response.NewLead.LeadOwnerImage;
+                        val.LeadOwnerName = response.NewLead.LeadOwnerName;
+                        viewModel.AddNewLeadInArray(val);
+                    }
+                }
+                $('._leadDetail').hide();
+                //location.hash.remove();
+            }
+            //  self.ViewLeadDetail(location.hash.split('#')[1]);
+
+        }
+    }
+
+</script>
+
+
+
+@*@if (Model.LeadId == null)
+{
+    <h2>@Html.CultureSpecificDisplay(model => model.PageHeaderCreate)</h2>
+}
+else
+{
+    <h2>@Html.CultureSpecificDisplay(model => model.PageHeaderEdit)</h2>
+}*@
+<script type="text/html" id="TagsListTemplate">
+    <div class="tag tagwidth" data-bind="attr: { TagId: TagId, TagName: TagName }">
+        <div>
+            <div class='tagname'><a target="_blank" class="floatleft"   data-bind="attr: { href: TagLink }"><span data-bind="    text: TagName"></span></a><a data-permission="@String.Concat(ErucaCRM.Utility.Constants.MODULE_LEAD, ErucaCRM.Utility.Constants.PERMISSION_EDIT)" class="_commonButton floatleft"  onclick="viewModel.RemoveTag(this);">&nbsp;&nbsp;X</a></div>
+        </div>
+    </div>
+</script>
+@using (Ajax.BeginForm("EditLead", new AjaxOptions() { HttpMethod = "Post", OnSuccess = "OnSuccess" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.AccountId)
+    @Html.HiddenFor(m => m.LeadId)
+    @Html.HiddenFor(model => model.RatingId)
+    @Html.Hidden("LeadRatingConstant")
+    @Html.Hidden("hdnIsClosedWin")
+    @Html.Hidden("hdnIsLastStage")
+    @Html.Hidden("hdnIsInitialStage")
+    @Html.HiddenFor(model => model.FinalStageId)
+    @Html.HiddenFor(model => model.StageId)
+    @Html.Hidden("TagIds");
+    @Html.HiddenFor(m => m.LeadTagIds);
+    @Html.HiddenFor(m => m.NewTagNames);
+    @Html.Hidden("CurrentTagId");
+    @Html.Hidden("CurrentTagName");
+    <input type="hidden" id="AccountId" value="" />
+    <div id="LeadDetailSection" class="leadpopup">
+        <div class="control-groContup">
+            <div class="infoheader">
+                <span>@Html.CultureSpecificDisplay(model => model.PageSubHeaders.PageSubHeaderLeadInfo)</span>
+            </div>
+            <div class="floatleft  " style="width: 60%;">
+                <div class="profile">
+                    <div class="control-group">
+                                @Html.ValidationMessageFor(model => model.Title)
+                        <div class="display-label">
+                            <span class="requiredfield floatright">*</span>
+                            @Html.CultureSpecificLabel(model => model.Title)
+                        </div>
+                        <div class="display-field">
+                            @Html.TextBoxFor(model => model.Title, new { @class = "text-box", maxlength = 50 })
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="display-label">
+                            @Html.CultureSpecificLabel(model => model.LeadCompanyName)
+                        </div>
+                        <div class="display-field">
+                            @Html.TextBoxFor(model => model.LeadCompanyName, new { @class = "text-box", maxlength = 75 })
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="display-label">
+                            @Html.CultureSpecificLabel(model => model.IndustryId)
+                        </div>
+                        <div class="display-field">
+                            <div class="clear valerr">@Html.ValidationMessageFor(model => model.IndustryId)</div>
+                            @(Html.CultureSpecificDropDownList(model => model.IndustryId, new SelectList(ViewBag.Industries, "IndustryId", "IndustryName", Model.IndustryId), new { @class = "dropdown" }))
+                            <div style="display: inline; margin-left: 5px;">@Html.ValidationMessageFor(model => model.LeadSourceId)
+                                @Html.CultureSpecificLabel(model => model.LeadSourceId, new {@class="divlabel" })
+                                @(Html.CultureSpecificDropDownList(model => model.LeadSourceId, new SelectList(ViewBag.LeadSources, "LeadSourceId", "LeadSourceName", Model.LeadSourceId), new { @class = "dropdown" }))
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="display-label">
+                            @Html.CultureSpecificLabel(model => model.LeadOwnerId)
+                        </div>
+                        <div class="display-field">
+                            <div class="clear valerr">@Html.ValidationMessageFor(model => model.LeadOwnerId)</div>
+                            @(Html.DropDownListFor(model => model.LeadOwnerId, new SelectList(ViewBag.Owners, "LeadOwnerId", "Name", Model.LeadOwnerId), new { @class = "dropdown" }))
+                            <div style="display: inline; margin-left: 5px;">@Html.ValidationMessageFor(model => model.LeadStatusId)
+                               @Html.CultureSpecificLabel(model => model.LeadStatusId, new { @class="divlabel"})&nbsp;
+                                @(Html.CultureSpecificDropDownList(model => model.LeadStatusId, new SelectList(ViewBag.LeadStatus, "LeadStatusId", "LeadStatusName", Model.LeadStatusId), new { @class = "dropdown" }))
+                            </div>
+                        </div>
+                    </div>
+                        <div class="clear"></div>
+                        <div class="control-group">
+                        <div class="display-label">
+                            @Html.CultureSpecificLabel(model => model.Description)
+                        </div>
+                        <div class="display-field">
+                            @Html.TextAreaFor(model => model.Description, new { @class = "descriptionfield" })
+                        </div>
+                    </div>
+                    <div class="_audio audio">
+                        <audio id="resource_audio" controls>
+                            <source src="" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <div id="_audio" class="downloadaudio _downloadaudio"><a href="" target="_blank">
+                            <img src="~/Content/images/Download.png" title="Download audio"></a></div>
+                    </div>
+                </div>
+            </div>
+                
+
+               
+              <div class="floatleft">
+                <div class="profile">
+                    <div class="clear"></div>
+
+                    <div class="control-group" id="ExpectedRevenueContainer">
+                        <div class="display-label">
+                            @Html.CultureSpecificLabel(model => model.ExpectedRevenue, new { @class = "padtp0px" })
+                        </div>
+                        <div class="display-field text-align-left">
+                            <span id="ExpectedRevenue">@*@Html.DisplayFor(model => model.ExpectedRevenue)*@</span>
+                        </div>
+                    </div>
+                    <div class="Rating" id="sectionRating">
+
+                        <div class="control-group" id="RatingContainer">
+                            <div class="display-field">
+                                <b id="LabelRating">@Html.CultureSpecificDisplay(model => model.PageLabels.Rating)</b>
+                                <div id="r1" class="rate_widget" data-bind="template: { name: 'templLeadRating', foreach: LeadRatingList }">
+
+                                    @* @foreach (var rating in Model.RatingList)
+                                        {
+                                            <div data-ratingId="@rating.RatingId" data-ratingconstant="@rating.RatingConstant" class="star_@rating.RatingConstant ratings_stars"></div>
+
+                                        }*@
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="clear"></div>
+                        <div class="amount">
+                                @Html.ValidationMessageFor(model => model.Amount)
+                                <div class="control-group">
+                                    <div class="display-field">
+                                        @Html.CultureSpecificLabel(model => model.Amount, new { @class = "divlabel" })
+
+                                        @Html.TextBoxFor(model => model.Amount, new { @class = "text-box", @maxlength = "18" })
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="control-group">
+                                    <input type="text" id="Tag" class="LeadTag" maxlength="50" placeholder="@Html.CultureSpecificDisplay(model => model.PageLabels.EnterTagPlaceHolder)" />
+
+                                    <button type="button" class="button _submitTags _commonButton" onclick="viewModel.AddTagToLead();">@Html.CultureSpecificDisplay(model => model.PageButtons.ButtonAddTag)</button>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="marL100px leadtext">
+                                    <div class="tagmain" data-bind="template: { name: 'TagsListTemplate', foreach: OnTagList }">
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="marL125px">
+            <div class="control-group">
+                <div class="display-label">
+                </div>
+                <div class="display-field buttoncontainer floatnone">
+                    <div data-bind="template: { name: 'tempLeadSubmitButton', foreach: DisplaySubmitButton }"></div>
+                    @* <input type="submit" class="button purple small" value="@Html.CultureSpecificDisplay(model => model.ButtonSave)" />
+                    <input type="button" onclick="$('._leadDetail').hide()" class="button purple small" value="@Html.CultureSpecificDisplay(model => model.ButtonCancel)" />*@
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
